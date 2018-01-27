@@ -12,6 +12,11 @@ this is just in terms of robot actions, and does not include use of powerups.
 
 #define MAP(F,IN) mapf([&](auto elem){ return F(elem); },IN)
 
+template<typename T>
+vector<T> to_vector(set<T> a){
+	return vector<T>(begin(a),end(a));
+}
+
 template<typename T,size_t LEN>
 std::ostream& operator<<(std::ostream& o,std::array<T,LEN> const& a){
 	o<<"[ ";
@@ -49,6 +54,15 @@ vector<tuple<T,T,T>> cross3(array<vector<T>,3> a){
 	return cross3(a[0],a[1],a[2]);
 }
 
+template<typename A,typename B,typename C>
+vector<tuple<A,B,C>> cross(vector<A> as,vector<B> bs,vector<C> cs){
+	vector<tuple<A,B,C>> r;
+	for(auto a:as) for(auto b:bs) for(auto c:cs){
+		r|=make_tuple(a,b,c);
+	}
+	return r;
+}
+
 template<typename T>
 T sum(vector<T> const& a){
 	nyi
@@ -60,11 +74,64 @@ T sum(tuple<T,T,T> in){
 }
 
 template<typename T,size_t LEN>
-T sum(array<T,LEN>)nyi
+T sum(array<T,LEN> const& a){
+	T r{};
+	for(auto elem:a){
+		r+=elem;
+	}
+	return r;
+}
 
 template<typename T>
 set<T> to_set(vector<T> v){
 	return set<T>(begin(v),end(v));
+}
+
+template<typename T,size_t SIZE>
+size_t count(array<T,SIZE> a){
+	size_t r=0;
+	for(auto elem:a){
+		if(elem){
+			r++;
+		}
+	}
+	return r;
+}
+
+template<typename T>
+array<T,3> as_array(tuple<T,T,T> a){
+	return {get<0>(a),get<1>(a),get<2>(a)};
+}
+
+template<typename T>
+vector<array<T,3>> permutations(array<T,3> a){
+	return {
+		{a[0],a[1],a[2]},
+		{a[0],a[2],a[1]},
+		{a[1],a[0],a[2]},
+		{a[1],a[2],a[0]},
+		{a[2],a[0],a[1]},
+		{a[2],a[1],a[0]}
+	};
+}
+
+template<typename T>
+vector<T> frontier(vector<T> a){
+	//remove from the set if there is another option that is always better.
+	return filter(
+		[&](auto elem){
+			return !any(mapf(
+				[&](auto x){ return always_better(elem,x); },
+				a
+			));
+		},
+		a
+	);
+}
+
+template<typename T>
+auto frontier(set<T> a){
+	return frontier(to_vector(a));
 }
 
 //start program-specific stuff
@@ -131,6 +198,10 @@ bool operator<(Action_set a,Action_set b){
 	return 0;
 }
 
+bool operator==(Action_set a,Action_set b){
+	nyi
+}
+
 Action_set operator+(Action_set a,Action_set b){
 	return Action_set{
 		#define X(A,B) a.B+b.B,
@@ -161,44 +232,118 @@ bool always_better(Action_set a,Action_set b){
 		(a.scale_cubes>=b.scale_cubes && a.low_cubes>b.low_cubes);
 }
 
-template<typename T>
-vector<T> frontier(vector<T> a){
-	//remove from the set if there is another option that is always better.
-	return filter(
-		[&](auto elem){
-			return any(mapf(
-				[&](auto x){ return always_better(x,elem); },
-				a
-			));
-		},
-		a
-	);
-}
-
-template<typename T>
-vector<T> to_vector(set<T> a){
-	return vector<T>(begin(a),end(a));
-}
-
-template<typename T>
-auto frontier(set<T> a){
-	return frontier(to_vector(a));
-}
-
 vector<Action_set> actions_available(Alliance_capabilities const& alliance){
 	auto m=MAP(actions_available,alliance);
 	auto x=to_set(MAP(sum,cross3(m)));
-	print_lines(x);
-	auto f=frontier(x);
-	cout<<"after:\n";
-	//PRINT(f);
-	print_lines(f);
-	nyi
+	return frontier(x);
+}
+
+//start what is essentially a duplicate of part of the python climbing info
+
+#define CLIMB_TYPE(X)\
+	X(DEAD)\
+	X(DRIVES)\
+	X(ITSELF)\
+	X(BAR1)\
+	X(BAR2)\
+	X(LIFT1)\
+	X(LIFT2)\
+	X(ALL1)\
+	X(ALL2)
+
+enum class Climb_type{
+	#define X(A) A,
+	CLIMB_TYPE(X)
+	#undef X
+};
+
+ostream& operator<<(ostream& o,Climb_type a){
+	#define X(A) if(a==Climb_type::A) return o<<""#A;
+	CLIMB_TYPE(X)
+	#undef X
+	assert(0);
+}
+
+vector<Climb_type> climb_types(){
+	return {
+		#define X(A) Climb_type::A,
+		CLIMB_TYPE(X)
+		#undef X
+	};
+}
+
+bool can_climb_bar(Climb_type a){
+	switch(a){
+		case Climb_type::DEAD:
+		case Climb_type::DRIVES:
+			return 0;
+		case Climb_type::ITSELF:
+		case Climb_type::BAR1:
+		case Climb_type::BAR2:
+			return 1;
+		case Climb_type::LIFT1:
+		case Climb_type::LIFT2:
+			return 0;
+		case Climb_type::ALL1:
+		case Climb_type::ALL2:
+			return 1;
+		default:
+			assert(0);
+	}
+}
+
+bool can_drive(Climb_type a){
+	return a!=Climb_type::DEAD;
+}
+
+using Alliance_climb_type=array<Climb_type,3>;
+
+vector<Alliance_climb_type> alliance_climb_types(){
+	return MAP(as_array,cross(climb_types(),climb_types(),climb_types()));
+}
+
+unsigned climbs_inner(Alliance_climb_type a){
+	//returns 0-3
+	array<Climb_type,2> rest{a[1],a[2]};
+	switch(a[0]){
+		case Climb_type::DEAD:
+			return 0;
+		case Climb_type::DRIVES:
+			return 0;
+		case Climb_type::ITSELF:
+			return 1;
+		case Climb_type::BAR1:
+			return 1+max(can_climb_bar(a[1]),can_climb_bar(a[2]));
+		case Climb_type::BAR2:
+			return 1+can_climb_bar(a[1])+can_climb_bar(a[2]);
+		case Climb_type::LIFT1:
+			return max(can_drive(a[1]),can_drive(a[2]));
+		case Climb_type::LIFT2:
+			return count(mapf(can_drive,rest));
+		case Climb_type::ALL1:
+			return 1+max(can_drive(a[1]),can_drive(a[2]));
+		case Climb_type::ALL2:
+			return 1+count(mapf(can_drive,rest));
+		default:
+			assert(0);
+	}
+}
+
+unsigned climbs(Alliance_climb_type a){
+	//returns 0-3
+	//the maximum number of climbs for that type of alliance.
+	return max(mapf(climbs_inner,permutations(a)));
 }
 
 int main(){
+	/*PRINT(always_better(Action_set{7,8},Action_set{7,7}));
 	auto a=rand((Alliance_capabilities*)nullptr);
+	//a=rand((Alliance_capabilities*)nullptr);
 	PRINT(a);
-	PRINT(actions_available(a));
+	print_lines(actions_available(a));*/
+
+	//PRINT(climb_types());
+	//PRINT(alliance_climb_types());
+	print_lines(mapf([](auto a){ return make_pair(a,climbs(a)); },alliance_climb_types()));
 }
 
