@@ -335,6 +335,76 @@ unsigned climbs(Alliance_climb_type a){
 	return max(mapf(climbs_inner,permutations(a)));
 }
 
+#define ROBOT_ENDGAME(X)\
+	X(FREE)\
+	X(CLIMBED)\
+	X(OCCUPIED)
+
+enum class Robot_endgame{
+	#define X(NAME) NAME,
+	ROBOT_ENDGAME(X)
+	#undef X
+};
+
+ostream& operator<<(ostream& o,Robot_endgame a){
+	#define X(A) if(a==Robot_endgame::A) return o<<""#A;
+	ROBOT_ENDGAME(X)
+	#undef X
+	assert(0);
+}
+
+#define SINGLE_ARG(A,B) A,B
+
+#define ALLIANCE_ENDGAME(X)\
+	X(unsigned,climbed)\
+	X(array<SINGLE_ARG(bool,3)>,occupied)
+
+struct Alliance_endgame{
+	#define X(A,B) A B;
+	ALLIANCE_ENDGAME(X)
+	#undef X
+};
+
+ostream& operator<<(ostream& o,Alliance_endgame const& a){
+	o<<"Alliance_endgame( ";
+	#define X(A,B) o<<""#B<<":"<<a.B<<" ";
+	ALLIANCE_ENDGAME(X)
+	#undef X
+	return o<<")";
+}
+
+vector<Alliance_endgame> climb_options(Alliance_climb_type a){
+	vector<Alliance_endgame> r;
+
+	r|={0,{0,0,0}};
+
+	if(can_climb_bar(a[0])){
+		r|={1,0,0};
+	}
+	if(can_climb_bar(a[1])){
+		r|={0,1,0};
+	}
+	if(can_climb_bar(a[2])){
+		r|={0,0,1};
+	}
+
+	if(climbs({a[0],a[1],Climb_type::DEAD})==2){
+		r|={1,1,0};
+	}
+	if(climbs({a[0],a[2],Climb_type::DEAD})==2){
+		r|={1,0,1};
+	}
+	if(climbs({a[1],a[2],Climb_type::DEAD})==2){
+		r|={0,1,1};
+	}
+
+	if(climbs(a)==3){
+		r|={1,1,1};
+	}
+
+	return r;
+}
+
 int main(){
 	/*PRINT(always_better(Action_set{7,8},Action_set{7,7}));
 	auto a=rand((Alliance_capabilities*)nullptr);
@@ -344,6 +414,12 @@ int main(){
 
 	//PRINT(climb_types());
 	//PRINT(alliance_climb_types());
-	print_lines(mapf([](auto a){ return make_pair(a,climbs(a)); },alliance_climb_types()));
+	//print_lines(mapf([](auto a){ return make_pair(a,climbs(a)); },alliance_climb_types()));
+	for(auto a:alliance_climb_types()){
+		cout<<a<<"\n";
+		for(auto b:climb_options(a)){
+			cout<<"\t"<<b<<"\n";
+		}
+	}
 }
 
