@@ -119,9 +119,9 @@ template<typename T>
 vector<T> frontier(vector<T> a){
 	//remove from the set if there is another option that is always better.
 	return filter(
-		[&](auto elem){
+		[a](auto elem){
 			return !any(mapf(
-				[&](auto x){ return always_better(elem,x); },
+				[elem](auto x){ return always_better(x,elem); },
 				a
 			));
 		},
@@ -132,6 +132,15 @@ vector<T> frontier(vector<T> a){
 template<typename T>
 auto frontier(set<T> a){
 	return frontier(to_vector(a));
+}
+
+template<typename A,typename B,size_t LEN>
+array<pair<A,B>,LEN> zip(array<A,LEN> a,array<B,LEN> b){
+	array<pair<A,B>,LEN> r;
+	for(auto i:range(LEN)){
+		r[i]=make_pair(a[i],b[i]);
+	}
+	return r;
 }
 
 //start program-specific stuff
@@ -355,9 +364,23 @@ ostream& operator<<(ostream& o,Robot_endgame a){
 
 #define SINGLE_ARG(A,B) A,B
 
+using Occupied=array<bool,3>;
+
+vector<Occupied> occupied_options(){
+	vector<Occupied> r;
+	for(auto a:bools()){
+		for(auto b:bools()){
+			for(auto c:bools()){
+				r|={a,b,c};
+			}
+		}
+	}
+	return r;
+}
+
 #define ALLIANCE_ENDGAME(X)\
 	X(unsigned,climbed)\
-	X(array<SINGLE_ARG(bool,3)>,occupied)
+	X(Occupied,occupied)
 
 struct Alliance_endgame{
 	#define X(A,B) A B;
@@ -373,53 +396,70 @@ ostream& operator<<(ostream& o,Alliance_endgame const& a){
 	return o<<")";
 }
 
-vector<Alliance_endgame> climb_options(Alliance_climb_type a){
-	vector<Alliance_endgame> r;
-
-	r|={0,{0,0,0}};
-
-	if(can_climb_bar(a[0])){
-		r|={1,0,0};
+bool subset(Occupied a,Occupied b){
+	//is 'a' a subset of 'b'?
+	for(auto p:zip(a,b)){
+		if(p.first && !p.second){
+			return 0;
+		}
 	}
-	if(can_climb_bar(a[1])){
-		r|={0,1,0};
-	}
-	if(can_climb_bar(a[2])){
-		r|={0,0,1};
-	}
-
-	if(climbs({a[0],a[1],Climb_type::DEAD})==2){
-		r|={1,1,0};
-	}
-	if(climbs({a[0],a[2],Climb_type::DEAD})==2){
-		r|={1,0,1};
-	}
-	if(climbs({a[1],a[2],Climb_type::DEAD})==2){
-		r|={0,1,1};
-	}
-
-	if(climbs(a)==3){
-		r|={1,1,1};
-	}
-
-	return r;
+	return 1;
 }
 
-int main(){
-	/*PRINT(always_better(Action_set{7,8},Action_set{7,7}));
-	auto a=rand((Alliance_capabilities*)nullptr);
-	//a=rand((Alliance_capabilities*)nullptr);
-	PRINT(a);
-	print_lines(actions_available(a));*/
+bool strict_subset(Occupied a,Occupied b){
+	//is 'a' a struct subset of 'b'?
+	return subset(a,b) && !subset(b,a);
+}
 
-	//PRINT(climb_types());
-	//PRINT(alliance_climb_types());
-	//print_lines(mapf([](auto a){ return make_pair(a,climbs(a)); },alliance_climb_types()));
+bool always_better(Alliance_endgame a,Alliance_endgame b){
+	//if at least as many climbs and have robots that don't need.
+	return (a.climbed>b.climbed && subset(a.occupied,b.occupied)) ||
+		(a.climbed>=b.climbed && strict_subset(a.occupied,b.occupied));
+}
+
+vector<Alliance_endgame> climb_options(Alliance_climb_type alliance){
+	return frontier(mapf(
+		[=](auto to_climb){
+			Alliance_climb_type effective={
+				to_climb[0]?alliance[0]:Climb_type::DEAD,
+				to_climb[1]?alliance[1]:Climb_type::DEAD,
+				to_climb[2]?alliance[2]:Climb_type::DEAD
+			};
+			return Alliance_endgame{climbs(effective),to_climb};
+		},
+		occupied_options()
+	));
+}
+
+void endgame_demo(){
+	PRINT(climb_types());
+	PRINT(alliance_climb_types());
+	print_lines(mapf([](auto a){ return make_pair(a,climbs(a)); },alliance_climb_types()));
 	for(auto a:alliance_climb_types()){
 		cout<<a<<"\n";
 		for(auto b:climb_options(a)){
 			cout<<"\t"<<b<<"\n";
 		}
 	}
+}
+
+void teleop_demo(){
+	auto a=rand((Alliance_capabilities*)nullptr);
+	//a=rand((Alliance_capabilities*)nullptr);
+	PRINT(a);
+	print_lines(actions_available(a));
+}
+
+//Auto_assignment
+	//scale/switch
+//Teleop_assignment
+	//switch/scale/vault/defense
+//Endgame_assignment:
+	//per robot: climb/switch/scale/vault/defense
+
+//Assignment: Auto_assignment x Teleop_assignment x Endgame_assignment
+
+int main(){
+	endgame_demo();
 }
 
