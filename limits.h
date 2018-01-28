@@ -43,4 +43,7 @@ std::ostream& operator<<(std::ostream&,Powerup_type);
 
 std::vector<Powerup_type> powerup_types();
 
+using Action=std::optional<std::pair<Alliance,Powerup_type>>;
+Result do_action(State,Action);
+
 #endif

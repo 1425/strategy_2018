@@ -8,9 +8,11 @@ all: 1 max_value stream adverserial
 
 max_value: state.o util.o limits.o placement.o
 
-adverserial: state.o placement.o util.o
+adverserial: state.o placement.o util.o limits.o
 
 stream: util.o
+
+outline: util.o
 
 .PHONY: clean
 clean:

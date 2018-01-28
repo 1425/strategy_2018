@@ -1,4 +1,5 @@
 #include "util.h"
+#include<fstream>
 
 Int_char::Int_char(int a):i(a){
 	assert(a>=-128);
@@ -101,3 +102,9 @@ bool operator>(Int_char a,int b){
 std::vector<bool> bools(){
 	return {0,1};
 }
+
+void write_file(std::string const& filename,std::string const& contents){
+	std::ofstream f(filename);
+	f<<contents;
+}
+

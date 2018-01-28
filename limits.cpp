@@ -54,8 +54,6 @@ vector<Powerup_type> powerup_types(){
 	};
 }
 
-using Action=optional<pair<Alliance,Powerup_type>>;
-
 vector_limited<Action,15> all_actions(){
 	vector_limited<Action,15> r;
 	r|=Action{};//do nothing
@@ -167,11 +165,16 @@ tuple<int,int,int,int> effective_weights(Action a){
 }
 
 Result do_action(State state,Action action){
+	if(!allowed(state,action)){
+		PRINT(state);
+		PRINT(action);
+	}
 	assert(allowed(state,action));
+
 	//state.time-=1;
 	state.time(state.time()-1);
 
-	//Points vault_cube_points=0;
+	Points vault_cube_points=0;
 
 	if(action){
 		auto a=*action;
@@ -180,7 +183,7 @@ Result do_action(State state,Action action){
 		{
 			auto vault_cubes=(a.first==Alliance::RED)?state.vault_red():state.vault_blue();
 			auto used=cubes_needed(a.second);
-			nyi//vault_cube_points=used*5;	
+			vault_cube_points=used*5;	
 			vault_cubes-=used;
 			if(a.first==Alliance::RED){
 				state.vault_red(vault_cubes);
@@ -213,7 +216,8 @@ Result do_action(State state,Action action){
 		}
 	}
 	auto e=effective_weights(action);
-	Points pts=(state.sw_red()>0)*10*get<0>(e)+
+	Points pts=vault_cube_points+
+		(state.sw_red()>0)*10*get<0>(e)+
 		sgn(state.scale())*10*get<1>(e)+
 		(state.sw_blue()<0)*10*get<2>(e)+
 		10*get<3>(e);
@@ -276,6 +280,7 @@ Points best_case2(State state){
 }
 
 class M_pt{
+	static const int SCALE=5;
 	unsigned char data;
 
 	public:
@@ -286,8 +291,13 @@ class M_pt{
 	void set(int i){
 		assert(!valid());
 
-		assert( (i%10)==0 );
-		int a=i/10;
+		assert(i/SCALE*SCALE==i);
+		/*if(i%SCALE){
+			PRINT(i);
+			PRINT(i%SCALE);
+		}
+		assert( (i%SCALE)==0 );*/
+		int a=i/SCALE;
 		assert(a>=-32);
 		assert(a<32);
 		auto v0=[&]()->int{
@@ -319,7 +329,7 @@ class M_pt{
 			}
 			return int(v)-64;
 		}();
-		return 10*unscaled;
+		return SCALE*unscaled;
 	}
 };
 
@@ -331,6 +341,10 @@ Points best_case(State state){
 		assert(cache);
 	}
 	auto index=*(uint32_t*)&state;
+	if(index>=SIZE){
+		PRINT(state);
+		cout<<hex<<index<<"\n";
+	}
 	assert(index<SIZE);
 	auto &v=cache[index];
 	if(v.valid()){

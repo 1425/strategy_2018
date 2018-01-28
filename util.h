@@ -309,4 +309,6 @@ std::vector<A> firsts(std::vector<std::pair<A,B>> in){
 	return mapf([](auto a){ return a.first; },in);
 }
 
+void write_file(std::string const& filename,std::string const& contents);
+
 #endif

@@ -4,6 +4,7 @@
 #include "util.h"
 #include "placement.h"
 #include "state.h"
+#include "limits.h"
 
 using namespace std;
 
@@ -101,11 +102,6 @@ string build_table(A as,B bs,F f,string xlabel,Sa show_a,string ylabel,Sb show_b
 			)
 		)
 	)));
-}
-
-void write_file(string filename,string contents){
-	ofstream f(filename);
-	f<<contents;
 }
 
 //start program-specific functions.
@@ -221,6 +217,7 @@ vector<bool> levitate_options(State state,Alliance alliance){
 }
 
 vector<Turn> play_options(State state,int max_cubes_to_place,Alliance alliance){
+	if(state.time()==0) return {};
 	vector<Turn> r;
 	for(auto cubes:cube_placements(state,max_cubes_to_place)){
 		for(auto levitate:levitate_options(state,alliance)){
@@ -257,12 +254,56 @@ string get1(Turn,Turn){
 	return "item";
 }
 
-void apply(State state,Turn red,Turn blue){
-	nyi
+State apply(State state,Cube_placement red,Cube_placement blue){
+	state.sw_red(state.sw_red()+red.red_switch-blue.red_switch);
+	state.sw_blue(state.sw_blue()-red.blue_switch+blue.blue_switch);
+	state.scale(state.scale()+red.scale-blue.scale);
+	state.vault_red(state.vault_red()+red.vault);
+	state.vault_blue(state.vault_blue()+blue.vault);
+	return state;
+}
+
+Powerup_type as_basic(Exclusive_powerup a){
+	#define X(A) if(a==Exclusive_powerup::A) return Powerup_type::A;
+	EXCLUSIVE_POWERUP(X)
+	#undef X
+	assert(0);
+}
+
+State apply(State state,Turn red,Turn blue){
+	/*X(Cube_placement,placement)\
+	X(optional<Exclusive_powerup>,exclusive_powerup)\
+	X(bool,levitate)*/
+	auto s2=apply(state,red.placement,blue.placement);
+	if(red.exclusive_powerup){
+		nyi
+	}
+	if(blue.exclusive_powerup){
+		/*switch(*blue.exclusive_powerup){
+			case BOOST1:
+			case BOOST2:
+			case BOOST3:
+			case 
+		nyi*/
+		auto r=do_action(
+			state,
+			Action{make_pair(Alliance::BLUE,as_basic(*blue.exclusive_powerup))}
+		);
+		state=r.state;
+	}
+	if(red.levitate)nyi
+	if(blue.levitate){
+		auto p=state.blue();
+		assert(p.levitate()==0);
+		p.levitate(1);
+		state.blue(p);
+	}
+	return s2;
 }
 
 int main(){
 	State state;
+	state.time(7);
 	state.vault_blue(5);
 	auto r=red_play_options(state,1);
 	auto b=blue_play_options(state,1);
@@ -277,8 +318,10 @@ int main(){
 		"out.html",
 		build_table(
 			r,b,
-			[](Turn red,Turn blue)->string{
+			[state](Turn red,Turn blue)->string{
+				return as_string(best_case(apply(state,red,blue)));
 				return "what";
+				//return as_string(best_case(
 			},
 			"red",
 			[](auto a){ return abbrev(a); },
