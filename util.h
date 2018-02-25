@@ -6,6 +6,7 @@
 #include<vector>
 #include<algorithm>
 #include<cassert>
+#include<sstream>
 
 #define nyi { std::cout<<"nyi "<<__FILE__<<":"<<__LINE__<<"\n"; exit(44); }
 
@@ -55,13 +56,23 @@ void print_lines(T t){
 }
 
 template<typename Func,typename T>
-auto mapf(Func f,std::vector<T> const& a)->std::vector<decltype(f(*begin(a)))>{
+auto mapf(Func f,T const& a)->std::vector<decltype(f(*begin(a)))>{
 	std::vector<decltype(f(*begin(a)))> r;
 	for(auto elem:a){
 		r|=f(elem);
 	}
 	return r;
 }
+
+template<typename T>
+std::vector<T> to_vector(std::set<T> a){
+	return std::vector<T>(begin(a),end(a));
+}
+
+/*template<typename Func,typename T>
+auto mapf(Func f,std::set<T> const& in){
+	return mapf(f,to_vector(in));
+}*/
 
 template<typename T>
 T max(std::vector<T> const& v){
@@ -310,5 +321,74 @@ std::vector<A> firsts(std::vector<std::pair<A,B>> in){
 }
 
 void write_file(std::string const& filename,std::string const& contents);
+
+std::string tag(std::string name,std::string contents);
+std::string tag(std::string name,std::string extra,std::string contents);
+std::string html(std::string);
+std::string body(std::string);
+std::string table(std::string);
+std::string tr(std::string);
+std::string td(std::string);
+std::string th(std::string);
+
+template<typename T>
+std::vector<std::pair<size_t,T>> enumerate(std::vector<T> a){
+	std::vector<std::pair<size_t,T>> r;
+	for(auto i:range(a.size())){
+		r|=std::make_pair(i,a[i]);
+	}
+	return r;
+}
+
+std::string join(std::vector<std::string> a){
+	std::stringstream ss;
+	for(auto elem:a){
+		ss<<elem;
+	}
+	return ss.str();
+}
+
+template<size_t LEN>
+std::string join(std::array<std::string,LEN> a){
+	std::stringstream ss;
+	for(auto elem:a){
+		ss<<elem;
+	}
+	return ss.str();
+}
+
+template<typename T>
+std::string as_string(T t){
+	std::stringstream ss;
+	ss<<t;
+	return ss.str();
+}
+
+template<typename T>
+std::vector<T> operator+(std::vector<T> a,std::vector<T> b){
+	a|=b;
+	return a;
+}
+
+template<typename T>
+T sum(std::vector<T> v){
+	T r{};
+	for(auto &a:v){
+		r+=a;
+	}
+	return r;
+}
+
+template<typename T>
+T sorted(T a){
+	std::sort(std::begin(a),std::end(a));
+	return a;
+}
+
+template<typename T>
+T reversed(T a){
+	std::reverse(std::begin(a),std::end(a));
+	return a;
+}
 
 #endif

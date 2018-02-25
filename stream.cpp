@@ -1,5 +1,6 @@
 #include<iostream>
 #include<array>
+#include<sstream>
 #include "util.h"
 
 using namespace std;
@@ -12,10 +13,9 @@ this is just in terms of robot actions, and does not include use of powerups.
 
 #define MAP(F,IN) mapf([&](auto elem){ return F(elem); },IN)
 
-template<typename T>
-vector<T> to_vector(set<T> a){
-	return vector<T>(begin(a),end(a));
-}
+string title(string s){ return tag("title",s); }
+string head(string s){ return tag("head",s); }
+string h1(string s){ return tag("h1",s); }
 
 template<typename T,size_t LEN>
 std::ostream& operator<<(std::ostream& o,std::array<T,LEN> const& a){
@@ -63,10 +63,10 @@ vector<tuple<A,B,C>> cross(vector<A> as,vector<B> bs,vector<C> cs){
 	return r;
 }
 
-template<typename T>
+/*template<typename T>
 T sum(vector<T> const& a){
 	nyi
-}
+}*/
 
 template<typename T>
 T sum(tuple<T,T,T> in){
@@ -443,6 +443,79 @@ void endgame_demo(){
 	}
 }
 
+auto consolidated_climb_options(){
+	return reversed(to_vector(to_set(MAP(
+		[](auto a){
+			return reversed(sorted(a));
+		},
+		alliance_climb_types()
+	))));
+}
+
+string climb_table(Alliance_climb_type a){
+	/*			climbed
+				occupied*/
+	/*return table(join(mapf(
+		[](auto a)->string{
+			return tr(
+				join(mapf(
+					[](auto a){ return td(as_string(a)); },
+					a.occupied
+				))+
+				td(as_string(a.climbed))
+			);
+		},
+		climb_options(a)
+	)));*/
+	return join(mapf(
+		[](auto a)->string{
+			return "("+
+				join(mapf(
+					[](auto a){ return as_string(a); },
+					a.occupied
+				))+
+				"-"+as_string(a.climbed)
+				+")";
+		},
+		climb_options(a)
+	));
+	return as_string(
+		climb_options(a)
+	);
+}
+
+void endgame_table(){
+	stringstream ss;
+	ss<<html(
+		head(
+			title("Endgame possibilities")
+		)+
+		body(
+			h1("Endgame possibilities")+
+			tag("table","border",
+				tr(
+					th("Robot 1 climb type")+
+					th("Robot 2 climb type")+
+					th("Robot 3 climb type")+
+					th("Options")
+				)+
+				join(mapf(
+					[](auto a){
+						return tr(
+							td(as_string(a[0]))+
+							td(as_string(a[1]))+
+							td(as_string(a[2]))+
+							td(climb_table(a))
+						);
+					},
+					consolidated_climb_options()
+				))
+			)
+		)
+	);
+	write_file("endgame.html",ss.str());
+}
+
 void teleop_demo(){
 	auto a=rand((Alliance_capabilities*)nullptr);
 	//a=rand((Alliance_capabilities*)nullptr);
@@ -459,7 +532,13 @@ void teleop_demo(){
 
 //Assignment: Auto_assignment x Teleop_assignment x Endgame_assignment
 
+/*
+TODO: Make endgame lookup brochure
+9*9*9=
+*/
+
 int main(){
-	endgame_demo();
+	//endgame_demo();
+	endgame_table();
 }
 

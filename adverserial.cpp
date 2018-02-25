@@ -10,55 +10,6 @@ using namespace std;
 
 //start generic functions
 
-template<typename T>
-vector<pair<size_t,T>> enumerate(vector<T> a){
-	vector<pair<size_t,T>> r;
-	for(auto i:range(a.size())){
-		r|=make_pair(i,a[i]);
-	}
-	return r;
-}
-
-string tag(string name,string contents){
-	stringstream ss;
-	ss<<"<"<<name<<">"<<contents<<"</"<<name<<">";
-	return ss.str();
-}
-
-string tag(string name,string extra,string contents){
-	stringstream ss;
-	ss<<"<"<<name<<" "<<extra<<">"<<contents<<"</"<<name<<">";
-	return ss.str();
-}
-
-string html(string s){ return tag("html",s); }
-string body(string s){ return tag("body",s); }
-string table(string s){ return tag("table",s); }
-string tr(string s){ return tag("tr",s); }
-string td(string s){ return tag("td",s); }
-string th(string s){ return tag("th",s); }
-
-string join(vector<string> a){
-	stringstream ss;
-	for(auto elem:a){
-		ss<<elem;
-	}
-	return ss.str();
-}
-
-template<typename T>
-string as_string(T t){
-	stringstream ss;
-	ss<<t;
-	return ss.str();
-}
-
-template<typename T>
-vector<T> operator+(vector<T> a,vector<T> b){
-	a|=b;
-	return a;
-}
-
 template<typename A,typename B,typename F,typename Sa,typename Sb>
 string build_table(A as,B bs,F f,string xlabel,Sa show_a,string ylabel,Sb show_b){
 	return html(body(tag("table","border",

@@ -1,5 +1,8 @@
 #include "util.h"
 #include<fstream>
+#include<sstream>
+
+using namespace std;
 
 Int_char::Int_char(int a):i(a){
 	assert(a>=-128);
@@ -108,3 +111,21 @@ void write_file(std::string const& filename,std::string const& contents){
 	f<<contents;
 }
 
+std::string tag(string name,string contents){
+	stringstream ss;
+	ss<<"<"<<name<<">"<<contents<<"</"<<name<<">";
+	return ss.str();
+}
+
+std::string tag(std::string name,string extra,string contents){
+	stringstream ss;
+	ss<<"<"<<name<<" "<<extra<<">"<<contents<<"</"<<name<<">";
+	return ss.str();
+}
+
+string html(string s){ return tag("html",s); }
+string body(string s){ return tag("body",s); }
+string table(string s){ return tag("table",s); }
+string tr(string s){ return tag("tr",s); }
+string td(string s){ return tag("td",s); }
+string th(string s){ return tag("th",s); }

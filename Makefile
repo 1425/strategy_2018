@@ -1,6 +1,6 @@
 CXX=g++-7
 CC=$(CXX)
-CXXFLAGS=-std=c++17 -Wall -Werror -Ofast -flto
+CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -Ofast -flto
 
 all: 1 max_value stream adverserial
 
@@ -13,6 +13,8 @@ adverserial: state.o placement.o util.o limits.o
 stream: util.o
 
 outline: util.o
+
+auto: util.o
 
 .PHONY: clean
 clean:
