@@ -1,6 +1,6 @@
-CXX=g++-7
+CXX=g++
 #CC=$(CXX)
-CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -Ofast -flto
+CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pg
 
 all: 1 max_value stream adverserial skellam pick
 

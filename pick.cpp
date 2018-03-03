@@ -1,10 +1,44 @@
-//#include<iostream>
 #include <fstream>
 #include <map>
+//#include <execution>
 #include "util.h"
 #include "sub.h"
 
+using namespace std;
+
 //start generic functions
+
+template<typename T>
+using Pair2=pair<T,T>;
+
+template<typename K,typename V>
+set<K> keys(map<K,V> const& m){
+	set<K> r;
+	for(auto elem:m) r|=elem.first;
+	return r;
+}
+
+template<typename Func,typename T>
+set<T> filter(Func f,set<T> a){
+	set<T> r;
+	for(auto elem:a){
+		if(f(elem)){
+			r|=elem;
+		}
+	}
+	return r;
+}
+
+template<typename A,typename B>
+pair<A,B> mean(Nonempty_vector<pair<A,B>> a){
+	return make_pair(mean(firsts(a)),mean(seconds(a)));
+}
+
+template<typename T>
+T mean(Nonempty_vector<T> const& a){
+	assert(a.size());
+	return sum(a)/a.size();
+}
 
 template<typename T>
 std::ostream& operator<<(std::ostream& o,std::set<T> const& a){
@@ -50,8 +84,15 @@ std::set<std::pair<T,T>> unique_pairs(std::set<T> const& a){
 }
 
 template<typename T>
-std::set<std::pair<T,T>> unique_pairs(std::vector<T> a){
-	return unique_pairs(to_set(move(a)));
+auto unique_pairs(std::vector<T> a){
+	//return unique_pairs(to_set(move(a)));
+	std::vector<std::pair<T,T>> r;
+	for(auto i:range(a.size())){
+		for(auto j:range(i+1,a.size())){
+			r|=std::make_pair(a[i],a[j]);
+		}
+	}
+	return r;
 }
 
 template<typename K,typename V>
@@ -88,7 +129,7 @@ std::pair<A,B> rand(const std::pair<A,B>*){
 
 template<typename T>
 std::vector<T> rand(const std::vector<T>*){
-	return mapf([](auto){ return rand((T*)0); },range(rand()%10));
+	return mapf([](auto){ return rand((T*)0); },range(rand()%40));
 }
 
 int rand(const int*){
@@ -125,13 +166,24 @@ std::pair<A,B> operator+(std::pair<A,B> a,std::pair<A,B> b){
 	return std::make_pair(a.first+b.first,a.second+b.second);
 }
 
-std::vector<double> to_doubles(std::vector<unsigned> const& a){
-	std::vector<double> r;
-	for(auto elem:a) r|=double(elem);
-	return r;
+template<typename A,typename B>
+std::pair<A,B>& operator+=(std::pair<A,B> &a,std::pair<A,B> const& b){
+	a.first+=b.first;
+	a.second+=b.second;
+	return a;
 }
 
-double mean(std::vector<unsigned> const& a){
+template<typename T>
+vector<double> to_doubles(vector<T> a){
+	return mapf([](auto x){ return double(x); },a);
+}
+
+template<typename T>
+Nonempty_vector<double> to_doubles(Nonempty_vector<T> const& a){
+	return mapf([](auto x){ return double(x); },a);
+}
+
+double mean(Nonempty_vector<unsigned> const& a){
 	return mean(to_doubles(a));
 }
 
@@ -171,6 +223,11 @@ std::array<T,N> as_array(std::vector<T> in){
 
 template<typename A,typename B>
 std::vector<B> seconds(std::vector<std::pair<A,B>> const& a){
+	return mapf([](auto const& x){ return x.second; },a);
+}
+
+template<typename A,typename B>
+auto seconds(Nonempty_vector<std::pair<A,B>> const& a){
 	return mapf([](auto const& x){ return x.second; },a);
 }
 
@@ -256,8 +313,6 @@ std::ostream& operator<<(std::ostream& o,Sorted_pair<T> const& a){
 	return o<<a.get();
 }
 
-using namespace std;
-
 template<typename T,size_t N>
 class Set_limited{
 	//the point of this class is to have a set that has a max size.
@@ -292,6 +347,21 @@ bool operator==(Set_limited<T,N> const& a,Set_limited<T,N> const& b){
 template<typename T,size_t N>
 std::ostream& operator<<(std::ostream& o,Set_limited<T,N> const& a){
 	return o<<a.get();
+}
+
+template<typename T,size_t N>
+class Sorted_array{
+	std::array<T,N> data;
+
+	public:
+	Sorted_array(std::array<T,N> a):data(sorted(a)){}
+
+	std::array<T,N> const& get()const{ return data; }
+};
+
+template<typename T,size_t N>
+bool operator<(Sorted_array<T,N> const& a,Sorted_array<T,N> const& b){
+	return a.get()<b.get();
 }
 
 //start program-speicifc functions.
@@ -424,6 +494,11 @@ Cubes_scored operator+(Cubes_scored a,Cubes_scored b){
 	return min(Cubes_scored::MAX-1,a.get()+b.get());
 }
 
+Cubes_scored& operator+=(Cubes_scored &a,Cubes_scored b){
+	a=(a+b);
+	return a;
+}
+
 Cubes_scored rand(const Cubes_scored*){
 	return rand()%Cubes_scored::MAX;
 }
@@ -432,11 +507,7 @@ Cubes_scored dead(const Cubes_scored*){
 	return 0;
 }
 
-vector<double> to_doubles(vector<Cubes_scored> a){
-	return mapf([](auto x){ return double(x); },a);
-}
-
-double mean(vector<Cubes_scored> a){
+double mean(Nonempty_vector<Cubes_scored> a){
 	return mean(to_doubles(a));
 }
 
@@ -479,8 +550,12 @@ double scale_expectation(Skellam_cdf const& skellam_cdf,double cubes1,double cub
 
 double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_capabilities b){
 	//TODO: Make it so that each of the teams can try different strategies.
-	return scale_expectation(skellam_cdf,mean(firsts(a)),mean(firsts(b)))+
-		scale_expectation(skellam_cdf,mean(seconds(a)),mean(seconds(b)));
+	auto mean_or_zero=[](auto a){
+		if(a.empty())nyi
+		return mean(make_nonempty(a));
+	};
+	return scale_expectation(skellam_cdf,mean_or_zero(firsts(a)),mean_or_zero(firsts(b)))+
+		scale_expectation(skellam_cdf,mean_or_zero(seconds(a)),mean_or_zero(seconds(b)));
 }
 
 #define ROBOT_CAPABILITIES(X)\
@@ -559,13 +634,21 @@ double expected_outcome(Skellam_cdf const& skellam_cdf,Alliance_capabilities a,A
 	auto distill_cubes=[](Alliance_capabilities a)->Cube_capabilities{
 		auto c=cubes(a);
 		Cube_capabilities r;
-		for(auto v0:c[0]){
+		/*for(auto v0:c[0]){
 			for(auto v1:c[1]){
 				for(auto v2:c[2]){
 					r|=v0+v1+v2;
 				}
 			}
-		}
+		}*/
+		//r|=sum(MAP(mean,c));
+		r|=sum(mapf(
+			[](vector<pair<Cubes_scored,Cubes_scored>> in){
+				if(in.size()) return mean(make_nonempty(in));
+				return make_pair(Cubes_scored(0),Cubes_scored(0));
+			},
+			c
+		));
 		return r;
 	};
 
@@ -590,44 +673,133 @@ auto random_alliance2(vector<Robot_capabilities> in){
 	return make_pair(as_array<Robot_capabilities,3>(t.first),t.second);
 }
 
-auto make_picklist(Team picker,map<Team,Robot_capabilities> robot_capabilities){
-	Skellam_cdf skellam_cdf;
+vector<pair<double,unsigned>> make_picklist_inner(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
+	assert(picker<robot_capabilities.size());
 
+	Skellam_cdf skellam_cdf;
+	auto const& own_capabilities=robot_capabilities[picker];
+	auto robots=robot_capabilities.size();
+	vector<pair<double,unsigned>> r;
+	for(const auto partner:range(robots)){
+		if(partner==picker) continue;
+		Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
+
+		vector<double> a;
+		for(const auto opponent1:range(robots)){
+			if(opponent1==picker || opponent1==partner) continue;
+			for(const auto opponent2:range(opponent1+1,robots)){
+				if(opponent2==picker || opponent2==partner) continue;
+				Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
+				a|=expected_outcome(skellam_cdf,alliance,opponents);
+			}
+		}
+		r|=make_pair(min(a),unsigned(partner));
+	}
+	return sorted(r);
+}
+
+vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
+	assert(picker<robot_capabilities.size());
+
+	Skellam_cdf skellam_cdf;
+	auto const& own_capabilities=robot_capabilities[picker];
+	auto robots=robot_capabilities.size();
+	vector<pair<double,unsigned>> r;
+
+	auto potential_partners=filter([picker](auto x){ return x!=picker; },range(robots));
+	transform(
+		//std::parallel_unsequenced_policy{},
+		begin(potential_partners),
+		end(potential_partners),
+		std::back_inserter(r),
+		[&](auto partner){
+			//return make_pair(4.0,4);
+			Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
+
+			vector<double> a;
+			for(const auto opponent1:range(robots)){
+				if(opponent1==picker || opponent1==partner) continue;
+				for(const auto opponent2:range(opponent1+1,robots)){
+					if(opponent2==picker || opponent2==partner) continue;
+					Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
+					a|=expected_outcome(skellam_cdf,alliance,opponents);
+				}
+			}
+			return make_pair(min(a),unsigned(partner));
+		}
+	);
+
+	/*for(const auto partner:range(robots)){
+		if(partner==picker) continue;
+		Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
+
+		vector<double> a;
+		for(const auto opponent1:range(robots)){
+			if(opponent1==picker || opponent1==partner) continue;
+			for(const auto opponent2:range(opponent1+1,robots)){
+				if(opponent2==picker || opponent2==partner) continue;
+				Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
+				a|=expected_outcome(skellam_cdf,alliance,opponents);
+			}
+		}
+		r|=make_pair(min(a),unsigned(partner));
+	}*/
+	return sorted(r);
+}
+
+auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabilities){
+	PRINT(picker);
+	vector<Team> teams;
+	vector<Robot_capabilities> capabilities;
+	for(auto p:robot_capabilities){
+		teams|=p.first;
+		capabilities|=p.second;
+	}
+	auto d=make_picklist_inner_par(
+		//picker,
+		[&](){
+			for(auto p:enumerate(teams)){
+				if(p.second==picker){
+					return p.first;
+				}
+			}
+			assert(0);
+		}(),
+		capabilities
+	);
+	return mapf(
+		[=](pair<double,int> p){
+			return make_pair(p.first,teams[p.second]);
+		},
+		d
+	);
+
+	Skellam_cdf skellam_cdf;
 	//first, just assume two-team alliances
 	//then come back and figure out what the best compliments would be.
 	//PRINT(picker)
 	//PRINT(robot_capabilities)
 
-	map<Sorted_pair<Set_limited<Robot_capabilities,3>>,double> cache;
-
 	auto get_expected=[&](Alliance_capabilities a,Alliance_capabilities b)->double{
-		using SR=Set_limited<Robot_capabilities,3>;
-		Sorted_pair p{SR(a),SR(b)};
-		assert(p==p);
-		cout<<p<<"\n";
-		auto f=cache.find(p);
-		if(f!=cache.end()){
-			nyi
-		}
-		auto v=expected_outcome(skellam_cdf,a,b);
-		cache[p]=v;
-		auto f2=cache.find(p);
-		assert(f2!=cache.end());
-		return v;
+		return expected_outcome(skellam_cdf,a,b);
 	};
 
 	auto own_capabilities=robot_capabilities[picker];
+	//auto other_robots=filter([=](auto p){ return p!=picker; },to_vector(keys(robot_capabilities)));
 	auto other_robots=filter([=](auto p){ return p.first!=picker; },robot_capabilities);
 
 	auto m=sorted(mapf(
 		[&](auto partner){
 			Alliance_capabilities alliance{own_capabilities,partner.second,dead((Robot_capabilities*)nullptr)};
-			auto remaining=filter([=](auto const& p){ return p.first!=partner.first; },other_robots);
+			auto remaining=filter([=](auto const& p){ return p!=partner; },other_robots);
 			auto p=unique_pairs(values(remaining));
-			//PRINT(alliance);
 			auto v=min(mapf(
 				[&](auto opponent_pair){
-					Alliance_capabilities opponents{opponent_pair.first,opponent_pair.second,dead((Robot_capabilities*)0)};
+					Alliance_capabilities opponents{
+						opponent_pair.first,
+						opponent_pair.second,
+						dead((Robot_capabilities*)0)
+					};
 					//return expected_outcome(skellam_cdf,alliance,opponents);
 					return get_expected(alliance,opponents);
 				},
@@ -644,6 +816,10 @@ auto make_picklist(Team picker,map<Team,Robot_capabilities> robot_capabilities){
 
 int main1(){
 	auto x=rand((map<Team,Robot_capabilities>*)nullptr);
+
+	cout<<"Example robots:\n";
+	print_lines(x);
+
 	assert(x.size());
 	auto picks=make_picklist(begin(x)->first,x);
 	print_lines(picks);

@@ -69,6 +69,8 @@ auto mapf(Func f,T const& a)->std::vector<decltype(f(*begin(a)))>{
 	return r;
 }
 
+#define MAP(F,IN) mapf([&](auto elem){ return F(elem); },IN)
+
 template<typename T>
 std::vector<T> to_vector(std::set<T> a){
 	return std::vector<T>(begin(a),end(a));
@@ -130,11 +132,15 @@ template<typename Func,typename T,size_t LEN>
 auto mapf(Func f,std::array<T,LEN> const& in)->
 	std::array<decltype(f(*begin(in))),LEN>
 {
-	std::array<decltype(f(*begin(in))),LEN> r;
+	using Out_elem=decltype(f(*begin(in)));
+	using Out=std::array<Out_elem,LEN>;
+	char s[sizeof(Out)];
+	Out &data=*(Out*)s;
+	
 	for(auto i:range(LEN)){
-		r[i]=f(in[i]);
+		new(&data[i]) Out_elem(f(in[i]));
 	}
-	return r;
+	return data;
 }
 
 template<typename T,size_t LIM>
@@ -270,6 +276,37 @@ T min(vector_limited<T,N> a){
 }
 
 template<typename T>
+class Nonempty_vector{
+	std::vector<T> data;
+
+	public:
+	explicit Nonempty_vector(std::vector<T> a):data(a){
+		assert(a.size());
+	}
+
+	std::vector<T> const& get()const{
+		return data;
+	}
+
+	operator std::vector<T> const&()const{ return data; }
+
+	auto size()const{ return data.size(); }
+	auto begin()const{ return data.begin(); }
+	auto end()const{ return data.end(); }
+};
+
+template<typename T>
+Nonempty_vector<T> make_nonempty(std::vector<T> a){
+	assert(a.size());
+	return Nonempty_vector<T>(a);
+}
+
+template<typename Func,typename T>
+auto mapf(Func f,Nonempty_vector<T> in) -> Nonempty_vector<decltype(f(*std::begin(in)))>{
+	return make_nonempty(mapf(f,in.get()));
+}
+
+template<typename T>
 int sgn(T val){
 	//the sign function
 	return (T(0)<val)-(val<T(0));
@@ -322,6 +359,11 @@ std::vector<bool> bools();
 
 template<typename A,typename B>
 std::vector<A> firsts(std::vector<std::pair<A,B>> in){
+	return mapf([](auto a){ return a.first; },in);
+}
+
+template<typename A,typename B>
+auto firsts(Nonempty_vector<std::pair<A,B>> in){
 	return mapf([](auto a){ return a.first; },in);
 }
 
@@ -378,11 +420,26 @@ T sum(std::vector<T> const& v){
 	return r;
 }
 
-template<typename T,size_t N>
+/*template<typename T,size_t N>
 T sum(std::array<T,N> const& a){
 	T r{};
 	for(auto elem:a){
 		r+=elem;
+	}
+	return r;
+}*/
+
+template<typename T>
+T sum(std::array<T,0> const& a){
+	return 0;
+}
+
+template<typename T,size_t N>
+T sum(std::array<T,N> const& a){
+	assert(N);
+	T r=a[0];
+	for(auto at=1+begin(a);at!=end(a);++at){
+		r+=*at;
 	}
 	return r;
 }
@@ -399,7 +456,7 @@ T reversed(T a){
 	return a;
 }
 
-double mean(std::vector<double> const&);
+double mean(Nonempty_vector<double> const&);
 
 template<typename A,typename B>
 std::ostream& operator<<(std::ostream& o,std::map<A,B> a){

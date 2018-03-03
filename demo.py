@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.4
 
 #from scipy.stats import skellam
 from scipy import stats

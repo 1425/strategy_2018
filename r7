@@ -1,1 +1,1 @@
-make pick 2>&1 && time ./pick
+make -j pick 2>&1 && time ./pick

@@ -9,8 +9,6 @@ this is just in terms of robot actions, and does not include use of powerups.
 
 //start generic routines
 
-#define MAP(F,IN) mapf([&](auto elem){ return F(elem); },IN)
-
 std::string title(std::string s){ return tag("title",s); }
 std::string head(std::string s){ return tag("head",s); }
 std::string h1(std::string s){ return tag("h1",s); }
