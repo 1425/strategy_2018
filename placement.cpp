@@ -11,7 +11,7 @@ ostream& operator<<(ostream& o,Cube_placement a){
 	return o<<")";
 }
 
-vector<Cube_placement> cube_placements(State s,unsigned cubes){
+vector<Cube_placement> cube_placements(State /*s*/,unsigned cubes){
 	//state is in here so that could decide to not end up with extras in the fault beyond the 9.
 	vector<Cube_placement> r;
 	for(auto a:range(cubes+1)){

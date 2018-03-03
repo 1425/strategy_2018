@@ -7,10 +7,15 @@
 #include<algorithm>
 #include<cassert>
 #include<sstream>
+#include<map>
 
 #define nyi { std::cout<<"nyi "<<__FILE__<<":"<<__LINE__<<"\n"; exit(44); }
 
 #define PRINT(X) { std::cout<<""#X<<":"<<(X)<<"\n"; }
+
+#define INST(A,B) A B;
+#define SHOW(A,B) o<<""#B<<":"<<a.B<<" ";
+#define CMP1(name) if(a.name<b.name) return 1; if(b.name<a.name) return 0;
 
 template<typename T>
 std::multiset<T>& operator|=(std::multiset<T> &a,T t){
@@ -144,7 +149,7 @@ std::array<T,LIM> range_st2(){
 template<typename T>
 std::vector<T> take(size_t n,std::vector<T> const& a){
 	std::vector<T> r;
-	for(auto i:range(n)){
+	for(auto i:range(std::min(n,a.size()))){
 		r|=a[i];
 	}
 	return r;
@@ -340,13 +345,7 @@ std::vector<std::pair<size_t,T>> enumerate(std::vector<T> a){
 	return r;
 }
 
-std::string join(std::vector<std::string> a){
-	std::stringstream ss;
-	for(auto elem:a){
-		ss<<elem;
-	}
-	return ss.str();
-}
+std::string join(std::vector<std::string> const&);
 
 template<size_t LEN>
 std::string join(std::array<std::string,LEN> a){
@@ -371,10 +370,19 @@ std::vector<T> operator+(std::vector<T> a,std::vector<T> b){
 }
 
 template<typename T>
-T sum(std::vector<T> v){
+T sum(std::vector<T> const& v){
 	T r{};
 	for(auto &a:v){
 		r+=a;
+	}
+	return r;
+}
+
+template<typename T,size_t N>
+T sum(std::array<T,N> const& a){
+	T r{};
+	for(auto elem:a){
+		r+=elem;
 	}
 	return r;
 }
@@ -389,6 +397,29 @@ template<typename T>
 T reversed(T a){
 	std::reverse(std::begin(a),std::end(a));
 	return a;
+}
+
+double mean(std::vector<double> const&);
+
+template<typename A,typename B>
+std::ostream& operator<<(std::ostream& o,std::map<A,B> a){
+	o<<"{";
+	for(auto elem:a) o<<elem;
+	return o<<"}";
+}
+
+template<typename T>
+std::set<T> to_set(std::vector<T> v){
+	return std::set<T>(begin(v),end(v));
+}
+
+template<typename A,typename B,size_t LEN>
+std::array<std::pair<A,B>,LEN> zip(std::array<A,LEN> a,std::array<B,LEN> b){
+	std::array<std::pair<A,B>,LEN> r;
+	for(auto i:range(LEN)){
+		r[i]=std::make_pair(a[i],b[i]);
+	}
+	return r;
 }
 
 #endif

@@ -57,7 +57,7 @@ void tab(int i){
 	}
 }
 
-void explore_inner(int i,State state){
+void explore_inner(int /*i*/,State /*state*/){
 	nyi/*for(auto a:allowable_actions(state)){
 		auto result=do_action(state,a);
 		auto st=result.second;

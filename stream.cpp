@@ -3,8 +3,6 @@
 #include<sstream>
 #include "util.h"
 
-using namespace std;
-
 /*This is to work out what the strategic options are for an alliance, in isolation
 this is just in terms of robot actions, and does not include use of powerups.
 */
@@ -13,9 +11,9 @@ this is just in terms of robot actions, and does not include use of powerups.
 
 #define MAP(F,IN) mapf([&](auto elem){ return F(elem); },IN)
 
-string title(string s){ return tag("title",s); }
-string head(string s){ return tag("head",s); }
-string h1(string s){ return tag("h1",s); }
+std::string title(std::string s){ return tag("title",s); }
+std::string head(std::string s){ return tag("head",s); }
+std::string h1(std::string s){ return tag("h1",s); }
 
 template<typename T,size_t LEN>
 std::ostream& operator<<(std::ostream& o,std::array<T,LEN> const& a){
@@ -27,7 +25,7 @@ std::ostream& operator<<(std::ostream& o,std::array<T,LEN> const& a){
 }
 
 template<typename T>
-bool any(vector<T> a){
+bool any(std::vector<T> a){
 	for(auto elem:a){
 		if(elem){
 			return 1;
@@ -37,12 +35,12 @@ bool any(vector<T> a){
 }
 
 template<typename A,typename B,typename C>
-vector<tuple<A,B,C>> cross3(vector<A> as,vector<B> bs,vector<C> cs){
-	vector<tuple<A,B,C>> r;
+std::vector<std::tuple<A,B,C>> cross3(std::vector<A> as,std::vector<B> bs,std::vector<C> cs){
+	std::vector<std::tuple<A,B,C>> r;
 	for(auto a:as){
 		for(auto b:bs){
 			for(auto c:cs){
-				r|=make_tuple(a,b,c);
+				r|=std::make_tuple(a,b,c);
 			}
 		}
 	}
@@ -50,15 +48,15 @@ vector<tuple<A,B,C>> cross3(vector<A> as,vector<B> bs,vector<C> cs){
 }
 
 template<typename T>
-vector<tuple<T,T,T>> cross3(array<vector<T>,3> a){
+std::vector<std::tuple<T,T,T>> cross3(std::array<std::vector<T>,3> a){
 	return cross3(a[0],a[1],a[2]);
 }
 
 template<typename A,typename B,typename C>
-vector<tuple<A,B,C>> cross(vector<A> as,vector<B> bs,vector<C> cs){
-	vector<tuple<A,B,C>> r;
+std::vector<std::tuple<A,B,C>> cross(std::vector<A> as,std::vector<B> bs,std::vector<C> cs){
+	std::vector<std::tuple<A,B,C>> r;
 	for(auto a:as) for(auto b:bs) for(auto c:cs){
-		r|=make_tuple(a,b,c);
+		r|=std::make_tuple(a,b,c);
 	}
 	return r;
 }
@@ -69,26 +67,12 @@ T sum(vector<T> const& a){
 }*/
 
 template<typename T>
-T sum(tuple<T,T,T> in){
-	return get<0>(in)+get<1>(in)+get<2>(in);
-}
-
-template<typename T,size_t LEN>
-T sum(array<T,LEN> const& a){
-	T r{};
-	for(auto elem:a){
-		r+=elem;
-	}
-	return r;
-}
-
-template<typename T>
-set<T> to_set(vector<T> v){
-	return set<T>(begin(v),end(v));
+T sum(std::tuple<T,T,T> in){
+	return std::get<0>(in)+std::get<1>(in)+std::get<2>(in);
 }
 
 template<typename T,size_t SIZE>
-size_t count(array<T,SIZE> a){
+size_t count(std::array<T,SIZE> a){
 	size_t r=0;
 	for(auto elem:a){
 		if(elem){
@@ -99,12 +83,12 @@ size_t count(array<T,SIZE> a){
 }
 
 template<typename T>
-array<T,3> as_array(tuple<T,T,T> a){
-	return {get<0>(a),get<1>(a),get<2>(a)};
+std::array<T,3> as_array(std::tuple<T,T,T> a){
+	return {std::get<0>(a),std::get<1>(a),std::get<2>(a)};
 }
 
 template<typename T>
-vector<array<T,3>> permutations(array<T,3> a){
+std::vector<std::array<T,3>> permutations(std::array<T,3> a){
 	return {
 		{a[0],a[1],a[2]},
 		{a[0],a[2],a[1]},
@@ -116,7 +100,7 @@ vector<array<T,3>> permutations(array<T,3> a){
 }
 
 template<typename T>
-vector<T> frontier(vector<T> a){
+std::vector<T> frontier(std::vector<T> a){
 	//remove from the set if there is another option that is always better.
 	return filter(
 		[a](auto elem){
@@ -130,18 +114,11 @@ vector<T> frontier(vector<T> a){
 }
 
 template<typename T>
-auto frontier(set<T> a){
+auto frontier(std::set<T> a){
 	return frontier(to_vector(a));
 }
 
-template<typename A,typename B,size_t LEN>
-array<pair<A,B>,LEN> zip(array<A,LEN> a,array<B,LEN> b){
-	array<pair<A,B>,LEN> r;
-	for(auto i:range(LEN)){
-		r[i]=make_pair(a[i],b[i]);
-	}
-	return r;
-}
+using namespace std;
 
 //start program-specific stuff
 
@@ -207,7 +184,7 @@ bool operator<(Action_set a,Action_set b){
 	return 0;
 }
 
-bool operator==(Action_set a,Action_set b){
+bool operator==(Action_set /*a*/,Action_set /*b*/){
 	nyi
 }
 

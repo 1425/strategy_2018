@@ -19,25 +19,12 @@ std::vector<double> as_doubles(std::vector<bool> in){
 	);
 }
 
-double mean(std::vector<double> a){
-	assert(a.size());
-	return sum(a)/a.size();
-}
-
 double mean(std::vector<bool> v){
 	return mean(as_doubles(v));
 }
 
-template<typename A,typename B>
-std::ostream& operator<<(std::ostream& o,std::map<A,B> a){
-	o<<"{";
-	for(auto elem:a) o<<elem;
-	return o<<"}";
-}
-
 using namespace std;
 
-#define INST(A,B) A B;
 #define SHOW(A,B) o<<""#B<<":"<<a.B<<" ";
 #define LIST(A) A,
 #define CMP(A,B) if(a.B<b.B) return 1; if(b.B<a.B) return 0;
@@ -156,8 +143,6 @@ struct Priority_impl{
 	virtual void show(std::ostream&)const=0;
 	virtual Priority_impl *clone()const=0;
 };
-
-#define CMP1(name) if(a.name<b.name) return 1; if(b.name<a.name) return 0;
 
 struct Switch:Priority_impl{
 	bool operator()(Outcome a,Outcome b)const{

@@ -129,3 +129,17 @@ string table(string s){ return tag("table",s); }
 string tr(string s){ return tag("tr",s); }
 string td(string s){ return tag("td",s); }
 string th(string s){ return tag("th",s); }
+
+std::string join(std::vector<std::string> const& a){
+	std::stringstream ss;
+	for(auto elem:a){
+		ss<<elem;
+	}
+	return ss.str();
+}
+
+double mean(std::vector<double> const& a){
+	assert(a.size());
+	return sum(a)/a.size();
+}
+

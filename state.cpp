@@ -87,7 +87,7 @@ vector<Owner> owners(){
 	return r;
 }
 
-ostream& operator<<(ostream& o,Owner a){
+ostream& operator<<(ostream& /*o*/,Owner /*a*/){
 	nyi
 }
 
@@ -104,7 +104,7 @@ State::State(
 	#define X(A,B) A B,
 	STATE_ITEMS(X)
 	#undef X
-	bool ignored
+	bool /*ignored*/
 ):
 	d( (vault_red<<4)+vault_blue ),
 	c(
