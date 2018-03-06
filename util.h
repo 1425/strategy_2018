@@ -8,6 +8,7 @@
 #include<cassert>
 #include<sstream>
 #include<map>
+#include<optional>
 
 #define nyi { std::cout<<"nyi "<<__FILE__<<":"<<__LINE__<<"\n"; exit(44); }
 

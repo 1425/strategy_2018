@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4
+#!/usr/bin/python3
 
 #from scipy.stats import skellam
 from scipy import stats
@@ -8,15 +8,13 @@ def skellam_cdf(a,b,c):
     return stats.skellam.cdf(a,b,c)
 
 def calculator():
+    f=stats.skellam.cdf
+    r=sys.stdin.readline
     while True:
-        #print('going to read a line',file=sys.stderr)
-        v=sys.stdin.readline()
-        #print('have line: \"%s\"'%v,file=sys.stderr)
-        if v=='exit\n' or v=='':
-            #print('done!')
+        v=r()
+        if v=='':
             return
-        a,b,c=map(float,v.split())
-        print(skellam_cdf(a,b,c))
+        print(f(*map(float,v.split())))
         sys.stdout.flush()
 
 def to_file():

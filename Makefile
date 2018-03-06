@@ -1,6 +1,6 @@
-CXX=g++
+CXX=g++-7
 #CC=$(CXX)
-CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pg
+CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pg -D_GLIBCXX_PARALLEL -fopenmp -march=native -mtune=native -flto -Ofast
 
 all: 1 max_value stream adverserial skellam pick
 
@@ -17,7 +17,8 @@ outline: util.o
 auto: util.o
 
 skellam:
-	$(CXX) $(CXXFLAGS) -I/usr/include/python3.6m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
+	#$(CXX) $(CXXFLAGS) -I/usr/include/python3.6m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
+	$(CXX) $(CXXFLAGS) -I/usr/include/python3.5m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
 
 pick: util.o sub.o
 

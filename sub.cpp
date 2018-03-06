@@ -8,6 +8,7 @@
 #include<strings.h>
 #include<vector>
 #include<sys/gmon.h>
+#include<chrono>
 #include "util.h"
 
 using namespace std;
@@ -220,14 +221,13 @@ struct Subprocess{
 	~Subprocess(){
 		//TODO: Send some sort of signal to kill the process.
 
-		send("exit\n");
+		//send("exit\n");
+		close_check(child_stdin);
+		close_check(child_stdout);
 
 		int status;
 		waitpid(pid,&status,0);
 		if(status!=0) cout<<"status:"<<status<<"\n";
-
-		close_check(child_stdin);
-		close_check(child_stdout);
 	}
 };
 
@@ -267,26 +267,36 @@ double skellam_cdf(double m1,double m2,double x){
 	return atof(str.c_str());
 }*/
 
-Skellam_cdf::Skellam_cdf():inner(new Subprocess()){
+struct Inner{
+	Subprocess subprocess;
+	map<tuple<double,double,double>,double> cache;
+};
+
+Skellam_cdf::Skellam_cdf():inner(new Inner()){
 }
 
 Skellam_cdf::~Skellam_cdf(){
-	delete (Subprocess*)inner;
+	delete (Inner*)inner;
 }
 
 double Skellam_cdf::operator()(double m1,double m2,double x)const{
-	/*static map<tuple<double,double,double>,double> cache;
+	Inner& data=*((Inner*)inner);
+	Subprocess const& s=data.subprocess;
+	auto& cache=data.cache;
+
 	auto t=make_tuple(m1,m2,x);
 	auto f=cache.find(t);
 	if(f!=cache.end()){
 		return f->second;
-	}*/
+	}
 
-	//auto t1=clock();
+	//typedef std::chrono::high_resolution_clock Clock;
+
+
+	//auto t1=Clock::now();
 	if(m1==0) m1=.0001;
 	if(m2==0) m2=.0001;
 
-	Subprocess const& s=*(const Subprocess*)inner;
 	s.send([=](){
 		stringstream ss;
 		ss<<x<<" "<<m1<<" "<<m2<<"\n";
@@ -294,10 +304,15 @@ double Skellam_cdf::operator()(double m1,double m2,double x)const{
 	}());
 	auto str=read_line(s.child_stdout);
 	auto r=atof(str.c_str());
-	//cache[t]=r;
-	/*auto t2=clock();
-	auto elapsed=(t2-t1)/CLOCKS_PER_SEC;
-	PRINT(elapsed);*/
+	cache[t]=r;
+	//auto t2=Clock::now();
+
+    /*std::cout << "Delta t2-t1: " 
+              << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()
+              << " nanoseconds" << std::endl;*/
+	//auto elapsed=(t2-t1)/double(CLOCKS_PER_SEC);
+	//PRINT(elapsed);
+	//PRINT(t2-t1);
 	return r;
 }
 

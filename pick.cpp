@@ -1,6 +1,7 @@
 #include <fstream>
 #include <map>
-//#include <execution>
+#include<unistd.h>
+#include<sys/wait.h>
 #include "util.h"
 #include "sub.h"
 
@@ -129,7 +130,8 @@ std::pair<A,B> rand(const std::pair<A,B>*){
 
 template<typename T>
 std::vector<T> rand(const std::vector<T>*){
-	return mapf([](auto){ return rand((T*)0); },range(rand()%40));
+	//return mapf([](auto){ return rand((T*)0); },range(rand()%40));
+	return mapf([](auto){ return rand((T*)0); },range(67));
 }
 
 int rand(const int*){
@@ -139,7 +141,7 @@ int rand(const int*){
 template<typename K,typename V>
 std::map<K,V> rand(const std::map<K,V>*){
 	std::map<K,V> r;
-	for(auto _:range(10)){
+	for(auto _:range(67)){
 		(void)_;
 		r[rand((K*)nullptr)]=rand((V*)nullptr);
 	}
@@ -365,6 +367,35 @@ bool operator<(Sorted_array<T,N> const& a,Sorted_array<T,N> const& b){
 }
 
 //start program-speicifc functions.
+
+/*
+How to figure out which teams to compare against:
+the frontier along several dimensions:
+1) scale cubes (incl auto)
+2) switch cubes (incl auto)
+3) climb points (since not really interactive)
+4) auto pts (include w/ climb points)
+
+need to know the top N+1 combinations, where N=# of robots available as partners
+this would mean that would have at least 1 where the candidate partner is not in it.
+
+how to keep track of the top N items:
+(and any linear combination of them is allowed also)
+to add to the set:
+*/
+
+/*struct Top_items{
+	using T=int;
+	vector<T> current;
+
+	void add(T t){
+		
+	}
+};
+
+Team_number->[alliances]
+
+*/
 
 using Team=unsigned int;
 
@@ -698,17 +729,38 @@ vector<pair<double,unsigned>> make_picklist_inner(unsigned picker,vector<Robot_c
 	return sorted(r);
 }
 
+template<typename It,typename Out,typename Func>
+void transform1(It in_begin,It in_end,Out /*out*/,Func f){
+	vector<pid_t> pids;
+	for(auto at=in_begin;at!=in_end;++at){
+		auto pid=fork();
+		if(pid==0){
+			//child
+			auto r=f(*at);
+			PRINT(r);
+			nyi
+		}
+		assert(pid!=-1);
+		pids|=pid;
+	}
+	for(auto pid:pids){
+		int status;
+		waitpid(pid,&status,0);
+		//TODO: check status
+	}
+	nyi
+}
+
 vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
 	assert(picker<robot_capabilities.size());
-
 	Skellam_cdf skellam_cdf;
+
 	auto const& own_capabilities=robot_capabilities[picker];
 	auto robots=robot_capabilities.size();
 	vector<pair<double,unsigned>> r;
 
 	auto potential_partners=filter([picker](auto x){ return x!=picker; },range(robots));
-	transform(
-		//std::parallel_unsequenced_policy{},
+	std::transform(
 		begin(potential_partners),
 		end(potential_partners),
 		std::back_inserter(r),
@@ -837,6 +889,10 @@ int main1(){
 }
 
 int main(){
+	const int threads_wanted = 20;
+	omp_set_dynamic(false);
+	omp_set_num_threads(threads_wanted);
+
 	try{
 		return main1();
 	}catch(const char *s){
