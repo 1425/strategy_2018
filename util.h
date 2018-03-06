@@ -65,7 +65,7 @@ template<typename Func,typename T>
 auto mapf(Func f,T const& a)->std::vector<decltype(f(*begin(a)))>{
 	std::vector<decltype(f(*begin(a)))> r;
 	for(auto elem:a){
-		r|=f(elem);
+		r.push_back(f(elem));
 	}
 	return r;
 }
@@ -294,6 +294,7 @@ class Nonempty_vector{
 	auto size()const{ return data.size(); }
 	auto begin()const{ return data.begin(); }
 	auto end()const{ return data.end(); }
+	T const& operator[](size_t i)const{ return data[i]; }
 };
 
 template<typename T>
@@ -419,6 +420,11 @@ T sum(std::vector<T> const& v){
 		r+=a;
 	}
 	return r;
+}
+
+template<typename T>
+T sum(Nonempty_vector<T> const& v){
+	return sum(v.get());
 }
 
 /*template<typename T,size_t N>
