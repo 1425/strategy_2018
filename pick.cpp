@@ -5,8 +5,6 @@
 #include "util.h"
 #include "sub.h"
 
-using namespace std;
-
 //start generic functions
 
 template<typename T>
@@ -15,24 +13,24 @@ T last(Nonempty_vector<T> const& a){
 }
 
 template<typename T,typename Func>
-vector<T> sorted(vector<T> a,Func f){
-	sort(std::begin(a),std::end(a),[&](auto e1,auto e2){ return f(e1)<f(e2); });
+std::vector<T> sorted(std::vector<T> a,Func f){
+	std::sort(std::begin(a),std::end(a),[&](auto e1,auto e2){ return f(e1)<f(e2); });
 	return a;
 }
 
 template<typename T>
-using Pair2=pair<T,T>;
+using Pair2=std::pair<T,T>;
 
 template<typename K,typename V>
-set<K> keys(map<K,V> const& m){
-	set<K> r;
+std::set<K> keys(std::map<K,V> const& m){
+	std::set<K> r;
 	for(auto elem:m) r|=elem.first;
 	return r;
 }
 
 template<typename Func,typename T>
-set<T> filter(Func f,set<T> a){
-	set<T> r;
+std::set<T> filter(Func f,std::set<T> a){
+	std::set<T> r;
 	for(auto elem:a){
 		if(f(elem)){
 			r|=elem;
@@ -42,9 +40,14 @@ set<T> filter(Func f,set<T> a){
 }
 
 template<typename A,typename B>
-pair<A,B> mean(Nonempty_vector<pair<A,B>> a){
+std::pair<A,B> mean(Nonempty_vector<std::pair<A,B>> a){
 	return make_pair(mean(firsts(a)),mean(seconds(a)));
 }
+
+/*template<typename A,typename B,typename C>
+std::tuple<A,B,C> mean(Nonempty_vector<std::tuple<A,B,C>>){
+	nyi
+}*/
 
 template<typename T>
 T mean(Nonempty_vector<T> const& a){
@@ -53,7 +56,7 @@ T mean(Nonempty_vector<T> const& a){
 }
 
 template<typename T>
-auto mean_or_0(vector<T> a){
+auto mean_or_0(std::vector<T> a){
 	if(a.empty()) return decltype(mean(make_nonempty(a))){};
 	return mean(make_nonempty(a));
 }
@@ -193,7 +196,7 @@ std::pair<A,B>& operator+=(std::pair<A,B> &a,std::pair<A,B> const& b){
 }
 
 template<typename T>
-vector<double> to_doubles(vector<T> a){
+std::vector<double> to_doubles(std::vector<T> a){
 	return mapf([](auto x){ return double(x); },a);
 }
 
@@ -394,6 +397,115 @@ bool operator<(Sorted_array<T,N> const& a,Sorted_array<T,N> const& b){
 	return a.get()<b.get();
 }
 
+struct Px{ //probability
+	double x; //note: not checking 0-1 bounds!
+
+	operator double()const;
+};
+
+std::ostream& operator<<(std::ostream& o,Px a){
+	return o<<a.x;
+}
+
+Px& operator+=(Px& a,Px b){
+	a.x+=b.x;
+	return a;
+}
+
+Px& operator/=(Px &a,long unsigned int b){
+	a.x/=b;
+	return a;
+}
+
+Px rand(const Px*){
+	return Px{(rand()%101)/100.0};
+}
+
+Px dead(const Px*){
+	return Px{0};
+}
+
+template<typename A,typename B,typename C>
+std::vector<A> firsts(std::vector<std::tuple<A,B,C>> const& in){
+	return mapf([](auto a){ return std::get<0>(a); },in);
+}
+
+template<typename A,typename B,typename C>
+std::vector<B> seconds(std::vector<std::tuple<A,B,C>> const& in){
+	return mapf([](auto a){ return std::get<1>(a); },in);
+}
+
+template<typename A,typename B,typename C>
+std::tuple<A,B,C> rand(const std::tuple<A,B,C>*){
+	return {
+		rand((A*)nullptr),
+		rand((B*)nullptr),
+		rand((C*)nullptr)
+	};
+}
+
+template<typename A,typename B,typename C>
+std::tuple<A,B,C> dead(const std::tuple<A,B,C>*){
+	return {
+		dead((A*)nullptr),
+		dead((B*)nullptr),
+		dead((C*)nullptr)
+	};
+}
+
+template<typename A,typename B,typename C>
+std::tuple<A,B,C> operator/(std::tuple<A,B,C> t,long unsigned int i){
+	std::get<0>(t)/=i;
+	std::get<1>(t)/=i;
+	std::get<2>(t)/=i;
+	return t;
+}
+
+template<typename A,typename B,typename C>
+std::tuple<A,B,C>& operator+=(std::tuple<A,B,C> &a,std::tuple<A,B,C> b){
+	std::get<0>(a)+=std::get<0>(b);
+	std::get<1>(a)+=std::get<1>(b);
+	std::get<2>(a)+=std::get<2>(b);
+	return a;
+}
+
+template<typename K,typename V>
+std::map<K,V> take(size_t n,std::map<K,V> const& in){
+	std::map<K,V> r;
+	auto at=std::begin(in);
+	size_t i=0;
+	for(;at!=std::end(in) && i<n;++at,++i){
+		r|=*at;
+	}
+	return r;
+}
+
+template<typename T>
+std::vector<T> flatten(Nonempty_vector<std::vector<T>> a){
+	std::vector<T> r;
+	for(auto elem:a) r|=elem;
+	return r;
+}
+
+template<typename A,typename B,typename C>
+std::vector<C> thirds(std::vector<std::tuple<A,B,C>> a){
+	return mapf([](auto elem){ return std::get<2>(elem); },a);
+}
+
+template<typename T>
+std::vector<std::pair<size_t,T>> enumerate_from(size_t start,std::vector<T> in){
+	std::vector<std::pair<size_t,T>> r;
+	for(auto elem:in){
+		r|=std::make_pair(start++,elem);
+	}
+	return r;
+}
+
+using namespace std;
+
+/*template<typename A,typename B,typename C>
+tuple<A,B,C> sum(vector<tuple<A,B,C>>)nyi*/
+
 //start program-speicifc functions.
 
 /*
@@ -434,6 +546,7 @@ using Team=unsigned int;
 	X(unsigned int,auto_scale_cubes)\
 	X(unsigned int,teleop_switch_cubes)\
 	X(unsigned int,teleop_scale_cubes)\
+	X(unsigned int,teleop_vault_cubes)\
 	X(unsigned int,helped_climb)\
 	X(bool,piggyback)
 
@@ -495,74 +608,113 @@ vector<Scouting_row> read_csv(string filename){
 	return r;
 }
 
+#define CLIMB_CAPABILITIES(X)\
+	X(drives)\
+	X(itself)\
+	X(bar1)\
+	X(bar2)\
+	X(lift1)\
+	X(lift2)\
+	X(all1)\
+	X(all2)
+
 struct Climb_capabilities{
-	//TODO: fixme
+	#define X(NAME) Px NAME;
+	CLIMB_CAPABILITIES(X)
+	#undef X
 };
 
-ostream& operator<<(ostream& o,Climb_capabilities ){
+ostream& operator<<(ostream& o,Climb_capabilities a){
 	o<<"Climb_capabilities(";
-
+	#define X(NAME) o<<""#NAME<<":"<<a.NAME<<" ";
+	CLIMB_CAPABILITIES(X)
+	#undef X
 	return o<<")";
 }
 
-bool operator<(Climb_capabilities const&,Climb_capabilities const&){
+bool operator<(Climb_capabilities const& a,Climb_capabilities const& b){
+	#define X(A) if(a.A<b.A) return 1; if(a.A>b.A) return 0;
+	CLIMB_CAPABILITIES(X)
+	#undef X
 	return 0;
 }
 
-bool operator!=(Climb_capabilities const&,Climb_capabilities const&){
-	return 0;
+bool operator==(Climb_capabilities const& a,Climb_capabilities const& b){
+	#define X(A) if(a.A!=b.A) return 0;
+	CLIMB_CAPABILITIES(X)
+	#undef X
+	return 1;
 }
 
-Climb_capabilities& operator+=(Climb_capabilities& a,Climb_capabilities){
+bool operator!=(Climb_capabilities const& a,Climb_capabilities const& b){
+	return !(a==b);
+}
+
+Climb_capabilities& operator+=(Climb_capabilities& a,Climb_capabilities b){
+	#define X(A) a.A+=b.A;
+	CLIMB_CAPABILITIES(X)
+	#undef X
 	return a;
 }
 
-Climb_capabilities operator/(Climb_capabilities a,long unsigned int){
+Climb_capabilities operator/(Climb_capabilities a,long unsigned int i){
+	#define X(A) a.A/=i;
+	CLIMB_CAPABILITIES(X)
+	#undef X
 	return a;
 }
 
 Climb_capabilities rand(const Climb_capabilities*){
-	return {};
+	Climb_capabilities r;
+	#define X(A) r.A=rand((Px*)0);
+	CLIMB_CAPABILITIES(X)
+	#undef X
+	return r;
 }
 
 Climb_capabilities dead(const Climb_capabilities*){
-	return {};
+	Climb_capabilities r;
+	#define X(A) r.A=dead((Px*)0);
+	CLIMB_CAPABILITIES(X)
+	#undef X
+	return r;
 }
 
 //Climb_capabilities mean(Nonempty_vector<Climb_capabilities>)nyi
 
-double expected_value(array<Climb_capabilities,3>){
+double expected_value(array<Climb_capabilities,3> ){
 	//TODO: Once there is data in the Climb_capabilities struct, use it.
 	return 0;
 }
 
 class Cubes_scored{
-	unsigned short value;
+	double value;
 
 	public:
 	static const unsigned MAX=50;//approx
 
 	Cubes_scored():value(0){}
 
-	Cubes_scored(unsigned in):value(in){
-		if(value>=MAX){
+	Cubes_scored(double in):value(in){
+		/*if(value>=MAX){
 			PRINT(value);
 		}
-		assert(value<MAX);
+		assert(value<MAX);*/
 	}
 
-	operator unsigned()const{
+	operator double()const{
 		return value;
 	}
 
-	unsigned get()const{
+	double get()const{
 		return value;
 	}
 };
 
 Cubes_scored operator+(Cubes_scored a,Cubes_scored b){
 	//saturating addition.
-	return min(Cubes_scored::MAX-1,a.get()+b.get());
+	//return min(double(Cubes_scored::MAX-1),a.get()+b.get());
+	return a.get()+b.get();
 }
 
 Cubes_scored& operator+=(Cubes_scored &a,Cubes_scored b){
@@ -570,9 +722,11 @@ Cubes_scored& operator+=(Cubes_scored &a,Cubes_scored b){
 	return a;
 }
 
-/*Cubes_scored& operator/=(Cubes_scored& a,long unsigned int b){
-
-}*/
+Cubes_scored& operator/=(Cubes_scored& a,unsigned int b){
+	//note that this will be doing some rounding.
+	a=Cubes_scored{a.get()/b};
+	return a;
+}
 
 Cubes_scored rand(const Cubes_scored*){
 	return rand()%Cubes_scored::MAX;
@@ -589,11 +743,17 @@ double mean(Nonempty_vector<Cubes_scored> a){
 //for teleop period
 using Scale_cubes=Cubes_scored;
 using Switch_cubes=Cubes_scored;
-using Cube_match=pair<Scale_cubes,Switch_cubes>;
+using Vault_cubes=Cubes_scored;
+using Cube_match=tuple<Scale_cubes,Switch_cubes,Vault_cubes>;
+
+/*Cube_match mean(Nonempty_vector<Cube_match> a){
+	
+}*/
+
 using Cube_capabilities=vector<Cube_match>;
 
-Cube_capabilities mean(Nonempty_vector<Cube_capabilities>){
-	return {};
+Cube_capabilities mean(Nonempty_vector<Cube_capabilities> in){
+	return flatten(in);
 }
 
 double average_total_cubes(Cube_capabilities a){
@@ -621,25 +781,59 @@ double scale_expectation(Skellam_cdf const& skellam_cdf,double cubes1,double cub
 	if(cubes1<cubes2) return -135;
 	return 0;*/
 
+	//PRINT(cubes1);
+	//PRINT(cubes2);
+
 	//next step: make it instead be based on a Skellam distribution & some summations.
+	static const int INTERVALS=67;
 	return 2*sum(mapf(
 		[&](auto t){
-			auto c1=cubes1*t/77;
-			auto c2=cubes2*t/77;
-	       		return skellam_cdf(c1,c2,-1)-skellam_cdf(c2,c1,-1);
+			auto c1=cubes1*t/INTERVALS;
+			auto c2=cubes2*t/INTERVALS;
+			/*PRINT(c1);
+			PRINT(c2);
+			auto a=skellam_cdf(c1,c2,-1);
+			auto b=skellam_cdf(c2,c1,-1);
+			PRINT(a);
+			PRINT(b);*/
+			return skellam_cdf(c2,c1,-1)-skellam_cdf(c1,c2,-1);
 		},
-		range_st<int,77>()
+		range_st<int,INTERVALS>()
 	));
+}
+
+int vault_value(Cubes_scored cubes){
+	/*individual cube values:
+	 * 15/15/15
+	 * 10/10/10
+	 * 5/5/5
+	 * */
+	if(cubes<1) return 0;
+	if(cubes<2) return 15;
+	if(cubes<3) return 30;
+	if(cubes<4) return 45;
+	if(cubes<5) return 55;
+	if(cubes<6) return 65;
+	if(cubes<7) return 75;
+	if(cubes<8) return 80;
+	if(cubes<9) return 85;
+	return 95;
+}
+
+double vault(Cube_capabilities a){
+	auto v=thirds(a);
+	return mean_or_0(v);
 }
 
 double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_capabilities b){
 	//TODO: Make it so that each of the teams can try different strategies.
-	auto mean_or_zero=[](auto a){
+	/*auto mean_or_zero=[](auto a){
 		if(a.empty())nyi
 		return mean(make_nonempty(a));
-	};
-	return scale_expectation(skellam_cdf,mean_or_zero(firsts(a)),mean_or_zero(firsts(b)))+
-		scale_expectation(skellam_cdf,mean_or_zero(seconds(a)),mean_or_zero(seconds(b)));
+	};*/
+	return scale_expectation(skellam_cdf,mean_or_0(firsts(a)),mean_or_0(firsts(b)))+
+		scale_expectation(skellam_cdf,mean_or_0(seconds(a)),mean_or_0(seconds(b)))+
+		vault_value(vault(a))-vault_value(vault(b));
 }
 
 #define AUTO_CAPABILITIES(X)\
@@ -647,35 +841,62 @@ double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_
 	X(double,switch_cubes)\
 
 struct Auto_capabilities{
-	//TODO: FIXME
-	double cubes;
+	AUTO_CAPABILITIES(INST)
 };
 
 ostream& operator<<(std::ostream& o,Auto_capabilities const& a){
 	o<<"Auto_capabilities(";
-	o<<a.cubes;
+	AUTO_CAPABILITIES(SHOW)
 	return o<<")";
 }
 
 bool operator<(Auto_capabilities const& a,Auto_capabilities const& b){
-	return a.cubes<b.cubes;
+	#define X(A,B) CMP1(B)
+	AUTO_CAPABILITIES(X)
+	#undef X
+	return 0;
+}
+
+bool operator==(Auto_capabilities const& a,Auto_capabilities const& b){
+	#define X(A,B) if(a.B!=b.B) return 0;
+	AUTO_CAPABILITIES(X)
+	#undef X
+	return 1;
 }
 
 bool operator!=(Auto_capabilities const& a,Auto_capabilities const& b){
-	return a.cubes!=b.cubes;
+	return !(a==b);
 }
 
 Auto_capabilities& operator+=(Auto_capabilities& a,Auto_capabilities b){
-	a.cubes+=b.cubes;
+	#define X(A,B) a.B+=b.B;
+	AUTO_CAPABILITIES(X)
+	#undef X
 	return a;
 }
 
+double rand(const double*){
+	return (rand()%100)/50.0;
+}
+
 Auto_capabilities rand(const Auto_capabilities*){
-	return {rand((Cube_match*)0)};
+	Auto_capabilities r;
+	#define X(A,B) r.B=rand((A*)0);
+	AUTO_CAPABILITIES(X)
+	#undef X
+	return r;
+}
+
+double dead(const double*){
+	return 0;
 }
 
 Auto_capabilities dead(const Auto_capabilities*){
-	return {dead((Cube_match*)0)};
+	Auto_capabilities r;
+	#define X(A,B) r.B=dead((A*)0);
+	AUTO_CAPABILITIES(X)
+	#undef X
+	return r;
 }
 
 template<typename A,typename B>
@@ -686,8 +907,23 @@ pair<A,B>& operator/=(pair<A,B> &p,long unsigned int i){
 }
 
 Auto_capabilities operator/(Auto_capabilities a,long unsigned int i){
-	a.cubes/=i;
+	#define X(A,B) a.B/=i;
+	AUTO_CAPABILITIES(X)
+	#undef X
 	return a;
+}
+
+double expected_value(std::array<Auto_capabilities,3> a){
+	auto s=sum(a);
+	auto switch_value=[&](){
+		auto switch_cubes=s.switch_cubes;
+		if(switch_cubes<1){
+			return 10*switch_cubes;
+		}
+		return 10+(switch_cubes-1)*3;
+	}();
+	//auto vault value=0
+	return switch_value+s.scale_cubes*10;
 }
 
 #define ROBOT_CAPABILITIES(X)\
@@ -760,7 +996,16 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 	return map_map(
 		[](auto a)->Robot_capabilities{
 			return Robot_capabilities{
-				mapf([](auto x){ return make_pair(Cubes_scored(x.teleop_scale_cubes),Cubes_scored(x.teleop_switch_cubes)); },a),
+				mapf(
+					[](auto x){
+						return make_tuple(
+							Cubes_scored(x.teleop_scale_cubes),
+							Cubes_scored(x.teleop_switch_cubes),
+							Cubes_scored(x.teleop_vault_cubes)
+						);
+					},
+					a
+				),
 				Climb_capabilities(),
 				Auto_capabilities()
 			};
@@ -773,6 +1018,11 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 
 using Alliance_capabilities=array<Robot_capabilities,3>;
 
+Alliance_capabilities dead(const Alliance_capabilities*){
+	auto d=dead((Robot_capabilities*)nullptr);
+	return Alliance_capabilities{d,d,d};
+}
+
 array<Climb_capabilities,3> climbs(Alliance_capabilities a){
 	return mapf([](auto x){ return x.climb; },a);
 }
@@ -781,30 +1031,35 @@ array<Cube_capabilities,3> cubes(Alliance_capabilities a){
 	return mapf([](auto x){ return x.cubes; },a);
 }
 
+Cube_capabilities distill_cubes(Alliance_capabilities a){
+	auto c=cubes(a);
+	Cube_capabilities r;
+	/*for(auto v0:c[0]){
+		for(auto v1:c[1]){
+			for(auto v2:c[2]){
+				r|=v0+v1+v2;
+			}
+		}
+	}*/
+	//r|=sum(MAP(mean,c));
+	r|=sum(mapf(
+		[](vector<Cube_match> in){
+			if(in.size()) return mean(make_nonempty(in));
+			return dead((Cube_match*)0);
+		},
+		c
+	));
+	return r;
+};
+
+array<Auto_capabilities,3> auton(Alliance_capabilities const& a){
+	return mapf([](auto x){ return x.auton; },a);
+}
+
 double expected_outcome(Skellam_cdf const& skellam_cdf,Alliance_capabilities a,Alliance_capabilities b){
 	//returns # of points expect alliance 'a' to win by.
+	double auto_pts=expected_value(auton(a))-expected_value(auton(b));
 	double climb=expected_value(climbs(a))-expected_value(climbs(b));
-
-	auto distill_cubes=[](Alliance_capabilities a)->Cube_capabilities{
-		auto c=cubes(a);
-		Cube_capabilities r;
-		/*for(auto v0:c[0]){
-			for(auto v1:c[1]){
-				for(auto v2:c[2]){
-					r|=v0+v1+v2;
-				}
-			}
-		}*/
-		//r|=sum(MAP(mean,c));
-		r|=sum(mapf(
-			[](vector<pair<Cubes_scored,Cubes_scored>> in){
-				if(in.size()) return mean(make_nonempty(in));
-				return make_pair(Cubes_scored(0),Cubes_scored(0));
-			},
-			c
-		));
-		return r;
-	};
 
 	auto from_cubes=expected_outcome(
 		skellam_cdf,
@@ -812,7 +1067,7 @@ double expected_outcome(Skellam_cdf const& skellam_cdf,Alliance_capabilities a,A
 		distill_cubes(b)
 	);
 	//ignoring the vault right now.
-	return climb+from_cubes;
+	return auto_pts+climb+from_cubes;
 }
 
 Alliance_capabilities random_alliance(vector<Robot_capabilities> in){
@@ -883,6 +1138,18 @@ vector<T> take_range(size_t start,size_t length,vector<T> in){
 	return r;
 }
 
+template<typename T>
+vector<pair<T,T>> nonduplicate_pairs(vector<T> a){
+	vector<pair<T,T>> r;
+	for(auto i:range(a.size())){
+		for(auto j:range(a.size())){
+			if(i==j) continue;
+			r|=make_pair(a[i],a[j]);
+		}
+	}
+	return r;
+}
+
 vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
 	assert(picker<robot_capabilities.size());
 	Skellam_cdf skellam_cdf;
@@ -910,9 +1177,20 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 		std::back_inserter(r),
 		[&](auto partner){
 			//return make_pair(4.0,4);
-			Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
+			Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],third_robot};
+			cout<<".";
+			cout.flush();
 
-			vector<double> a;
+			auto opponents=seconds(filter([picker,partner](auto p){ return p.first!=picker && p.first!=partner; },enumerate(robot_capabilities)));
+			auto interesting_opponents=take(
+				3,
+				reversed(sorted(
+					opponents,
+					[](auto a){ return mean_or_0(firsts(a.cubes))+mean_or_0(seconds(a.cubes))+mean_or_0(thirds(a.cubes))/3.0; }
+				))
+			);
+
+			/*vector<double> a;
 			for(const auto opponent1:range(robots)){
 				if(opponent1==picker || opponent1==partner) continue;
 				for(const auto opponent2:range(opponent1+1,robots)){
@@ -920,6 +1198,12 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 					Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
 					a|=expected_outcome(skellam_cdf,alliance,opponents);
 				}
+			}
+			return make_pair(min(a),unsigned(partner));*/
+			vector<double> a;
+			for(auto p:nonduplicate_pairs(interesting_opponents)){
+				Alliance_capabilities opponents{p.first,p.second,third_robot};
+				a|=expected_outcome(skellam_cdf,alliance,opponents);
 			}
 			return make_pair(min(a),unsigned(partner));
 		}
@@ -940,7 +1224,7 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 		}
 		r|=make_pair(min(a),unsigned(partner));
 	}*/
-	return sorted(r);
+	return reversed(sorted(r));
 }
 
 auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabilities){
@@ -963,13 +1247,14 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 		}(),
 		capabilities
 	);
-	return mapf(
+	return enumerate_from(1,mapf(
 		[=](pair<double,int> p){
 			return make_pair(p.first,teams[p.second]);
 		},
 		d
-	);
+	));
 
+#if 0
 	Skellam_cdf skellam_cdf;
 	//first, just assume two-team alliances
 	//then come back and figure out what the best compliments would be.
@@ -1008,13 +1293,62 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 	));
 	//print_lines(m);
 	return reversed(m);
+#endif
+}
+
+using Cube_average=tuple<double,double,double>;
+
+#define ROBOT_SIMPLE(X)\
+	X(Auto_capabilities,auton)\
+	X(Cube_average,cubes)\
+	X(Climb_capabilities,climb)
+
+struct Robot_simple{
+	ROBOT_SIMPLE(INST)
+
+	Robot_simple(Robot_capabilities a):
+		auton(a.auton),
+		cubes(
+			mean_or_0(firsts(a.cubes)),
+			mean_or_0(seconds(a.cubes)),
+			mean_or_0(thirds(a.cubes))
+		),
+		climb(a.climb)
+	{}
+};
+
+ostream& operator<<(ostream& o,Robot_simple const& a){
+	o<<"Robot_simple(";
+	ROBOT_SIMPLE(SHOW)
+	return o<<")";
+}
+
+double solo_points(Robot_capabilities const& a){
+	Skellam_cdf skellam_cdf;
+	auto d=dead((Robot_capabilities*)nullptr);
+	Alliance_capabilities a1{a,d,d};
+	Alliance_capabilities a2{dead((Alliance_capabilities*)nullptr)};
+
+	auto d1=distill_cubes(a1);
+	auto d2=distill_cubes(a2);
+
+	auto v=expected_outcome(skellam_cdf,d1,d2);
+	PRINT(v);
+
+	return expected_outcome(skellam_cdf,a1,a2);
 }
 
 int main1(){
 	auto x=rand((map<Team,Robot_capabilities>*)nullptr);
 
-	//cout<<"Example robots:\n";
+	cout<<"Example robots:\n";
 	//print_lines(x);
+	for(auto a:take(5,x)){
+		//PRINT(a);
+		PRINT(Robot_simple(a.second));
+		PRINT(solo_points(a.second));
+	}
+	//nyi
 
 	assert(x.size());
 	auto picks=make_picklist(begin(x)->first,x);
