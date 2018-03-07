@@ -11,6 +11,14 @@
 
 using namespace std;
 
+auto atoi(string const& s){ return atoi(s.c_str()); }
+
+string small(string s){ return tag("small",s); }
+string title(string s){ return tag("title",s); }
+string head(string s){ return tag("head",s); }
+string h1(string s){ return tag("h1",s); }
+
+
 template<typename K,typename V>
 vector<K> firsts(map<K,V> m){
 	return mapf([](auto a){ return a.first; },m);
@@ -886,16 +894,6 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 				))
 			);
 
-			/*vector<double> a;
-			for(const auto opponent1:range(robots)){
-				if(opponent1==picker || opponent1==partner) continue;
-				for(const auto opponent2:range(opponent1+1,robots)){
-					if(opponent2==picker || opponent2==partner) continue;
-					Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
-					a|=expected_outcome(skellam_cdf,alliance,opponents);
-				}
-			}
-			return make_pair(min(a),unsigned(partner));*/
 			vector<double> a;
 			for(auto p:nonduplicate_pairs(interesting_opponents)){
 				Alliance_capabilities opponents{p.first,p.second,third_robot};
@@ -905,21 +903,6 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 		}
 	);
 
-	/*for(const auto partner:range(robots)){
-		if(partner==picker) continue;
-		Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
-
-		vector<double> a;
-		for(const auto opponent1:range(robots)){
-			if(opponent1==picker || opponent1==partner) continue;
-			for(const auto opponent2:range(opponent1+1,robots)){
-				if(opponent2==picker || opponent2==partner) continue;
-				Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
-				a|=expected_outcome(skellam_cdf,alliance,opponents);
-			}
-		}
-		r|=make_pair(min(a),unsigned(partner));
-	}*/
 	return reversed(sorted(r));
 }
 
@@ -949,47 +932,6 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 		},
 		d
 	);
-
-#if 0
-	Skellam_cdf skellam_cdf;
-	//first, just assume two-team alliances
-	//then come back and figure out what the best compliments would be.
-	//PRINT(picker)
-	//PRINT(robot_capabilities)
-
-	auto get_expected=[&](Alliance_capabilities a,Alliance_capabilities b)->double{
-		return expected_outcome(skellam_cdf,a,b);
-	};
-
-	auto own_capabilities=robot_capabilities[picker];
-	//auto other_robots=filter([=](auto p){ return p!=picker; },to_vector(keys(robot_capabilities)));
-	auto other_robots=filter([=](auto p){ return p.first!=picker; },robot_capabilities);
-
-	auto m=sorted(mapf(
-		[&](auto partner){
-			Alliance_capabilities alliance{own_capabilities,partner.second,dead((Robot_capabilities*)nullptr)};
-			auto remaining=filter([=](auto const& p){ return p!=partner; },other_robots);
-			auto p=unique_pairs(values(remaining));
-			auto v=min(mapf(
-				[&](auto opponent_pair){
-					Alliance_capabilities opponents{
-						opponent_pair.first,
-						opponent_pair.second,
-						dead((Robot_capabilities*)0)
-					};
-					//return expected_outcome(skellam_cdf,alliance,opponents);
-					return get_expected(alliance,opponents);
-				},
-				p
-			));
-			//PRINT(v);
-			return make_pair(v,partner.first);
-		},
-		other_robots
-	));
-	//print_lines(m);
-	return reversed(m);
-#endif
 }
 
 using Cube_average=tuple<double,double,double>;
@@ -1034,7 +976,19 @@ double solo_points(Robot_capabilities const& a){
 	return expected_outcome(skellam_cdf,a1,a2);
 }
 
-vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_list,map<Team,Robot_capabilities> robot_capabilities){
+template<typename T>
+T index_or_last(size_t index,vector<T> v){
+	assert(v.size());
+	if(v.size()>index) return v[index];
+	return v[v.size()-1];
+}
+
+vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
+	Team picker,
+	vector<pair<double,Team>> pick_list_d,
+	map<Team,Robot_capabilities> robot_capabilities
+){
+	auto pick_list=seconds(pick_list_d);
 	assert(robot_capabilities.count(picker));
 	assert(filter([picker](auto x){ return x==picker; },pick_list).empty());
 	for(auto team:pick_list){
@@ -1045,8 +999,9 @@ vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_
 	//PRINT(pick_list);
 	Skellam_cdf skellam_cdf;
 
-	vector<pair<Team,vector<Team>>> out;
-	for(auto partner:take(15,pick_list)){
+	vector<pair<pair<double,Team>,vector<pair<double,Team>>>> out;
+	for(auto p:take(15,pick_list_d)){
+		auto partner=p.second;
 		auto other_robots=filter(
 			[&](auto a){ return a!=picker && a!=partner; },
 			firsts(robot_capabilities)
@@ -1055,16 +1010,21 @@ vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_
 		for(auto candidate:other_robots){
 			Alliance_capabilities alliance{robot_capabilities[picker],robot_capabilities[partner],robot_capabilities[candidate]};
 
-			auto top_opponents=take(2,filter([partner,candidate](auto x){ return x!=partner && x!=candidate; },pick_list));
+			auto opponents1=filter([partner,candidate](auto x){ return x!=partner && x!=candidate; },pick_list);
+			auto top_opponents=take(2,opponents1);
 			assert(top_opponents.size()==2);
-			Alliance_capabilities opponents{robot_capabilities[top_opponents[0]],robot_capabilities[top_opponents[1]],dead((Robot_capabilities*)0)};
+			Alliance_capabilities opponents{
+				robot_capabilities[top_opponents[0]],
+				robot_capabilities[top_opponents[1]],
+				robot_capabilities[index_or_last(22,opponents1)]
+			};
 			auto exp=expected_outcome(skellam_cdf,alliance,opponents);
 			values|=make_pair(exp,candidate);
 		}
 		//PRINT(partner);
-		auto second_picks=seconds(take(22,reversed(sorted(values))));
+		auto second_picks=take(22,reversed(sorted(values)));
 		//print_lines(second_picks);
-		out|=make_pair(partner,second_picks);
+		out|=make_pair(p,second_picks);
 
 		cout<<".";
 		cout.flush();
@@ -1072,12 +1032,8 @@ vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_
 	return out;
 }
 
-string title(string s){ return tag("title",s); }
-string head(string s){ return tag("head",s); }
-string h1(string s){ return tag("h1",s); }
 
-
-string as_html(vector<pair<Team,vector<Team>>> in){
+string as_html(vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
 	auto title1="Team 1425 Picklist";
 	return html(
 		head(title(title1))+
@@ -1093,12 +1049,18 @@ string as_html(vector<pair<Team,vector<Team>>> in){
 					range(1,23)
 				)))+
 				join(mapf(
-					[](pair<size_t,pair<Team,vector<Team>>> p1){
+					[](pair<size_t,pair<pair<double,Team>,vector<pair<double,Team>>>> p1){
 						auto p=p1.second;
 						return tr(
 							th(as_string(p1.first))+
-							td(as_string(p.first))+
-							join(mapf([](auto x){ return td(as_string(x)); },p.second))
+							tag("td","align=right",as_string(p.first.second)+"<br>"+small(as_string(int(p.first.first))))+
+							join(mapf(
+								[](auto x){
+									//return td(as_string(x));
+									return tag("td","align=right",as_string(x.second)+"<br>"+small(as_string(int(x.first))));
+								},
+								p.second
+							))
 						);
 					},
 					enumerate_from(1,in)
@@ -1107,58 +1069,6 @@ string as_html(vector<pair<Team,vector<Team>>> in){
 		)
 	);
 }
-
-#if 0
-string show_robots(map<Team,Robot_capabilities> const& in){
-	auto title1="Team 1425: Estimated robot skills";
-	return html(
-		head(title(title1))+
-		body(
-			h1(title1)+
-			tag("table","border",
-				tr(join(mapf(th,vector<string>{
-					"Team",
-					"Auto scale cubes",
-					"Auto switch cubes",
-					"Scale cubes",
-					"Switch cubes",
-					"Climb_drive",
-					"Climb_itself",
-					"Climb_bar1",
-					"Climb_bar2",
-					"Climb_lift1",
-					"Climb_lift2",
-					"Climb_all1",
-					"Climb_all2"
-				})))+
-				join(mapf(
-					[](auto p){
-						return tr(join(mapf(
-							td,
-							vector<string>{
-								as_string(p.first),
-								as_string(p.second.auton.scale_cubes),
-								as_string(p.second.auton.switch_cubes),
-								as_string(mean_or_0(p.second.cubes).scale_cubes),
-								as_string(mean_or_0(p.second.cubes).switch_cubes),
-								as_string(p.second.climb.drives),
-								as_string(p.second.climb.itself),
-								as_string(p.second.climb.bar1),
-								as_string(p.second.climb.bar2),
-								as_string(p.second.climb.lift1),
-								as_string(p.second.climb.lift2),
-								as_string(p.second.climb.all1),
-								as_string(p.second.climb.all2)
-							}
-						)));
-					},
-					in
-				))
-			)
-		)
-	);
-}
-#endif
 
 pair<double,double> limits(vector<double> a){
 	return make_pair(min(a),max(a));
@@ -1202,8 +1112,6 @@ string as_2decimals(double a){
 	ss<<fixed<<setprecision(2)<<a;
 	return ss.str();
 }
-
-string small(string s){ return tag("small",s); }
 
 string colorize(double f,string s){
 	//red->green?
@@ -1286,7 +1194,15 @@ string show_robots(map<Team,Robot_capabilities> const& in){
 	);
 }
 
-int main1(){
+vector<string> args(int argc,char **argv){
+	vector<string> r;
+	for(auto i:range(1,argc)){
+		r|=string(argv[i]);
+	}
+	return r;
+}
+
+int main1(int argc,char **argv){
 	auto x=rand((map<Team,Robot_capabilities>*)nullptr);
 	//x=take(5,x);
 
@@ -1300,14 +1216,44 @@ int main1(){
 		PRINT(solo_points(a.second));
 	}*/
 	
+	auto a=args(argc,argv);
+
 	assert(x.size());
 	auto picker=begin(x)->first;
+
+	optional<array<Team,3>> opponents;
+
+	for(auto at=begin(a);at!=end(a);++at){
+		if(*at=="--picker"){
+			++at;
+			assert(at!=end(a));
+
+			picker=atoi(*at);
+			++at;
+
+			assert(x.count(picker));
+		}else if(*at=="--known_opponents"){
+			at++;
+			assert(at!=end(a));
+
+			vector<Team> teams;
+			for(auto _:range(3)){
+				(void)_;
+				teams.push_back(atoi(*at));
+			}
+			opponents=as_array<Team,3>(teams);
+		}else{
+			cout<<"Error: Unrecognized argument:"<<*at<<"\n";
+			return 1;
+		}
+	}
+
 	auto picks=make_picklist(picker,x);
 
 	cout<<"\n";
 	print_lines(enumerate_from(1,picks));
 
-	auto m=make_second_picks(picker,seconds(picks),x);
+	auto m=make_second_picks(picker,picks,x);
 
 	cout<<"\n";
 	print_lines(m);
@@ -1326,13 +1272,13 @@ int main1(){
 	return 0;*/
 }
 
-int main(){
+int main(int argc,char **argv){
 	const int threads_wanted = 20;
 	omp_set_dynamic(false);
 	omp_set_num_threads(threads_wanted);
 
 	try{
-		return main1();
+		return main1(argc,argv);
 	}catch(const char *s){
 		cout<<s<<"\n";
 		return 1;
