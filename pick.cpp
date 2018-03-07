@@ -2,6 +2,7 @@
 #include <map>
 #include<unistd.h>
 #include<sys/wait.h>
+#include<iomanip>
 #include "util.h"
 #include "sub.h"
 #include "util2.h"
@@ -381,7 +382,54 @@ double mean(Nonempty_vector<Cubes_scored> a){
 using Scale_cubes=Cubes_scored;
 using Switch_cubes=Cubes_scored;
 using Vault_cubes=Cubes_scored;
-using Cube_match=tuple<Scale_cubes,Switch_cubes,Vault_cubes>;
+//using Cube_match=tuple<Scale_cubes,Switch_cubes,Vault_cubes>;
+
+#define CUBE_MATCH(X)\
+	X(Cubes_scored,scale_cubes)\
+	X(Cubes_scored,switch_cubes)\
+	X(Cubes_scored,vault_cubes)
+
+struct Cube_match{
+	CUBE_MATCH(INST)
+};
+
+ostream& operator<<(ostream&,Cube_match)nyi
+
+Cube_match rand(const Cube_match*){
+	Cube_match r;
+	#define X(A,B) r.B=rand((A*)0);
+	CUBE_MATCH(X)
+	#undef X
+	return r;
+}
+
+Cube_match dead(const Cube_match*){
+	Cube_match r;
+	#define X(A,B) r.B=dead((A*)0);
+	CUBE_MATCH(X)
+	#undef X
+	return r;
+}
+
+Cube_match operator/(Cube_match a,long unsigned int i){
+	#define X(A,B) a.B/=i;
+	CUBE_MATCH(X)
+	#undef X
+	return a;
+}
+
+Cube_match& operator+=(Cube_match& a,Cube_match b){
+	#define X(A,B) a.B+=b.B;
+	CUBE_MATCH(X)
+	#undef X
+	return a;
+}
+
+bool operator<(Cube_match,Cube_match)nyi
+
+bool operator==(Cube_match,Cube_match)nyi
+
+//ostream& opoera
 
 /*Cube_match mean(Nonempty_vector<Cube_match> a){
 	
@@ -393,8 +441,20 @@ Cube_capabilities mean(Nonempty_vector<Cube_capabilities> in){
 	return flatten(in);
 }
 
+vector<Cubes_scored> scale_cubes(vector<Cube_match> const& a){
+	return mapf([](auto x){ return x.scale_cubes; },a);
+}
+
+vector<Cubes_scored> switch_cubes(vector<Cube_match> const& a){
+	return mapf([](auto x){ return x.switch_cubes; },a);
+}
+
+vector<Cubes_scored> vault_cubes(vector<Cube_match> const& a){
+	return mapf([](auto x){ return x.vault_cubes; },a);
+}
+
 double average_total_cubes(Cube_capabilities a){
-	return mean_or_0(firsts(a))+mean_or_0(seconds(a));
+	return mean_or_0(scale_cubes(a))+mean_or_0(switch_cubes(a))+mean_or_0(vault_cubes(a));
 }
 
 template<typename T>
@@ -458,8 +518,7 @@ int vault_value(Cubes_scored cubes){
 }
 
 double vault(Cube_capabilities a){
-	auto v=thirds(a);
-	return mean_or_0(v);
+	return mean_or_0(vault_cubes(a));
 }
 
 double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_capabilities b){
@@ -468,8 +527,8 @@ double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_
 		if(a.empty())nyi
 		return mean(make_nonempty(a));
 	};*/
-	return scale_expectation(skellam_cdf,mean_or_0(firsts(a)),mean_or_0(firsts(b)))+
-		scale_expectation(skellam_cdf,mean_or_0(seconds(a)),mean_or_0(seconds(b)))+
+	return scale_expectation(skellam_cdf,mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
+		scale_expectation(skellam_cdf,mean_or_0(switch_cubes(a)),mean_or_0(switch_cubes(b)))+
 		vault_value(vault(a))-vault_value(vault(b));
 }
 
@@ -635,11 +694,11 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 			return Robot_capabilities{
 				mapf(
 					[](auto x){
-						return make_tuple(
+						return Cube_match{
 							Cubes_scored(x.teleop_scale_cubes),
 							Cubes_scored(x.teleop_switch_cubes),
 							Cubes_scored(x.teleop_vault_cubes)
-						);
+						};
 					},
 					a
 				),
@@ -823,7 +882,7 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 				3,
 				reversed(sorted(
 					opponents,
-					[](auto a){ return mean_or_0(firsts(a.cubes))+mean_or_0(seconds(a.cubes))+mean_or_0(thirds(a.cubes))/3.0; }
+					[](auto a){ return mean_or_0(scale_cubes(a.cubes))+mean_or_0(switch_cubes(a.cubes))+mean_or_0(vault_cubes(a.cubes))/3.0; }
 				))
 			);
 
@@ -865,7 +924,7 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 }
 
 auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabilities){
-	PRINT(picker);
+	//PRINT(picker);
 	vector<Team> teams;
 	vector<Robot_capabilities> capabilities;
 	for(auto p:robot_capabilities){
@@ -946,9 +1005,9 @@ struct Robot_simple{
 	Robot_simple(Robot_capabilities a):
 		auton(a.auton),
 		cubes(
-			mean_or_0(firsts(a.cubes)),
-			mean_or_0(seconds(a.cubes)),
-			mean_or_0(thirds(a.cubes))
+			mean_or_0(scale_cubes(a.cubes)),
+			mean_or_0(switch_cubes(a.cubes)),
+			mean_or_0(vault_cubes(a.cubes))
 		),
 		climb(a.climb)
 	{}
@@ -982,8 +1041,8 @@ vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_
 		assert(robot_capabilities.count(team));
 	}
 
-	PRINT(picker);
-	PRINT(pick_list);
+	//PRINT(picker);
+	//PRINT(pick_list);
 	Skellam_cdf skellam_cdf;
 
 	vector<pair<Team,vector<Team>>> out;
@@ -1013,27 +1072,246 @@ vector<pair<Team,vector<Team>>> make_second_picks(Team picker,vector<Team> pick_
 	return out;
 }
 
+string title(string s){ return tag("title",s); }
+string head(string s){ return tag("head",s); }
+string h1(string s){ return tag("h1",s); }
+
+
+string as_html(vector<pair<Team,vector<Team>>> in){
+	auto title1="Team 1425 Picklist";
+	return html(
+		head(title(title1))+
+		body(
+			h1(title1)+
+			tag("table","border",
+				tr(
+					tag("th","rowspan=2 colspan=2","First pick")+
+					tag("th","colspan=22","Second pick")
+				)+
+				tr(join(mapf(
+					[](auto i){ return th(as_string(i)); },
+					range(1,23)
+				)))+
+				join(mapf(
+					[](pair<size_t,pair<Team,vector<Team>>> p1){
+						auto p=p1.second;
+						return tr(
+							th(as_string(p1.first))+
+							td(as_string(p.first))+
+							join(mapf([](auto x){ return td(as_string(x)); },p.second))
+						);
+					},
+					enumerate_from(1,in)
+				))
+			)
+		)
+	);
+}
+
+#if 0
+string show_robots(map<Team,Robot_capabilities> const& in){
+	auto title1="Team 1425: Estimated robot skills";
+	return html(
+		head(title(title1))+
+		body(
+			h1(title1)+
+			tag("table","border",
+				tr(join(mapf(th,vector<string>{
+					"Team",
+					"Auto scale cubes",
+					"Auto switch cubes",
+					"Scale cubes",
+					"Switch cubes",
+					"Climb_drive",
+					"Climb_itself",
+					"Climb_bar1",
+					"Climb_bar2",
+					"Climb_lift1",
+					"Climb_lift2",
+					"Climb_all1",
+					"Climb_all2"
+				})))+
+				join(mapf(
+					[](auto p){
+						return tr(join(mapf(
+							td,
+							vector<string>{
+								as_string(p.first),
+								as_string(p.second.auton.scale_cubes),
+								as_string(p.second.auton.switch_cubes),
+								as_string(mean_or_0(p.second.cubes).scale_cubes),
+								as_string(mean_or_0(p.second.cubes).switch_cubes),
+								as_string(p.second.climb.drives),
+								as_string(p.second.climb.itself),
+								as_string(p.second.climb.bar1),
+								as_string(p.second.climb.bar2),
+								as_string(p.second.climb.lift1),
+								as_string(p.second.climb.lift2),
+								as_string(p.second.climb.all1),
+								as_string(p.second.climb.all2)
+							}
+						)));
+					},
+					in
+				))
+			)
+		)
+	);
+}
+#endif
+
+pair<double,double> limits(vector<double> a){
+	return make_pair(min(a),max(a));
+}
+
+template<typename T>
+auto size(vector<T> v){ return v.size(); }
+
+template<typename T>
+bool all_equal(vector<T> a){
+	if(a.empty()) return 1;
+	for(auto elem:a){
+		if(elem!=a[0]){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+template<typename T>
+vector<vector<T>> transpose(vector<vector<T>> in){
+	if(in.empty()) return {};
+
+	auto s=MAP(size,in);
+	assert(all_equal(s));
+	auto len=s[0];
+
+	vector<vector<T>> r;
+	for(auto i:range(len)){
+		vector<T> row;
+		for(auto a:in){
+			row|=a[i];
+		}
+		r.push_back(row);
+	}
+	return r;
+}
+
+string as_2decimals(double a){
+	stringstream ss;
+	ss<<fixed<<setprecision(2)<<a;
+	return ss.str();
+}
+
+string small(string s){ return tag("small",s); }
+
+string colorize(double f,string s){
+	//red->green?
+	//white->green?
+	auto color=[&](){
+		auto x=int(f*255);
+		stringstream ss;
+		ss<<"#"<<setfill('0')<<setw(2)<<hex<<(255-x)<<x<<"00";
+		return ss.str();
+	}();
+	return tag("font","color=\""+color+"\"",s);
+}
+
+string show_robots(map<Team,Robot_capabilities> const& in){
+	auto title1="Team 1425: Estimated robot skills";
+	vector<pair<Team,vector<double>>> data=mapf(
+		[](auto p){
+			return make_pair(
+				p.first,
+				vector<double>{
+					p.second.auton.scale_cubes,
+					p.second.auton.switch_cubes,
+					mean_or_0(p.second.cubes).scale_cubes,
+					mean_or_0(p.second.cubes).switch_cubes,
+					p.second.climb.drives,
+					p.second.climb.itself,
+					p.second.climb.bar1,
+					p.second.climb.bar2,
+					p.second.climb.lift1,
+					p.second.climb.lift2,
+					p.second.climb.all1,
+					p.second.climb.all2
+				}
+			);
+		},
+		in
+	);
+
+	auto data_limits=mapf(limits,transpose(seconds(data)));
+
+	return html(
+		head(title(title1))+
+		body(
+			h1(title1)+
+			tag("table","border",
+				tr(join(mapf(th,vector<string>{
+					"Team",
+					"Auto scale cubes",
+					"Auto switch cubes",
+					"Scale cubes",
+					"Switch cubes",
+					"Climb_drive",
+					"Climb_itself",
+					"Climb_bar1",
+					"Climb_bar2",
+					"Climb_lift1",
+					"Climb_lift2",
+					"Climb_all1",
+					"Climb_all2"
+				})))+
+				join(mapf(
+					[&](auto p){
+						return tr(
+							td(as_string(p.first))+
+							join(mapf(
+								[](auto p1){
+									auto [min,max]=p1.first;
+									auto f=p1.second;
+									auto portion=(f-min)/(max-min);
+							       		return td(as_string(f)+" "+colorize(portion,small(as_2decimals(portion))));
+								},
+								zip(data_limits,p.second)
+							)
+						));
+					},
+					data
+				))
+			)
+		)
+	);
+}
+
 int main1(){
 	auto x=rand((map<Team,Robot_capabilities>*)nullptr);
+	//x=take(5,x);
 
-	/*
-	cout<<"Example robots:\n";
+	write_file("robots.html",show_robots(x));
+	
+	/*cout<<"Example robots:\n";
 	//print_lines(x);
 	for(auto a:take(5,x)){
 		//PRINT(a);
 		PRINT(Robot_simple(a.second));
 		PRINT(solo_points(a.second));
-	}
-	//nyi
-	*/
+	}*/
 	
 	assert(x.size());
 	auto picker=begin(x)->first;
 	auto picks=make_picklist(picker,x);
+
+	cout<<"\n";
 	print_lines(enumerate_from(1,picks));
 
 	auto m=make_second_picks(picker,seconds(picks),x);
+
+	cout<<"\n";
 	print_lines(m);
+	write_file("out.html",as_html(m));
 
 	return 0;
 

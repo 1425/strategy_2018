@@ -138,11 +138,6 @@ std::string join(std::vector<std::string> const& a){
 	return ss.str();
 }
 
-template<typename T>
-T sum(Nonempty_vector<T> a){
-	return sum(a.get());
-}
-
 double mean(Nonempty_vector<double> const& a){
 	return sum(a)/a.size();
 }

@@ -145,7 +145,7 @@ std::pair<A,B> rand(const std::pair<A,B>*){
 template<typename T>
 std::vector<T> rand(const std::vector<T>*){
 	//return mapf([](auto){ return rand((T*)0); },range(rand()%40));
-	return mapf([](auto){ return rand((T*)0); },range(67));
+	return mapf([](auto){ return rand((T*)0); },range(10));
 }
 
 int rand(const int*){
