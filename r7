@@ -1,1 +1,1 @@
-make -j pick 2>&1 && time ./pick
+make -j pick 2>&1 && time ./pick --known_opponents 6 7 8

@@ -3,6 +3,7 @@
 #include<unistd.h>
 #include<sys/wait.h>
 #include<iomanip>
+#include<functional>
 #include "util.h"
 #include "sub.h"
 #include "util2.h"
@@ -10,6 +11,23 @@
 //start generic functions
 
 using namespace std;
+
+template<typename T>
+T index_or_last(size_t index,vector<T> v){
+	assert(v.size());
+	if(v.size()>index) return v[index];
+	return v[v.size()-1];
+}
+
+template<typename T,size_t N>
+T max(std::array<T,N> a){
+	assert(N);
+	T r=a[0];
+	for(auto elem:a){
+		r=max(elem,r);
+	}
+	return r;
+}
 
 auto atoi(string const& s){ return atoi(s.c_str()); }
 
@@ -22,6 +40,116 @@ string h1(string s){ return tag("h1",s); }
 template<typename K,typename V>
 vector<K> firsts(map<K,V> m){
 	return mapf([](auto a){ return a.first; },m);
+}
+
+template<typename T>
+vector<T> take_range(size_t start,size_t length,vector<T> in){
+	vector<T> r;
+	for(size_t at=start;at<start+length && at<in.size();at++){
+		r|=in[at];
+	}
+	return r;
+}
+
+template<typename T>
+vector<pair<T,T>> nonduplicate_pairs(vector<T> a){
+	vector<pair<T,T>> r;
+	for(auto i:range(a.size())){
+		for(auto j:range(a.size())){
+			if(i==j) continue;
+			r|=make_pair(a[i],a[j]);
+		}
+	}
+	return r;
+}
+
+template<typename T,size_t N>
+size_t index_max(array<T,N> const& a){
+	assert(N);
+	size_t r=0;
+	T value=a[0];
+	for(auto p:enumerate(a)){
+		if(p.second>value){
+			r=p.first;
+			value=p.second;
+		}
+	}
+	return r;
+}
+
+template<typename Func,typename T,size_t N>
+size_t index_max(Func f,array<T,N> const& in){
+	return index_max(mapf(f,in));
+}
+
+template<typename T,size_t N>
+std::array<std::pair<size_t,T>,N> enumerate(std::array<T,N> a){
+	std::array<pair<size_t,T>,N> r;
+	for(auto i:range(N)){
+		r[i]=make_pair(i,a[i]);
+	}
+	return r;
+}
+
+template<typename T,size_t N>
+std::array<T,N-1> without_index(size_t i,std::array<T,N> a){
+	assert(i<N);
+	std::array<T,N-1> r;
+
+	size_t in_index=0;
+	size_t out_index=0;
+	while(in_index<N){
+		if(in_index==i) in_index++;
+
+		r[out_index]=a[in_index];
+
+		in_index++;
+		out_index++;
+	}
+	return r;
+}
+
+pair<double,double> limits(vector<double> a){
+	return make_pair(min(a),max(a));
+}
+
+template<typename T>
+auto size(vector<T> v){ return v.size(); }
+
+template<typename T>
+bool all_equal(vector<T> a){
+	if(a.empty()) return 1;
+	for(auto elem:a){
+		if(elem!=a[0]){
+			return 0;
+		}
+	}
+	return 1;
+}
+
+template<typename T>
+vector<vector<T>> transpose(vector<vector<T>> in){
+	if(in.empty()) return {};
+
+	auto s=MAP(size,in);
+	assert(all_equal(s));
+	auto len=s[0];
+
+	vector<vector<T>> r;
+	for(auto i:range(len)){
+		vector<T> row;
+		for(auto a:in){
+			row|=a[i];
+		}
+		r.push_back(row);
+	}
+	return r;
+}
+
+string as_2decimals(double a){
+	stringstream ss;
+	ss<<fixed<<setprecision(2)<<a;
+	return ss.str();
 }
 
 /*template<typename A,typename B,typename C>
@@ -203,66 +331,10 @@ Climb_capabilities dead(const Climb_capabilities*){
 
 //Climb_capabilities mean(Nonempty_vector<Climb_capabilities>)nyi
 
-template<typename T,size_t N>
-T max(std::array<T,N> a){
-	assert(N);
-	T r=a[0];
-	for(auto elem:a){
-		r=max(elem,r);
-	}
-	return r;
-}
-
 using Alliance_climb=std::array<Climb_capabilities,3>;
 
 double single_climb(std::array<Climb_capabilities,3> a){
 	return 30*max(mapf([](auto x){ return x.itself; },a))+10;
-}
-
-template<typename T,size_t N>
-size_t index_max(array<T,N> const& a){
-	assert(N);
-	size_t r=0;
-	T value=a[0];
-	for(auto p:enumerate(a)){
-		if(p.second>value){
-			r=p.first;
-			value=p.second;
-		}
-	}
-	return r;
-}
-
-template<typename Func,typename T,size_t N>
-size_t index_max(Func f,array<T,N> const& in){
-	return index_max(mapf(f,in));
-}
-
-template<typename T,size_t N>
-std::array<std::pair<size_t,T>,N> enumerate(std::array<T,N> a){
-	std::array<pair<size_t,T>,N> r;
-	for(auto i:range(N)){
-		r[i]=make_pair(i,a[i]);
-	}
-	return r;
-}
-
-template<typename T,size_t N>
-std::array<T,N-1> without_index(size_t i,std::array<T,N> a){
-	assert(i<N);
-	std::array<T,N-1> r;
-
-	size_t in_index=0;
-	size_t out_index=0;
-	while(in_index<N){
-		if(in_index==i) in_index++;
-
-		r[out_index]=a[in_index];
-
-		in_index++;
-		out_index++;
-	}
-	return r;
 }
 
 double no_climb(Alliance_climb){
@@ -786,31 +858,6 @@ auto random_alliance2(vector<Robot_capabilities> in){
 	return make_pair(as_array<Robot_capabilities,3>(t.first),t.second);
 }
 
-vector<pair<double,unsigned>> make_picklist_inner(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
-	assert(picker<robot_capabilities.size());
-
-	Skellam_cdf skellam_cdf;
-	auto const& own_capabilities=robot_capabilities[picker];
-	auto robots=robot_capabilities.size();
-	vector<pair<double,unsigned>> r;
-	for(const auto partner:range(robots)){
-		if(partner==picker) continue;
-		Alliance_capabilities alliance{own_capabilities,robot_capabilities[partner],dead((Robot_capabilities*)nullptr)};
-
-		vector<double> a;
-		for(const auto opponent1:range(robots)){
-			if(opponent1==picker || opponent1==partner) continue;
-			for(const auto opponent2:range(opponent1+1,robots)){
-				if(opponent2==picker || opponent2==partner) continue;
-				Alliance_capabilities opponents{robot_capabilities[opponent1],robot_capabilities[opponent2],dead((Robot_capabilities*)nullptr)};
-				a|=expected_outcome(skellam_cdf,alliance,opponents);
-			}
-		}
-		r|=make_pair(min(a),unsigned(partner));
-	}
-	return sorted(r);
-}
-
 template<typename It,typename Out,typename Func>
 void transform1(It in_begin,It in_end,Out /*out*/,Func f){
 	vector<pid_t> pids;
@@ -833,28 +880,7 @@ void transform1(It in_begin,It in_end,Out /*out*/,Func f){
 	nyi
 }
 
-template<typename T>
-vector<T> take_range(size_t start,size_t length,vector<T> in){
-	vector<T> r;
-	for(size_t at=start;at<start+length && at<in.size();at++){
-		r|=in[at];
-	}
-	return r;
-}
-
-template<typename T>
-vector<pair<T,T>> nonduplicate_pairs(vector<T> a){
-	vector<pair<T,T>> r;
-	for(auto i:range(a.size())){
-		for(auto j:range(a.size())){
-			if(i==j) continue;
-			r|=make_pair(a[i],a[j]);
-		}
-	}
-	return r;
-}
-
-vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities){
+vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities,optional<array<unsigned,3>> known_opponents){
 	assert(picker<robot_capabilities.size());
 	Skellam_cdf skellam_cdf;
 
@@ -895,9 +921,18 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 			);
 
 			vector<double> a;
-			for(auto p:nonduplicate_pairs(interesting_opponents)){
-				Alliance_capabilities opponents{p.first,p.second,third_robot};
+			if(known_opponents){
+				Alliance_capabilities opponents{
+					robot_capabilities[(*known_opponents)[0]],
+					robot_capabilities[(*known_opponents)[1]],
+					robot_capabilities[(*known_opponents)[2]]
+				};
 				a|=expected_outcome(skellam_cdf,alliance,opponents);
+			}else{
+				for(auto p:nonduplicate_pairs(interesting_opponents)){
+					Alliance_capabilities opponents{p.first,p.second,third_robot};
+					a|=expected_outcome(skellam_cdf,alliance,opponents);
+				}
 			}
 			return make_pair(min(a),unsigned(partner));
 		}
@@ -906,7 +941,14 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 	return reversed(sorted(r));
 }
 
-auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabilities){
+auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabilities,optional<array<Team,3>> known_opponents){
+	assert(robot_capabilities.count(picker));
+	if(known_opponents){
+		for(auto team:*known_opponents){
+			assert(robot_capabilities.count(team));
+		}
+	}
+
 	//PRINT(picker);
 	vector<Team> teams;
 	vector<Robot_capabilities> capabilities;
@@ -914,6 +956,14 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 		teams|=p.first;
 		capabilities|=p.second;
 	}
+
+	auto get_index=[&](Team team)->unsigned{
+		for(auto p:enumerate(teams)){
+			if(p.second==team) return p.first;
+		}
+		assert(0);
+	};
+
 	auto d=make_picklist_inner_par(
 		//picker,
 		[&](){
@@ -924,7 +974,13 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 			}
 			assert(0);
 		}(),
-		capabilities
+		capabilities,
+		[&](){
+			if(known_opponents){
+				return optional<array<unsigned,3>>{mapf(get_index,*known_opponents)};
+			}
+			return optional<array<unsigned,3>>();
+		}()
 	);
 	return mapf(
 		[=](pair<double,int> p){
@@ -976,17 +1032,11 @@ double solo_points(Robot_capabilities const& a){
 	return expected_outcome(skellam_cdf,a1,a2);
 }
 
-template<typename T>
-T index_or_last(size_t index,vector<T> v){
-	assert(v.size());
-	if(v.size()>index) return v[index];
-	return v[v.size()-1];
-}
-
 vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 	Team picker,
 	vector<pair<double,Team>> pick_list_d,
-	map<Team,Robot_capabilities> robot_capabilities
+	map<Team,Robot_capabilities> robot_capabilities,
+	optional<array<Team,3>> known_opponents
 ){
 	auto pick_list=seconds(pick_list_d);
 	assert(robot_capabilities.count(picker));
@@ -1010,14 +1060,23 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 		for(auto candidate:other_robots){
 			Alliance_capabilities alliance{robot_capabilities[picker],robot_capabilities[partner],robot_capabilities[candidate]};
 
-			auto opponents1=filter([partner,candidate](auto x){ return x!=partner && x!=candidate; },pick_list);
-			auto top_opponents=take(2,opponents1);
-			assert(top_opponents.size()==2);
-			Alliance_capabilities opponents{
-				robot_capabilities[top_opponents[0]],
-				robot_capabilities[top_opponents[1]],
-				robot_capabilities[index_or_last(22,opponents1)]
-			};
+			auto opponents=[&]()->Alliance_capabilities{
+				if(known_opponents){
+					return Alliance_capabilities{
+						robot_capabilities[(*known_opponents)[0]],
+						robot_capabilities[(*known_opponents)[1]],
+						robot_capabilities[(*known_opponents)[2]]
+					};
+				}
+				auto opponents1=filter([partner,candidate](auto x){ return x!=partner && x!=candidate; },pick_list);
+				auto top_opponents=take(2,opponents1);
+				assert(top_opponents.size()==2);
+				return Alliance_capabilities{
+					robot_capabilities[top_opponents[0]],
+					robot_capabilities[top_opponents[1]],
+					robot_capabilities[index_or_last(22,opponents1)]
+				};
+			}();
 			auto exp=expected_outcome(skellam_cdf,alliance,opponents);
 			values|=make_pair(exp,candidate);
 		}
@@ -1068,49 +1127,6 @@ string as_html(vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
 			)
 		)
 	);
-}
-
-pair<double,double> limits(vector<double> a){
-	return make_pair(min(a),max(a));
-}
-
-template<typename T>
-auto size(vector<T> v){ return v.size(); }
-
-template<typename T>
-bool all_equal(vector<T> a){
-	if(a.empty()) return 1;
-	for(auto elem:a){
-		if(elem!=a[0]){
-			return 0;
-		}
-	}
-	return 1;
-}
-
-template<typename T>
-vector<vector<T>> transpose(vector<vector<T>> in){
-	if(in.empty()) return {};
-
-	auto s=MAP(size,in);
-	assert(all_equal(s));
-	auto len=s[0];
-
-	vector<vector<T>> r;
-	for(auto i:range(len)){
-		vector<T> row;
-		for(auto a:in){
-			row|=a[i];
-		}
-		r.push_back(row);
-	}
-	return r;
-}
-
-string as_2decimals(double a){
-	stringstream ss;
-	ss<<fixed<<setprecision(2)<<a;
-	return ss.str();
 }
 
 string colorize(double f,string s){
@@ -1221,39 +1237,99 @@ int main1(int argc,char **argv){
 	assert(x.size());
 	auto picker=begin(x)->first;
 
-	optional<array<Team,3>> opponents;
+	optional<array<Team,3>> known_opponents;
 
-	for(auto at=begin(a);at!=end(a);++at){
-		if(*at=="--picker"){
-			++at;
-			assert(at!=end(a));
+	using It=vector<string>::iterator;
+	map<string,pair<string,std::function<int(It&,It)>>> flags;
+	flags.insert(make_pair(
+		"--picker",
+		make_pair(
+			"Team number that is doing the picking.  Defaults to the lowest numbered team.",
+			[&](It& at,It end){
+				if(at==end){
+					cout<<"Error: Expected team number.\n";
+					return 1;
+				}
+	
+				picker=atoi(*at);
+				++at;
 
-			picker=atoi(*at);
-			++at;
-
-			assert(x.count(picker));
-		}else if(*at=="--known_opponents"){
-			at++;
-			assert(at!=end(a));
-
-			vector<Team> teams;
-			for(auto _:range(3)){
-				(void)_;
-				teams.push_back(atoi(*at));
+				if(x.count(picker)==0){
+					cout<<"Error: Team not found in data.  Cannot be used as picker.\n";
+					return 1;
+				}
+				return 0;
 			}
-			opponents=as_array<Team,3>(teams);
-		}else{
+		)
+	));
+
+	flags.insert(make_pair(
+		"--known_opponents",
+		make_pair(
+			"Assume that the opposing alliance is the set of three given team numbers",
+			[&known_opponents,&x](It &at,It end){
+				if(known_opponents){
+					cout<<"Error: Opponents already specified.\n";
+					return 1;
+				}
+				vector<Team> teams;
+				for(auto _:range(3)){
+					(void)_;
+					if(at==end){
+						cout<<"Error: Expected 3 team numbers of opponents.\n";
+						return 1;
+					}
+					auto team=atoi(*at);
+					if(x.count(team)==0){
+						cout<<"Error: Could not find data about opponent: "<<team<<".\n";
+						cout<<"Known teams:"<<firsts(x)<<"\n";
+						return 1;
+					}
+					teams.push_back(atoi(*at));
+					at++;
+				}
+				known_opponents=as_array<Team,3>(teams);
+				return 0;
+			}
+		)
+	));
+
+	auto show_help=[&](){
+		for(auto p:flags){
+			cout<<p.first<<"\n";
+			cout<<"\t"<<p.second.first<<"\n";
+		}
+	};
+
+	flags.insert(make_pair(
+		"--help",
+		make_pair(
+			"Display this message",
+			[&show_help](It &/*at*/,It /*end*/){
+				show_help();
+				return 1;
+			}
+		)
+	));
+
+	for(auto at=begin(a);at!=end(a);){
+		auto f=flags.find(*at);
+		if(f==flags.end()){
 			cout<<"Error: Unrecognized argument:"<<*at<<"\n";
+			show_help();
 			return 1;
 		}
+		at++;
+		auto r=f->second.second(at,end(a));
+		if(r) return r;
 	}
 
-	auto picks=make_picklist(picker,x);
+	auto picks=make_picklist(picker,x,known_opponents);
 
 	cout<<"\n";
 	print_lines(enumerate_from(1,picks));
 
-	auto m=make_second_picks(picker,picks,x);
+	auto m=make_second_picks(picker,picks,x,known_opponents);
 
 	cout<<"\n";
 	print_lines(m);
@@ -1273,9 +1349,9 @@ int main1(int argc,char **argv){
 }
 
 int main(int argc,char **argv){
-	const int threads_wanted = 20;
+	/*const int threads_wanted = 20;
 	omp_set_dynamic(false);
-	omp_set_num_threads(threads_wanted);
+	omp_set_num_threads(threads_wanted);*/
 
 	try{
 		return main1(argc,argv);
