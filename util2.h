@@ -1,6 +1,11 @@
 #ifndef UTIL2_H
 #define UTIL2_H
 
+#include "util.h"
+
+unsigned rand(const unsigned*);
+int rand(const int*);
+
 template<typename T>
 T last(Nonempty_vector<T> const& a){
 	return a[a.size()-1];
@@ -133,10 +138,6 @@ std::map<K,V> filter(Func f,std::map<K,V> const& in){
 	return r;
 }
 
-unsigned rand(const unsigned*){
-	return rand()%100;
-}
-
 template<typename A,typename B>
 std::pair<A,B> rand(const std::pair<A,B>*){
 	return std::make_pair(rand((A*)0),rand((B*)0));
@@ -146,10 +147,6 @@ template<typename T>
 std::vector<T> rand(const std::vector<T>*){
 	//return mapf([](auto){ return rand((T*)0); },range(rand()%40));
 	return mapf([](auto){ return rand((T*)0); },range(10));
-}
-
-int rand(const int*){
-	return (rand()%100)-50;
 }
 
 template<typename K,typename V>
@@ -199,9 +196,7 @@ Nonempty_vector<double> to_doubles(Nonempty_vector<T> const& a){
 	return mapf([](auto x){ return double(x); },a);
 }
 
-double mean(Nonempty_vector<unsigned> const& a){
-	return mean(to_doubles(a));
-}
+double mean(Nonempty_vector<unsigned> const&);
 
 template<typename T>
 T car(std::vector<T> const& a){
@@ -281,22 +276,7 @@ auto map_map(Func f,std::map<K,V> in)->std::map<K,decltype(f(in.begin()->second)
 	return r;
 }
 
-std::vector<std::string> split(std::string haystack,char needle){
-	std::vector<std::string> r;
-	std::stringstream ss;
-	for(auto c:haystack){
-		if(c==needle){
-			r|=ss.str();
-			ss.str("");
-		}else{
-			ss<<c;
-		}
-	}
-	if(ss.str().size()){
-		r|=ss.str();
-	}
-	return r;
-}
+std::vector<std::string> split(std::string haystack,char needle);
 
 #define RM_CONST(X) typename std::remove_const<X>::type
 #define RM_REF(X) typename std::remove_reference<X>::type
@@ -394,30 +374,14 @@ bool operator<(Sorted_array<T,N> const& a,Sorted_array<T,N> const& b){
 struct Px{ //probability
 	double x; //note: not checking 0-1 bounds!
 
-	operator double()const{ return x; }
+	operator double()const;
 };
 
-std::ostream& operator<<(std::ostream& o,Px a){
-	return o<<a.x;
-}
-
-Px& operator+=(Px& a,Px b){
-	a.x+=b.x;
-	return a;
-}
-
-Px& operator/=(Px &a,long unsigned int b){
-	a.x/=b;
-	return a;
-}
-
-Px rand(const Px*){
-	return Px{(rand()%101)/100.0};
-}
-
-Px dead(const Px*){
-	return Px{0};
-}
+std::ostream& operator<<(std::ostream& o,Px);
+Px& operator+=(Px&,Px);
+Px& operator/=(Px&,long unsigned int);
+Px rand(const Px*);
+Px dead(const Px*);
 
 template<typename A,typename B,typename C>
 std::vector<A> firsts(std::vector<std::tuple<A,B,C>> const& in){

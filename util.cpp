@@ -129,6 +129,10 @@ string table(string s){ return tag("table",s); }
 string tr(string s){ return tag("tr",s); }
 string td(string s){ return tag("td",s); }
 string th(string s){ return tag("th",s); }
+std::string small(std::string s){ return tag("small",s); }
+std::string title(std::string s){ return tag("title",s); }
+std::string head(std::string s){ return tag("head",s); }
+std::string h1(std::string s){ return tag("h1",s); }
 
 std::string join(std::vector<std::string> const& a){
 	std::stringstream ss;
@@ -142,3 +146,12 @@ double mean(Nonempty_vector<double> const& a){
 	return sum(a)/a.size();
 }
 
+vector<string> args(int argc,char **argv){
+	vector<string> r;
+	for(auto i:range(1,argc)){
+		r|=string(argv[i]);
+	}
+	return r;
+}
+
+int atoi(std::string const& s){ return atoi(s.c_str()); }

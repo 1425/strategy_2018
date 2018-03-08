@@ -2,7 +2,7 @@ CXX=g++-7
 #CC=$(CXX)
 CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -march=native -mtune=native -Ofast -flto
 
-all: 1 max_value stream adverserial skellam pick
+all: 1 max_value stream adverserial pick in_match
 
 1: util.o state.o limits.o
 
@@ -20,7 +20,9 @@ skellam:
 	#$(CXX) $(CXXFLAGS) -I/usr/include/python3.6m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
 	$(CXX) $(CXXFLAGS) -I/usr/include/python3.5m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
 
-pick: util.o sub.o
+pick: util.o sub.o decode.o util2.o
+
+in_match: util.o decode.o util2.o
 
 .PHONY: clean
 clean:

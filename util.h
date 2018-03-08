@@ -379,6 +379,10 @@ std::string table(std::string);
 std::string tr(std::string);
 std::string td(std::string);
 std::string th(std::string);
+std::string small(std::string);
+std::string title(std::string);
+std::string head(std::string);
+std::string h1(std::string);
 
 template<typename T>
 std::vector<std::pair<size_t,T>> enumerate(std::vector<T> a){
@@ -485,5 +489,82 @@ std::array<std::pair<A,B>,LEN> zip(std::array<A,LEN> a,std::array<B,LEN> b){
 	}
 	return r;
 }
+
+template<typename T,size_t N>
+T max(std::array<T,N> a){
+	assert(N);
+	T r=a[0];
+	for(auto elem:a){
+		r=std::max(elem,r);
+	}
+	return r;
+}
+
+template<typename T,size_t N>
+size_t index_max(std::array<T,N> const& a){
+	assert(N);
+	size_t r=0;
+	T value=a[0];
+	for(auto p:enumerate(a)){
+		if(p.second>value){
+			r=p.first;
+			value=p.second;
+		}
+	}
+	return r;
+}
+
+template<typename Func,typename T,size_t N>
+size_t index_max(Func f,std::array<T,N> const& in){
+	return index_max(mapf(f,in));
+}
+
+template<typename T,size_t N>
+std::array<T,N-1> without_index(size_t i,std::array<T,N> a){
+	assert(i<N);
+	std::array<T,N-1> r;
+
+	size_t in_index=0;
+	size_t out_index=0;
+	while(in_index<N){
+		if(in_index==i) in_index++;
+
+		r[out_index]=a[in_index];
+
+		in_index++;
+		out_index++;
+	}
+	return r;
+}
+
+template<typename T,size_t N>
+std::array<std::pair<size_t,T>,N> enumerate(std::array<T,N> a){
+	std::array<std::pair<size_t,T>,N> r;
+	for(auto i:range(N)){
+		r[i]=std::make_pair(i,a[i]);
+	}
+	return r;
+}
+
+std::vector<std::string> args(int argc,char **argv);
+int atoi(std::string const&);
+
+template<typename K,typename V>
+std::vector<K> firsts(std::map<K,V> m){
+	return mapf([](auto a){ return a.first; },m);
+}
+
+template<typename T>
+std::vector<std::array<T,3>> permutations(std::array<T,3> a){
+	return {
+		{a[0],a[1],a[2]},
+		{a[0],a[2],a[1]},
+		{a[1],a[0],a[2]},
+		{a[1],a[2],a[0]},
+		{a[2],a[0],a[1]},
+		{a[2],a[1],a[0]}
+	};
+}
+
 
 #endif

@@ -9,10 +9,6 @@ this is just in terms of robot actions, and does not include use of powerups.
 
 //start generic routines
 
-std::string title(std::string s){ return tag("title",s); }
-std::string head(std::string s){ return tag("head",s); }
-std::string h1(std::string s){ return tag("h1",s); }
-
 template<typename T,size_t LEN>
 std::ostream& operator<<(std::ostream& o,std::array<T,LEN> const& a){
 	o<<"[ ";
@@ -83,18 +79,6 @@ size_t count(std::array<T,SIZE> a){
 template<typename T>
 std::array<T,3> as_array(std::tuple<T,T,T> a){
 	return {std::get<0>(a),std::get<1>(a),std::get<2>(a)};
-}
-
-template<typename T>
-std::vector<std::array<T,3>> permutations(std::array<T,3> a){
-	return {
-		{a[0],a[1],a[2]},
-		{a[0],a[2],a[1]},
-		{a[1],a[0],a[2]},
-		{a[1],a[2],a[0]},
-		{a[2],a[0],a[1]},
-		{a[2],a[1],a[0]}
-	};
 }
 
 template<typename T>
