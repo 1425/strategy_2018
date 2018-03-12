@@ -12,6 +12,25 @@
 //start generic functions
 
 template<typename T>
+std::multiset<T> to_multiset(std::vector<T> a){
+	return std::multiset<T>{a.begin(),a.end()};
+}
+
+template<typename T>
+std::set<T> to_set(std::multiset<T> a){
+	return std::set<T>{std::begin(a),std::end(a)};
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o,std::multiset<T> const& a){
+	o<<"{";
+	for(auto v:to_set(a)){
+		o<<"("<<a.count(v)<<","<<v<<")";
+	}
+	return o<<"}";
+}
+
+template<typename T>
 T index_or_last(size_t index,std::vector<T> v){
 	assert(v.size());
 	if(v.size()>index) return v[index];
@@ -366,10 +385,18 @@ string show_robots(map<Team,Robot_capabilities> const& in){
 	);
 }
 
+void check_scouting_data(vector<Scouting_row> const& a){
+	#define X(A,B) cout<<""#B<<"("<<""#A<<"): "<<to_multiset(mapf([](auto x){ return x.B; },a))<<"\n";
+	SCOUTING_ROW(X)
+	#undef X
+}
+
 int main1(int argc,char **argv){
 	auto scouting_data=read_csv("TMAR.csv");
 	//PRINT(scouting_data);
 	//nyi
+	check_scouting_data(scouting_data);
+
 	auto useful=interpret(scouting_data);
 	auto x=useful;
 	//auto x=rand((map<Team,Robot_capabilities>*)nullptr);

@@ -56,7 +56,52 @@ std::string as_2decimals(double a){
 
 //start program-specific functions
 
-using Team=unsigned int;
+Alliance decode(std::string const& s,const Alliance*){
+	if(s=="blue") return Alliance::BLUE;
+	if(s=="red") return Alliance::RED;
+	stringstream ss;
+	ss<<"Invalid alliance:"<<s;
+	throw ss.str();
+}
+
+Team::Team():data(0){
+	//invalid!
+}
+
+Team::Team(unsigned i):data(i){}
+
+Team::operator unsigned()const{
+	return data;
+}
+
+std::ostream& operator<<(std::ostream& o,Team a){
+	return o<<unsigned(a);
+}
+
+Team decode(std::string const& s,const Team*){
+	return decode(s,(unsigned*)nullptr);
+}
+
+Team rand(const Team*){
+	return Team{rand((unsigned*)nullptr)};
+}
+
+ostream& operator<<(std::ostream& o,Always_null const&){
+	return o<<"(NULL)";
+}
+
+bool operator<(Always_null,Always_null){
+	return 0;
+}
+
+Always_null decode(std::string const& s,const Always_null*){
+	if(s!="NULL"){
+		std::stringstream ss;
+		ss<<"Error: Expected \"NULL\" but got: "<<s;
+		throw ss.str();
+	}
+	return Always_null{};
+}
 
 ostream& operator<<(ostream& o,Scouting_row a){
 	o<<"Scouting_row(";

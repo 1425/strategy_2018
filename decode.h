@@ -4,6 +4,7 @@
 #include "util.h"
 #include "util2.h"
 #include "sub.h"
+#include "state.h"
 
 double rand(const double*);
 double dead(const double*);
@@ -25,25 +26,45 @@ std::pair<A,B>& operator/=(std::pair<A,B> &p,long unsigned int i){
 	return p;
 }
 
-using Team=unsigned int;
+//using Team=unsigned int;
+class Team{
+	unsigned data;
+
+	public:
+	Team();
+	Team(unsigned);
+	operator unsigned()const;
+};
+
+std::ostream& operator<<(std::ostream&,Team);
+Team decode(std::string const&,const Team*);
+Team rand(const Team*);
+
+struct Always_null{};
+
+std::ostream& operator<<(std::ostream&,Always_null const&);
+Always_null decode(std::string const&,const Always_null*);
+bool operator<(Always_null,Always_null);
+
+Alliance decode(std::string const&,const Alliance*);
 
 #define SCOUTING_ROW(X)\
 	X(std::string,event_name)\
 	X(std::string,team_name)\
 	X(Team,team_number)\
-	X(std::string,alliance)\
+	X(Alliance,alliance)\
 	X(std::string,position)\
 	X(std::string,team_match_seq)\
-	X(std::string,score)\
-	X(std::string,opp_score)\
-	X(std::string,qp)\
+	X(Always_null,score)\
+	X(Always_null,opp_score)\
+	X(Always_null,qp)\
 	X(std::string,result)\
 	X(std::string,wins)\
 	X(std::string,draws)\
 	X(std::string,losses)\
-	X(std::string,match_total_score)\
-	X(std::string,match_auto_score)\
-	X(std::string,match_teleop_score)\
+	X(Always_null,match_total_score)\
+	X(Always_null,match_auto_score)\
+	X(Always_null,match_teleop_score)\
 	X(std::string,team_match_id)\
 	X(std::string,match_number)\
 	X(std::string,team_id)\

@@ -20,7 +20,7 @@ skellam:
 	#$(CXX) $(CXXFLAGS) -I/usr/include/python3.6m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
 	$(CXX) $(CXXFLAGS) -I/usr/include/python3.5m skellam.cpp -o $@ $(shell python3.6m-config --ldflags)
 
-pick: util.o sub.o decode.o util2.o
+pick: util.o sub.o decode.o util2.o state.o
 
 in_match: util.o decode.o util2.o
 
