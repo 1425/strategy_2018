@@ -23,3 +23,29 @@ Px& operator/=(Px& a,unsigned long b){
 Px dead(const Px*){ return Px{0}; }
 
 Px::operator double()const{ return x; }
+
+bool nonblank(string s){
+	for(auto c:s){
+		if(!isblank(c)){
+			return 1;
+		}
+	}
+	return 0;
+}
+
+vector<string> split(string haystack,char needle){
+	vector<string> r;
+	stringstream ss;
+	for(auto c:haystack){
+		if(c==needle){
+			r|=ss.str();
+			ss.str("");
+		}else{
+			ss<<c;
+		}
+	}
+	if(ss.str().size() && nonblank(ss.str())){
+		r|=ss.str();
+	}
+	return r;
+}

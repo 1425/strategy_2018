@@ -28,6 +28,49 @@ std::pair<A,B>& operator/=(std::pair<A,B> &p,long unsigned int i){
 using Team=unsigned int;
 
 #define SCOUTING_ROW(X)\
+	X(std::string,event_name)\
+	X(std::string,team_name)\
+	X(Team,team_number)\
+	X(std::string,alliance)\
+	X(std::string,position)\
+	X(std::string,team_match_seq)\
+	X(std::string,score)\
+	X(std::string,opp_score)\
+	X(std::string,qp)\
+	X(std::string,result)\
+	X(std::string,wins)\
+	X(std::string,draws)\
+	X(std::string,losses)\
+	X(std::string,match_total_score)\
+	X(std::string,match_auto_score)\
+	X(std::string,match_teleop_score)\
+	X(std::string,team_match_id)\
+	X(std::string,match_number)\
+	X(std::string,team_id)\
+	X(std::string,match_id)\
+	X(int,auto_scale_cube)\
+	X(int,auto_exchange_cube)\
+	X(std::string,auto_cross_baseline)\
+	X(int,auto_switch_cube)\
+	X(int,home_switch_cube)\
+	X(int,scale_cube)\
+	X(int,exchange_cube)\
+	X(std::string,no_climb)\
+	X(std::optional<int>,piggyback_climb)\
+	X(std::optional<int>,climb)\
+	X(std::string,assist)\
+	X(std::string,ground_collect_bool)\
+	X(std::string,support_failure)\
+	X(int,opp_switch_cube)\
+	X(std::string,collect_from_exchange)\
+	X(std::string,collect_from_portal_far)\
+	X(std::string,collect_from_stack)\
+	X(std::string,collect_from_portal_near)\
+	X(std::string,played_defensively)\
+	X(std::string,breakdown)\
+	X(std::string,disconnect)\
+
+#if 0
 	X(Team,team)\
 	X(std::string,match)\
 	X(unsigned int,auto_switch_cubes)\
@@ -37,6 +80,7 @@ using Team=unsigned int;
 	X(unsigned int,teleop_vault_cubes)\
 	X(unsigned int,helped_climb)\
 	X(bool,piggyback)
+#endif
 
 //TODO: put in the full set of data that we're going to care about.
 

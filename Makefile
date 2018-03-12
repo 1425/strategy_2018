@@ -24,6 +24,8 @@ pick: util.o sub.o decode.o util2.o
 
 in_match: util.o decode.o util2.o
 
+pit: util2.o decode.o
+
 .PHONY: clean
 clean:
 	rm -f 1 gmon.out max_value *.o stream adverserial skellam pick

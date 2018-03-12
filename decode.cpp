@@ -76,6 +76,8 @@ string decode(string s,const string*){
 bool decode(string s,const bool*){
 	if(s=="0") return 0;
 	if(s=="1") return 1;
+	if(s=="Yes") return 1;
+	if(s=="No") return 0;
 	stringstream ss;
 	ss<<"Invalid bool: \""<<s<<"\"";
 	throw ss.str();
@@ -87,25 +89,53 @@ unsigned decode(string s,const unsigned*){
 	return i;
 }
 
+template<typename T>
+std::optional<T> decode(string s,const std::optional<T>*){
+	if(s=="NULL"){
+		return std::optional<T>();
+	}
+	return decode(s,(T*)nullptr);
+}
+
 vector<Scouting_row> read_csv(string filename){
 	ifstream f(filename);
 	vector<Scouting_row> r;
+	bool first=1;
 	while(f.good()){
 		string s;
 		getline(f,s);
 		if(s.empty()) continue;
 
 		auto sp=split(s,',');
-		Scouting_row row;
-		#define X(A,B) assert(sp.size()); {\
-			auto v=car(sp);\
-			sp=cdr(sp);\
-			row.B=decode(v,(A*)nullptr);\
+		if(first){
+			first=0;
+			#define X(A,B) assert(sp.size()); {\
+				auto v=car(sp);\
+				sp=cdr(sp);\
+				if(""#B!=v){\
+					cout<<"B:"#B<<" "<<v<<"\n";\
+				}\
+				assert(""#B==v);\
+			}
+			SCOUTING_ROW(X)
+			#undef X
+		}else{
+			Scouting_row row;
+			#define X(A,B) assert(sp.size()); {\
+				auto v=car(sp);\
+				sp=cdr(sp);\
+				try{\
+					row.B=decode(v,(A*)nullptr);\
+				}catch(string const& s){\
+					throw string()+""#B+": "+s;\
+				}\
+			}
+			SCOUTING_ROW(X)
+			#undef X
+			//PRINT(sp);
+			assert(sp.empty());
+			r|=row;
 		}
-		SCOUTING_ROW(X)
-		#undef X
-		assert(sp.empty());
-		r|=row;
 	}
 	return r;
 }
@@ -564,28 +594,65 @@ double average_total_cubes(Robot_capabilities a){
 }
 
 map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
-	auto g=group([](auto x){ return x.team; },a);
-	return map_map(
+	auto g=group([](auto x){ return x.team_number; },a);
+	auto r=map_map(
 		[](auto a)->Robot_capabilities{
 			return Robot_capabilities{
 				mapf(
 					[](auto x){
 						return Cube_match{
-							Cubes_scored(x.teleop_scale_cubes),
-							Cubes_scored(x.teleop_switch_cubes),
-							Cubes_scored(x.teleop_vault_cubes)
+							Cubes_scored(x.auto_scale_cube+x.scale_cube),
+							Cubes_scored(x.auto_switch_cube+x.home_switch_cube+x.opp_switch_cube),
+							Cubes_scored(x.auto_exchange_cube+x.exchange_cube)
 						};
 					},
 					a
 				),
-				Climb_capabilities(),
-				Auto_capabilities()
+				[&]()->Climb_capabilities{
+					/*auto m=mapf(
+						[](auto x){
+							PRINT(x.no_climb);
+							PRINT(x.piggyback_climb);
+							PRINT(x.climb);
+							PRINT(x.assist);
+							return Climb_capabilities();
+						},
+						a
+					);
+					return mean_or_0(m);*/
+					//if(a.
+					Climb_capabilities cc{};
+					cc.drives=Px{.9};
+					cc.itself=Px{.81};
+					return cc;
+				}(),
+				Auto_capabilities{
+					mean_or_0(mapf([](auto x){ return double(x.auto_scale_cube); },a)),
+					mean_or_0(mapf([](auto x){ return double(x.auto_switch_cube); },a))
+				}
 			};
 			print_lines(a);
 			nyi
 		},
 		g
 	);
+	//START SPECIAL MUNGING
+
+	r[1425].climb.all1=Px{.8};
+	r[1425].climb.all2=Px{.7};
+	r[2471].climb.all1=Px{.8};
+	r[2471].climb.all2=Px{.7};
+
+	vector<Team> mecanums{
+		753,847,4132,4309
+	};
+	for(auto t:mecanums){
+		r[t].climb.drives=Px{0};
+	}
+	r[997].climb.drives=Px{.5};
+
+	//END SPECIAL MUNGING
+	return r;
 }
 
 using Alliance_capabilities=array<Robot_capabilities,3>;

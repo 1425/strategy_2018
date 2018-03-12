@@ -306,7 +306,8 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 			values|=make_pair(exp,candidate);
 		}
 		//PRINT(partner);
-		auto second_picks=take(22,reversed(sorted(values)));
+		//auto second_picks=take(22,reversed(sorted(values)));
+		auto second_picks=reversed(sorted(values));
 		//print_lines(second_picks);
 		out|=make_pair(p,second_picks);
 
@@ -366,7 +367,12 @@ string show_robots(map<Team,Robot_capabilities> const& in){
 }
 
 int main1(int argc,char **argv){
-	auto x=rand((map<Team,Robot_capabilities>*)nullptr);
+	auto scouting_data=read_csv("TMAR.csv");
+	//PRINT(scouting_data);
+	//nyi
+	auto useful=interpret(scouting_data);
+	auto x=useful;
+	//auto x=rand((map<Team,Robot_capabilities>*)nullptr);
 	//x=take(5,x);
 
 	write_file("robots.html",show_robots(x));
@@ -382,7 +388,7 @@ int main1(int argc,char **argv){
 	auto a=args(argc,argv);
 
 	assert(x.size());
-	auto picker=begin(x)->first;
+	auto picker=1425;//begin(x)->first;
 
 	optional<array<Team,3>> known_opponents;
 
