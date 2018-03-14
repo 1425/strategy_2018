@@ -24,6 +24,10 @@ Px dead(const Px*){ return Px{0}; }
 
 Px::operator double()const{ return x; }
 
+std::ostream& operator<<(std::ostream& o,Px a){
+	return o<<a.x;
+}
+
 bool nonblank(string s){
 	for(auto c:s){
 		if(!isblank(c)){

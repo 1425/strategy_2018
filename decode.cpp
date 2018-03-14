@@ -103,9 +103,9 @@ Always_null decode(std::string const& s,const Always_null*){
 	return Always_null{};
 }
 
-ostream& operator<<(ostream& o,Scouting_row a){
+ostream& operator<<(ostream& o,Scouting_row1 const& a){
 	o<<"Scouting_row(";
-	SCOUTING_ROW(SHOW)
+	SCOUTING_ROW1(SHOW)
 	return o<<")";
 }
 
@@ -141,6 +141,8 @@ std::optional<T> decode(string s,const std::optional<T>*){
 	}
 	return decode(s,(T*)nullptr);
 }
+
+#define SCOUTING_ROW SCOUTING_ROW2
 
 vector<Scouting_row> read_csv(string filename){
 	ifstream f(filename);
@@ -378,7 +380,13 @@ using Switch_cubes=Cubes_scored;
 using Vault_cubes=Cubes_scored;
 //using Cube_match=tuple<Scale_cubes,Switch_cubes,Vault_cubes>;
 
-ostream& operator<<(ostream&,Cube_match)nyi
+ostream& operator<<(ostream& o,Cube_match a){
+	o<<"Cube_match( ";
+	#define X(A,B) o<<""#B<<":"<<a.B<<" ";
+	CUBE_MATCH(X)
+	#undef X
+	return o<<")";
+}
 
 Cube_match rand(const Cube_match*){
 	Cube_match r;
@@ -681,8 +689,9 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 		},
 		g
 	);
-	//START SPECIAL MUNGING
 
+	//START SPECIAL MUNGING
+	#if 0
 	r[1425].climb.all1=Px{.8};
 	r[1425].climb.all2=Px{.7};
 	r[2471].climb.all1=Px{.8};
@@ -695,8 +704,9 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 		r[t].climb.drives=Px{0};
 	}
 	r[997].climb.drives=Px{.5};
-
+	#endif
 	//END SPECIAL MUNGING
+	//
 	return r;
 }
 

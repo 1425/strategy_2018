@@ -48,7 +48,7 @@ bool operator<(Always_null,Always_null);
 
 Alliance decode(std::string const&,const Alliance*);
 
-#define SCOUTING_ROW(X)\
+#define SCOUTING_ROW1(X)\
 	X(std::string,event_name)\
 	X(std::string,team_name)\
 	X(Team,team_number)\
@@ -105,11 +105,36 @@ Alliance decode(std::string const&,const Alliance*);
 
 //TODO: put in the full set of data that we're going to care about.
 
-struct Scouting_row{
-	SCOUTING_ROW(INST)
+struct Scouting_row1{
+	SCOUTING_ROW1(INST)
 };
 
-std::ostream& operator<<(std::ostream& o,Scouting_row a);
+std::ostream& operator<<(std::ostream& o,Scouting_row1 const&);
+
+#define SCOUTING_ROW2(X)\
+	X(int,event_year)\
+	X(std::string,event_name)\
+	X(Team,team_number)\
+	X(std::string,team_match_id)\
+	X(std::string,team_match_seq)\
+	X(int,auto_scale_cube)\
+	X(int,auto_exchange_cube)\
+	X(int,auto_switch_cube)\
+	X(int,home_switch_cube)\
+	X(int,opp_switch_cube)\
+	X(int,scale_cube)\
+	X(int,exchange_cube)\
+	X(std::optional<int>,climb)\
+	X(std::string,assist)\
+	X(std::optional<int>,piggyback_climb_boolean)\
+
+struct Scouting_row2{
+	SCOUTING_ROW2(INST)
+};
+
+std::ostream& operator<<(std::ostream&,Scouting_row2 const&);
+
+using Scouting_row=Scouting_row2;
 
 int decode(std::string s,const int*);
 

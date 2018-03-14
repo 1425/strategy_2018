@@ -385,45 +385,62 @@ string show_robots(map<Team,Robot_capabilities> const& in){
 	);
 }
 
-void check_scouting_data(vector<Scouting_row> const& a){
+void check_scouting_data(vector<Scouting_row1> const& a){
 	#define X(A,B) cout<<""#B<<"("<<""#A<<"): "<<to_multiset(mapf([](auto x){ return x.B; },a))<<"\n";
-	SCOUTING_ROW(X)
+	SCOUTING_ROW1(X)
 	#undef X
 }
 
+void check_scouting_data(vector<Scouting_row2> const& a){
+	#define X(A,B) cout<<""#B<<"("<<""#A<<"): "<<to_multiset(mapf([](auto x){ return x.B; },a))<<"\n";
+	SCOUTING_ROW2(X)
+	#undef X
+
+	auto climbing=to_multiset(mapf([](auto x){ return make_tuple(x.climb,x.assist,x.piggyback_climb_boolean); },a));
+	PRINT(climbing);
+}
+
 int main1(int argc,char **argv){
-	auto scouting_data=read_csv("TMAR.csv");
-	//PRINT(scouting_data);
-	//nyi
-	check_scouting_data(scouting_data);
-
-	auto useful=interpret(scouting_data);
-	auto x=useful;
-	//auto x=rand((map<Team,Robot_capabilities>*)nullptr);
-	//x=take(5,x);
-
-	write_file("robots.html",show_robots(x));
-	
-	/*cout<<"Example robots:\n";
-	//print_lines(x);
-	for(auto a:take(5,x)){
-		//PRINT(a);
-		PRINT(Robot_simple(a.second));
-		PRINT(solo_points(a.second));
-	}*/
-	
 	auto a=args(argc,argv);
 
-	assert(x.size());
-	auto picker=1425;//begin(x)->first;
-
+	auto picker=1425;
 	optional<array<Team,3>> known_opponents;
+	string match_data_file="2018orwil/TMAR.csv";
 
 	using It=vector<string>::iterator;
-	map<string,pair<string,std::function<int(It&,It)>>> flags;
+	using Team_data=map<Team,Robot_capabilities>;
+
+	map<
+		string,
+		tuple<
+			string,
+			std::function<int(It&,It)>,
+			std::function<int(Team_data)>
+		>
+	> flags;
+
+	flags.insert(make_pair(
+		"--match_data",
+		make_tuple(
+			"Path to match data CSV",
+			[&](It& at,It end){
+				if(at==end){
+					cout<<"Error: Expected path.\n";
+					return 1;
+				}
+				match_data_file=*at;
+				at++;
+				return 0;
+			},
+			[](Team_data){
+				return 0;
+			}
+		)
+	));
+
 	flags.insert(make_pair(
 		"--picker",
-		make_pair(
+		make_tuple(
 			"Team number that is doing the picking.  Defaults to the lowest numbered team.",
 			[&](It& at,It end){
 				if(at==end){
@@ -433,7 +450,9 @@ int main1(int argc,char **argv){
 	
 				picker=atoi(*at);
 				++at;
-
+				return 0;
+			},
+			[&picker](Team_data x){
 				if(x.count(picker)==0){
 					cout<<"Error: Team not found in data.  Cannot be used as picker.\n";
 					return 1;
@@ -445,9 +464,9 @@ int main1(int argc,char **argv){
 
 	flags.insert(make_pair(
 		"--known_opponents",
-		make_pair(
+		make_tuple(
 			"Assume that the opposing alliance is the set of three given team numbers",
-			[&known_opponents,&x](It &at,It end){
+			[&known_opponents](It &at,It end){
 				if(known_opponents){
 					cout<<"Error: Opponents already specified.\n";
 					return 1;
@@ -460,15 +479,22 @@ int main1(int argc,char **argv){
 						return 1;
 					}
 					auto team=atoi(*at);
-					if(x.count(team)==0){
-						cout<<"Error: Could not find data about opponent: "<<team<<".\n";
-						cout<<"Known teams:"<<firsts(x)<<"\n";
-						return 1;
-					}
-					teams.push_back(atoi(*at));
+					teams.push_back(team);
 					at++;
 				}
 				known_opponents=as_array<Team,3>(teams);
+				return 0;
+			},
+			[&known_opponents](Team_data x){
+				if(known_opponents){
+					for(auto team:*known_opponents){
+						if(x.count(team)==0){
+							cout<<"Error: Could not find data about opponent: "<<team<<".\n";
+							cout<<"Known teams:"<<firsts(x)<<"\n";
+							return 1;
+						}
+					}
+				}
 				return 0;
 			}
 		)
@@ -477,17 +503,20 @@ int main1(int argc,char **argv){
 	auto show_help=[&](){
 		for(auto p:flags){
 			cout<<p.first<<"\n";
-			cout<<"\t"<<p.second.first<<"\n";
+			cout<<"\t"<<get<0>(p.second)<<"\n";
 		}
 	};
 
 	flags.insert(make_pair(
 		"--help",
-		make_pair(
+		make_tuple(
 			"Display this message",
 			[&show_help](It &/*at*/,It /*end*/){
 				show_help();
 				return 1;
+			},
+			[](Team_data){
+				return 0;
 			}
 		)
 	));
@@ -500,10 +529,29 @@ int main1(int argc,char **argv){
 			return 1;
 		}
 		at++;
-		auto r=f->second.second(at,end(a));
+		auto r=get<1>(f->second)(at,end(a));
 		if(r) return r;
 	}
 
+	auto scouting_data=read_csv(match_data_file);
+	//PRINT(scouting_data);
+	//nyi
+	check_scouting_data(scouting_data);
+
+	auto useful=interpret(scouting_data);
+	auto x=useful;
+	//auto x=rand((map<Team,Robot_capabilities>*)nullptr);
+	//x=take(5,x);
+	if(x.empty()){
+		cout<<"Error: Failed to get information about any teams.  Aborting.\n";
+		return 1;
+	}
+
+	/*PRINT(x);
+	nyi*/
+
+	write_file("robots.html",show_robots(x));
+	
 	auto picks=make_picklist(picker,x,known_opponents);
 
 	cout<<"\n";
