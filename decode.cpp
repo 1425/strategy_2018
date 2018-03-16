@@ -1,6 +1,7 @@
 #include "decode.h"
 #include<fstream>
 #include<iomanip>
+#include "skellam_local.h"
 
 using namespace std;
 
@@ -450,7 +451,7 @@ double average_total_cubes(Cube_capabilities a){
 	return mean_or_0(scale_cubes(a))+mean_or_0(switch_cubes(a))+mean_or_0(vault_cubes(a));
 }
 
-double scale_expectation(Skellam_cdf const& skellam_cdf,double cubes1,double cubes2){
+double scale_expectation(double cubes1,double cubes2){
 	assert(cubes1>=0);
 	assert(cubes2>=0);
 
@@ -467,7 +468,7 @@ double scale_expectation(Skellam_cdf const& skellam_cdf,double cubes1,double cub
 	//next step: make it instead be based on a Skellam distribution & some summations.
 	static const int INTERVALS=67;
 	return 2*sum(mapf(
-		[&](auto t){
+		[&](auto t)->double{
 			auto c1=cubes1*t/INTERVALS;
 			auto c2=cubes2*t/INTERVALS;
 			/*PRINT(c1);
@@ -476,7 +477,9 @@ double scale_expectation(Skellam_cdf const& skellam_cdf,double cubes1,double cub
 			auto b=skellam_cdf(c2,c1,-1);
 			PRINT(a);
 			PRINT(b);*/
-			return skellam_cdf(c2,c1,-1)-skellam_cdf(c1,c2,-1);
+			//(void)c1; (void)c2; nyi//return skellam_cdf(c2,c1,-1)-skellam_cdf(c1,c2,-1);
+			auto p=skellam_totals(c1,c2);
+			return p.second-p.first;
 		},
 		range_st<int,INTERVALS>()
 	));
@@ -504,14 +507,14 @@ double vault(Cube_capabilities a){
 	return mean_or_0(vault_cubes(a));
 }
 
-double expected_outcome(Skellam_cdf const& skellam_cdf,Cube_capabilities a,Cube_capabilities b){
+double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 	//TODO: Make it so that each of the teams can try different strategies.
 	/*auto mean_or_zero=[](auto a){
 		if(a.empty())nyi
 		return mean(make_nonempty(a));
 	};*/
-	return scale_expectation(skellam_cdf,mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
-		scale_expectation(skellam_cdf,mean_or_0(switch_cubes(a)),mean_or_0(switch_cubes(b)))+
+	return scale_expectation(mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
+		scale_expectation(mean_or_0(switch_cubes(a)),mean_or_0(switch_cubes(b)))+
 		vault_value(vault(a))-vault_value(vault(b));
 }
 
@@ -750,13 +753,12 @@ array<Auto_capabilities,3> auton(Alliance_capabilities const& a){
 	return mapf([](auto x){ return x.auton; },a);
 }
 
-double expected_outcome(Skellam_cdf const& skellam_cdf,Alliance_capabilities a,Alliance_capabilities b){
+double expected_outcome(Alliance_capabilities a,Alliance_capabilities b){
 	//returns # of points expect alliance 'a' to win by.
 	double auto_pts=expected_value(auton(a))-expected_value(auton(b));
 	double climb=expected_value(climbs(a))-expected_value(climbs(b));
 
 	auto from_cubes=expected_outcome(
-		skellam_cdf,
 		distill_cubes(a),
 		distill_cubes(b)
 	);

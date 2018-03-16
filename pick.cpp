@@ -5,7 +5,6 @@
 #include<iomanip>
 #include<functional>
 #include "util.h"
-#include "sub.h"
 #include "util2.h"
 #include "decode.h"
 
@@ -126,7 +125,6 @@ void transform1(It in_begin,It in_end,Out /*out*/,Func f){
 
 vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities,optional<array<unsigned,3>> known_opponents){
 	assert(picker<robot_capabilities.size());
-	Skellam_cdf skellam_cdf;
 
 	auto const& own_capabilities=robot_capabilities[picker];
 	auto robots=robot_capabilities.size();
@@ -171,11 +169,11 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 					robot_capabilities[(*known_opponents)[1]],
 					robot_capabilities[(*known_opponents)[2]]
 				};
-				a|=expected_outcome(skellam_cdf,alliance,opponents);
+				a|=expected_outcome(alliance,opponents);
 			}else{
 				for(auto p:nonduplicate_pairs(interesting_opponents)){
 					Alliance_capabilities opponents{p.first,p.second,third_robot};
-					a|=expected_outcome(skellam_cdf,alliance,opponents);
+					a|=expected_outcome(alliance,opponents);
 				}
 			}
 			return make_pair(min(a),unsigned(partner));
@@ -262,7 +260,6 @@ ostream& operator<<(ostream& o,Robot_simple const& a){
 }
 
 double solo_points(Robot_capabilities const& a){
-	Skellam_cdf skellam_cdf;
 	auto d=dead((Robot_capabilities*)nullptr);
 	Alliance_capabilities a1{a,d,d};
 	Alliance_capabilities a2{dead((Alliance_capabilities*)nullptr)};
@@ -273,7 +270,7 @@ double solo_points(Robot_capabilities const& a){
 	auto v=expected_outcome(skellam_cdf,d1,d2);
 	PRINT(v);*/
 
-	return expected_outcome(skellam_cdf,a1,a2);
+	return expected_outcome(a1,a2);
 }
 
 vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
@@ -291,7 +288,6 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 
 	//PRINT(picker);
 	//PRINT(pick_list);
-	Skellam_cdf skellam_cdf;
 
 	vector<pair<pair<double,Team>,vector<pair<double,Team>>>> out;
 	for(auto p:take(15,pick_list_d)){
@@ -321,7 +317,7 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 					robot_capabilities[index_or_last(22,opponents1)]
 				};
 			}();
-			auto exp=expected_outcome(skellam_cdf,alliance,opponents);
+			auto exp=expected_outcome(alliance,opponents);
 			values|=make_pair(exp,candidate);
 		}
 		//PRINT(partner);
@@ -405,7 +401,7 @@ int main1(int argc,char **argv){
 
 	auto picker=1425;
 	optional<array<Team,3>> known_opponents;
-	string match_data_file="2018orwil/TMAR.csv";
+	string match_data_file="2018orwil/post_event.csv";
 
 	using It=vector<string>::iterator;
 	using Team_data=map<Team,Robot_capabilities>;

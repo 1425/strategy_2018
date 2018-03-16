@@ -3,7 +3,6 @@
 
 #include "util.h"
 #include "util2.h"
-#include "sub.h"
 #include "state.h"
 
 double rand(const double*);
@@ -257,13 +256,13 @@ std::vector<Cubes_scored> vault_cubes(std::vector<Cube_match> const&);
 
 double average_total_cubes(Cube_capabilities);
 
-double scale_expectation(Skellam_cdf const&,double cubes1,double cubes2);
+double scale_expectation(double cubes1,double cubes2);
 
 int vault_value(Cubes_scored);
 
 double vault(Cube_capabilities);
 
-double expected_outcome(Skellam_cdf const&,Cube_capabilities,Cube_capabilities);
+double expected_outcome(Cube_capabilities,Cube_capabilities);
 
 #define AUTO_CAPABILITIES(X)\
 	X(double,scale_cubes)\
@@ -323,7 +322,7 @@ Cube_capabilities distill_cubes(Alliance_capabilities);
 
 std::array<Auto_capabilities,3> auton(Alliance_capabilities const&);
 
-double expected_outcome(Skellam_cdf const& skellam_cdf,Alliance_capabilities a,Alliance_capabilities b);
+double expected_outcome(Alliance_capabilities a,Alliance_capabilities b);
 
 Alliance_capabilities random_alliance(std::vector<Robot_capabilities> in);
 

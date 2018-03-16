@@ -133,15 +133,21 @@ template<typename Func,typename T,size_t LEN>
 auto mapf(Func f,std::array<T,LEN> const& in)->
 	std::array<decltype(f(*begin(in))),LEN>
 {
+	std::array<decltype(f(*begin(in))),LEN> r;
+	for(auto i:range(LEN)){
+		r[i]=f(in[i]);
+	}
+	return r;
+	/*
 	using Out_elem=decltype(f(*begin(in)));
 	using Out=std::array<Out_elem,LEN>;
-	char s[sizeof(Out)];
+	char s[sizeof(Out)];//assuming that we don't have to care about alignment requirements.
 	Out &data=*(Out*)s;
 	
 	for(auto i:range(LEN)){
 		new(&data[i]) Out_elem(f(in[i]));
 	}
-	return data;
+	return data;*/
 }
 
 template<typename T,size_t LIM>
