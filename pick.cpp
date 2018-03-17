@@ -155,7 +155,7 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 
 			auto opponents=seconds(filter([picker,partner](auto p){ return p.first!=picker && p.first!=partner; },enumerate(robot_capabilities)));
 			auto interesting_opponents=take(
-				3,
+				5,
 				reversed(sorted(
 					opponents,
 					[](auto a){ return mean_or_0(scale_cubes(a.cubes))+mean_or_0(switch_cubes(a.cubes))+mean_or_0(vault_cubes(a.cubes))/3.0; }
