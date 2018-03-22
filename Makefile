@@ -1,8 +1,8 @@
-CXX=g++-7
+CXX=g++
 #CC=$(CXX)
 CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -march=native -mtune=native -Ofast -flto
 
-all: 1 max_value stream adverserial pick in_match
+all: 1 max_value stream adverserial pick in_match correlation
 
 1: util.o state.o limits.o
 
@@ -26,6 +26,8 @@ in_match: util.o decode.o util2.o
 
 pit: util2.o decode.o
 
+correlation: util.o decode.o util2.o
+
 .PHONY: clean
 clean:
-	rm -f 1 gmon.out max_value *.o stream adverserial skellam pick
+	rm -f 1 gmon.out max_value *.o stream adverserial skellam pick in_match correlation

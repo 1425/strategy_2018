@@ -105,8 +105,14 @@ Always_null decode(std::string const& s,const Always_null*){
 }
 
 ostream& operator<<(ostream& o,Scouting_row1 const& a){
-	o<<"Scouting_row(";
+	o<<"Scouting_row1(";
 	SCOUTING_ROW1(SHOW)
+	return o<<")";
+}
+
+ostream& operator<<(ostream& o,Scouting_row2 const& a){
+	o<<"Scouting_row2(";
+	SCOUTING_ROW2(SHOW)
 	return o<<")";
 }
 

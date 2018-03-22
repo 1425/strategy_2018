@@ -287,6 +287,10 @@ class Nonempty_vector{
 	std::vector<T> data;
 
 	public:
+	explicit Nonempty_vector(std::initializer_list<T> a):data(a){
+		assert(a.size());
+	}
+
 	explicit Nonempty_vector(std::vector<T> a):data(a){
 		assert(a.size());
 	}
@@ -302,6 +306,11 @@ class Nonempty_vector{
 	auto end()const{ return data.end(); }
 	T const& operator[](size_t i)const{ return data[i]; }
 };
+
+template<typename T>
+std::ostream& operator<<(std::ostream& o,Nonempty_vector<T> const& a){
+	return o<<a.get();
+}
 
 template<typename T>
 Nonempty_vector<T> make_nonempty(std::vector<T> a){
