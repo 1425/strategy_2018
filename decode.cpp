@@ -520,7 +520,10 @@ double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 		return mean(make_nonempty(a));
 	};*/
 	return scale_expectation(mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
-		scale_expectation(mean_or_0(switch_cubes(a)),mean_or_0(switch_cubes(b)))+
+		scale_expectation(
+			mean_or_0(scale_cubes(a)+switch_cubes(a)),
+			mean_or_0(scale_cubes(b)+switch_cubes(b))
+		)+
 		vault_value(vault(a))-vault_value(vault(b));
 }
 
@@ -659,7 +662,7 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 	auto g=group([](auto x){ return x.team_number; },a);
 	auto r=map_map(
 		[](auto a)->Robot_capabilities{
-			return Robot_capabilities{
+			Robot_capabilities r{
 				mapf(
 					[](auto x){
 						return Cube_match{
@@ -684,8 +687,17 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 					return mean_or_0(m);*/
 					//if(a.
 					Climb_capabilities cc{};
-					cc.drives=Px{.9};
-					cc.itself=Px{.81};
+					cc.drives=Px{.5};
+					//PRINT(a);
+					cc.itself=Px{mean_or_0(
+						mapf(
+							[](auto a){ return double(*a); },
+							filter(
+								[](auto a){ return a.has_value(); },
+								mapf([](auto x){ return x.climb; },a)
+							)
+						)
+					)}; //Px{.81};
 					return cc;
 				}(),
 				Auto_capabilities{
@@ -693,6 +705,8 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 					mean_or_0(mapf([](auto x){ return double(x.auto_switch_cube); },a))
 				}
 			};
+			//r.cubes.switch_cubes=max(r.cubes.switch_cubes,r.cubes.scale_cubes);
+			return r;
 			print_lines(a);
 			nyi
 		},
@@ -700,20 +714,20 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 	);
 
 	//START SPECIAL MUNGING
-	#if 0
 	r[1425].climb.all1=Px{.8};
 	r[1425].climb.all2=Px{.7};
-	r[2471].climb.all1=Px{.8};
-	r[2471].climb.all2=Px{.7};
+	//r[2471].climb.all1=Px{.8};
+	//r[2471].climb.all2=Px{.7};
 
 	vector<Team> mecanums{
-		753,847,4132,4309
+		//753,847,4132,4309
+		492,948,949,2557,4579,3786
 	};
 	for(auto t:mecanums){
 		r[t].climb.drives=Px{0};
 	}
-	r[997].climb.drives=Px{.5};
-	#endif
+	//r[997].climb.drives=Px{.5};
+	//#endif
 	//END SPECIAL MUNGING
 	//
 	return r;

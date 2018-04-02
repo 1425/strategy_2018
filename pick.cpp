@@ -123,6 +123,71 @@ void transform1(It in_begin,It in_end,Out /*out*/,Func f){
 	nyi
 }
 
+using Partial_picks=array<array<std::optional<Team>,3>,8>;
+
+struct Alliance_selection_in_progress{
+
+	Partial_picks partial_picks;
+	
+	vector<Team> rankings;
+
+	bool ok()const{
+		nyi
+	}
+};
+
+template<typename T,size_t N1,size_t N2>
+array<T,N1*N2> flatten(array<array<T,N1>,N2>){
+	nyi
+}
+
+template<typename T,size_t N>
+vector<T> non_null(array<std::optional<T>,N>)nyi
+
+template<typename T,size_t N>
+vector<pair<size_t,T>> enumerate_from(size_t,array<T,N>)nyi
+
+vector<Team> taken(Alliance_selection_in_progress a){
+	return non_null(flatten(a.partial_picks));
+}
+
+vector<Team> available_teams(Alliance_selection_in_progress a){
+	return filter(
+		[](auto /*x*/)->bool{
+			nyi
+		},
+		a.rankings
+	);
+}
+
+ostream& operator<<(std::ostream& o,Alliance_selection_in_progress const& a){
+	o<<"Current alliances:\n";
+	for(auto p:enumerate_from(1,a.partial_picks)){
+		auto t=p.second;
+		o<<p.first<<"\t"<<t[0]<<"\t"<<t[1]<<"\t"<<t[2]<<"\n";
+	}
+
+	o<<"Available teams:\n";
+	nyi//for(auto t:filter(
+}
+
+vector<pair<double,unsigned>> make_picklist_with_known(Team picker,vector<Robot_capabilities> const& robot_capabilities,Partial_picks partial_picks){
+	(void)picker;
+	(void)robot_capabilities;
+	(void)partial_picks;
+	nyi
+}
+
+template<typename T>
+bool contains(T a,int i){
+	for(auto elem:a){
+		if(elem==i){
+			return 1;
+		}
+	}
+	return 0;
+}
+
 vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Robot_capabilities> const& robot_capabilities,optional<array<unsigned,3>> known_opponents){
 	assert(picker<robot_capabilities.size());
 
@@ -173,7 +238,13 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 			}else{
 				for(auto p:nonduplicate_pairs(interesting_opponents)){
 					Alliance_capabilities opponents{p.first,p.second,third_robot};
-					a|=expected_outcome(alliance,opponents);
+					auto penalty=[&](){
+						if(partner==949){
+							return 20;
+						}
+						return 0;
+					}();
+					a|=expected_outcome(alliance,opponents)-penalty;
 				}
 			}
 			return make_pair(min(a),unsigned(partner));
@@ -290,7 +361,7 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 	//PRINT(pick_list);
 
 	vector<pair<pair<double,Team>,vector<pair<double,Team>>>> out;
-	for(auto p:take(15,pick_list_d)){
+	for(auto p:take(24,pick_list_d)){
 		auto partner=p.second;
 		auto other_robots=filter(
 			[&](auto a){ return a!=picker && a!=partner; },
@@ -357,7 +428,7 @@ string as_html(vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
 							join(mapf(
 								[](auto x){
 									//return td(as_string(x));
-									return tag("td","align=right",as_string(x.second)+"<br>"+small(as_string(int(x.first))));
+									return tag("td","align=right",as_string(x.second)+"<br>"/*+small(as_string(int(x.first)))*/);
 								},
 								p.second
 							))
