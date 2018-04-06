@@ -258,6 +258,11 @@ double single_climb(std::array<Climb_capabilities,3> a){
 	return 30*max(mapf([](auto x){ return x.itself; },a))+10;
 }
 
+double share_bar_climb(std::array<Climb_capabilities,3> a){
+	auto s=sorted(mapf([](auto x){ return x.itself; },a));
+	return 30*(s[0]+s[1])+5;
+}
+
 double no_climb(Alliance_climb){
 	return 15;
 }
@@ -317,6 +322,7 @@ double expected_value(std::array<Climb_capabilities,3> a){
 	return max({
 		no_climb(a),
 		single_climb(a),
+		share_bar_climb(a),
 		bar1(a),
 		bar2(a),
 		lift1(a),
@@ -698,6 +704,12 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 							)
 						)
 					)}; //Px{.81};
+					cc.bar1=Px{0};
+					cc.bar2=Px{0};
+					cc.lift1=Px{0};
+					cc.lift2=Px{0};
+					cc.all1=Px{0};
+					cc.all2=Px{0};
 					return cc;
 				}(),
 				Auto_capabilities{
@@ -716,15 +728,18 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 	//START SPECIAL MUNGING
 	r[1425].climb.all1=Px{.8};
 	r[1425].climb.all2=Px{.7};
-	//r[2471].climb.all1=Px{.8};
-	//r[2471].climb.all2=Px{.7};
+	r[2471].climb.all1=Px{.8};
+	r[2471].climb.all2=Px{.7};
 
 	vector<Team> mecanums{
 		//753,847,4132,4309
 		492,948,949,2557,4579,3786
 	};
 	for(auto t:mecanums){
-		r[t].climb.drives=Px{0};
+		auto f=r.find(t);
+		if(f!=r.end()){
+			f->second.climb.drives=Px{0};
+		}
 	}
 	//r[997].climb.drives=Px{.5};
 	//#endif
@@ -820,10 +835,11 @@ string capabilities_table(vector<pair<Team,Robot_capabilities>> const& in){
 					p.second.auton.switch_cubes,
 					mean_or_0(p.second.cubes).scale_cubes,
 					mean_or_0(p.second.cubes).switch_cubes,
+					mean_or_0(p.second.cubes).vault_cubes,
 					p.second.climb.drives,
 					p.second.climb.itself,
-					p.second.climb.bar1,
-					p.second.climb.bar2,
+					//p.second.climb.bar1,
+					//p.second.climb.bar2,
 					p.second.climb.lift1,
 					p.second.climb.lift2,
 					p.second.climb.all1,
@@ -843,10 +859,11 @@ string capabilities_table(vector<pair<Team,Robot_capabilities>> const& in){
 			"Auto switch cubes",
 			"Scale cubes",
 			"Switch cubes",
+			"Exchange cubes",
 			"Climb_drive",
 			"Climb_itself",
-			"Climb_bar1",
-			"Climb_bar2",
+			//"Climb_bar1",
+			//"Climb_bar2",
 			"Climb_lift1",
 			"Climb_lift2",
 			"Climb_all1",

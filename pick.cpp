@@ -404,8 +404,12 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 }
 
 
-string as_html(vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
-	auto title1="Team 1425 Picklist";
+string as_html(Team picker,vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
+	auto title1=[=](){
+		stringstream ss;
+		ss<<"Team "<<picker<<" Picklist";
+		return ss.str();
+	}();
 	return html(
 		head(title(title1))+
 		body(
@@ -428,7 +432,7 @@ string as_html(vector<pair<pair<double,Team>,vector<pair<double,Team>>>> in){
 							join(mapf(
 								[](auto x){
 									//return td(as_string(x));
-									return tag("td","align=right",as_string(x.second)+"<br>"/*+small(as_string(int(x.first)))*/);
+									return tag("td","align=right",as_string(x.second)+"<br>"+small(as_string(int(x.first))));
 								},
 								p.second
 							))
@@ -628,7 +632,7 @@ int main1(int argc,char **argv){
 
 	cout<<"\n";
 	print_lines(m);
-	write_file("out.html",as_html(m));
+	write_file("out.html",as_html(picker,m));
 
 	return 0;
 
