@@ -499,9 +499,11 @@ double scale_expectation(double cubes1,double cubes2){
 
 int vault_value(Cubes_scored cubes){
 	/*individual cube values:
-	 * 15/15/15
+	 * 15/15 (12.5?)/15
 	 * 10/10/10
 	 * 5/5/5
+	 * 
+	 * TODO: Figure out if there is a more linear function to do this so that don't end up with weird thresholds.
 	 * */
 	if(cubes<1) return 0;
 	if(cubes<2) return 15;
@@ -521,16 +523,64 @@ double vault(Cube_capabilities a){
 
 double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 	//TODO: Make it so that each of the teams can try different strategies.
-	/*auto mean_or_zero=[](auto a){
-		if(a.empty())nyi
-		return mean(make_nonempty(a));
-	};*/
-	return scale_expectation(mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
+
+	/*
+	Version used at 2018waamv/2018pncmp
+ 	return scale_expectation(mean_or_0(scale_cubes(a)),mean_or_0(scale_cubes(b)))+
 		scale_expectation(
 			mean_or_0(scale_cubes(a)+switch_cubes(a)),
 			mean_or_0(scale_cubes(b)+switch_cubes(b))
 		)+
-		vault_value(vault(a))-vault_value(vault(b));
+		vault_value(vault(a))-vault_value(vault(b));*/
+
+	const auto a_scale=mean_or_0(scale_cubes(a));
+	const auto b_scale=mean_or_0(scale_cubes(b));
+	const auto a_switch=mean_or_0(switch_cubes(a));
+	const auto b_switch=mean_or_0(switch_cubes(b));
+	auto a_vault=vault(a);
+	auto b_vault=vault(b);
+
+	static const unsigned PYRAMID=10;
+	static const unsigned SWITCH=6;
+	static const unsigned PORTAL=7;
+	static const unsigned MAX_CUBES=2*(PYRAMID+SWITCH+PORTAL);
+
+	//if the match is not running out of cubes, but you are then assume that you're able to grab 2 more cubes from the center of the field than your opponents.
+	static const unsigned FROM_OPPONENT_SWITCH=2;
+
+	static const unsigned TEAM_MAX=PYRAMID+SWITCH+PORTAL+FROM_OPPONENT_SWITCH;
+
+	{
+		auto team_a=a_scale+a_switch+a_vault;
+		if(team_a>TEAM_MAX){
+			a_vault=max(0.0,TEAM_MAX-a_scale-a_switch);
+		}
+	}
+
+	{
+		auto team_b=b_scale+b_switch+b_vault;
+		if(team_b>TEAM_MAX){
+			b_vault=max(0.0,TEAM_MAX-b_scale-b_switch);
+		}
+	}
+
+	auto total_cubes=a_scale+b_scale+a_switch+b_switch+a_vault+b_vault;
+	if(total_cubes>MAX_CUBES){
+		//cout<<"match total hit.\n";
+		auto excess_cubes=total_cubes-MAX_CUBES;
+		auto vault_cubes=a_vault+b_vault;
+		auto to_remove=min(excess_cubes,vault_cubes);
+		auto frac_to_retain=(1-to_remove/vault_cubes);
+		a_vault*=frac_to_retain;
+		b_vault*=frac_to_retain;
+	}
+
+	return scale_expectation(a_scale,b_scale)+
+		scale_expectation(
+			mean_or_0(scale_cubes(a)+switch_cubes(a)),
+			mean_or_0(scale_cubes(b)+switch_cubes(b))
+		)+
+		vault_value(a_vault)-vault_value(b_vault);
 }
 
 ostream& operator<<(std::ostream& o,Auto_capabilities const& a){
