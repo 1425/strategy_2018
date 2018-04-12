@@ -242,6 +242,9 @@ vector<pair<double,unsigned>> make_picklist_inner_par(unsigned picker,vector<Rob
 						if(partner==949){
 							return 20;
 						}
+						if(partner==1540){
+							return 5;
+						}
 						return 0;
 					}();
 					a|=expected_outcome(alliance,opponents)-penalty;
@@ -361,7 +364,7 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 	//PRINT(pick_list);
 
 	vector<pair<pair<double,Team>,vector<pair<double,Team>>>> out;
-	for(auto p:take(24,pick_list_d)){
+	for(auto p:take(50,pick_list_d)){
 		auto partner=p.second;
 		auto other_robots=filter(
 			[&](auto a){ return a!=picker && a!=partner; },
@@ -388,7 +391,20 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 					robot_capabilities[index_or_last(22,opponents1)]
 				};
 			}();
-			auto exp=expected_outcome(alliance,opponents);
+			auto penalty=[&](){
+				if(candidate==1540 || candidate==5468){
+					return 5;
+				}
+				if(candidate==2976 || candidate==2990 || candidate==5803){
+					return -10;
+				}
+				if(candidate==4061){
+					return -20;
+				}
+				//Evan wants to boost: 1778 
+				return 0;
+			}();
+			auto exp=expected_outcome(alliance,opponents)-penalty;
 			values|=make_pair(exp,candidate);
 		}
 		//PRINT(partner);

@@ -1,6 +1,6 @@
 CXX=g++-7
 #CC=$(CXX)
-CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -march=native -mtune=native -Ofast -flto
+CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -march=native -mtune=native -Ofast -flto -g
 
 all: 1 max_value stream adverserial pick in_match correlation
 

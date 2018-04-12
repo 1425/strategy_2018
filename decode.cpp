@@ -733,7 +733,7 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 
 	vector<Team> mecanums{
 		//753,847,4132,4309
-		492,948,949,2557,4579,3786
+		492,847,948,949,2605,2557,2910,4579,3786
 	};
 	for(auto t:mecanums){
 		auto f=r.find(t);
@@ -741,6 +741,16 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 			f->second.climb.drives=Px{0};
 		}
 	}
+	vector<Team> climb_on_top{
+		6445,2733,5450,2046,2522,4512,5920,2928,3663,4061,4469,360,4131,6465,6845
+	};
+	for(auto t:climb_on_top){
+		auto f=r.find(t);
+		if(f!=r.end()){
+			f->second.climb.drives=Px{.75};
+		}
+	}
+
 	//r[997].climb.drives=Px{.5};
 	//#endif
 	//END SPECIAL MUNGING
