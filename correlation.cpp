@@ -130,7 +130,7 @@ Line new_fit(Nonempty_vector<pair<double,double>> points){
 	auto max_x=max(firsts(points));
 	auto max_y=max(seconds(points));
 	double slope=max_y/max_x;
-	
+	PRINT(slope);
 	nyi
 }
 

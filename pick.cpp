@@ -291,11 +291,11 @@ auto make_picklist(const Team picker,map<Team,Robot_capabilities> robot_capabili
 			assert(0);
 		}(),
 		capabilities,
-		[&](){
+		[&]()->optional<array<unsigned,3>>{
 			if(known_opponents){
 				return optional<array<unsigned,3>>{mapf(get_index,*known_opponents)};
 			}
-			return optional<array<unsigned,3>>();
+			return std::nullopt;//optional<array<unsigned,3>>{};
 		}()
 	);
 	return mapf(

@@ -318,6 +318,11 @@ Nonempty_vector<T> make_nonempty(std::vector<T> a){
 	return Nonempty_vector<T>(a);
 }
 
+template<typename T>
+T max(Nonempty_vector<T> a){
+	return max(a.get());
+}
+
 template<typename Func,typename T>
 auto mapf(Func f,Nonempty_vector<T> in) -> Nonempty_vector<decltype(f(*std::begin(in)))>{
 	return make_nonempty(mapf(f,in.get()));
@@ -380,7 +385,7 @@ std::vector<A> firsts(std::vector<std::pair<A,B>> in){
 }
 
 template<typename A,typename B>
-auto firsts(Nonempty_vector<std::pair<A,B>> in){
+Nonempty_vector<A> firsts(Nonempty_vector<std::pair<A,B>> in){
 	return mapf([](auto a){ return a.first; },in);
 }
 

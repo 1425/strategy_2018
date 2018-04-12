@@ -144,7 +144,7 @@ unsigned decode(string s,const unsigned*){
 template<typename T>
 std::optional<T> decode(string s,const std::optional<T>*){
 	if(s=="NULL"){
-		return std::optional<T>();
+		return std::nullopt;
 	}
 	return decode(s,(T*)nullptr);
 }
