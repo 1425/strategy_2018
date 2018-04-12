@@ -121,6 +121,19 @@ double get_r_squared(Nonempty_vector<pair<double,double>> data,Line line){
 	return 1-ss_res/ss_tot;
 }
 
+/*
+ * Try to fit the teams in a different way:
+ * look at max scale & max switch to get a slope, then try to fit based on that & see how it fits
+ * */
+
+Line new_fit(Nonempty_vector<pair<double,double>> points){
+	auto max_x=max(firsts(points));
+	auto max_y=max(seconds(points));
+	double slope=max_y/max_x;
+	
+	nyi
+}
+
 int main(){
 	Nonempty_vector<pair<double,double>> x{{0,1},{1,2}};
 	cout<<best_fit_line(x)<<"\n";
