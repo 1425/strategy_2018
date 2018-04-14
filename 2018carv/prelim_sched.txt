@@ -1,0 +1,1096 @@
+
+FIRST Championship - Houston - Carver Subdivision
+Matches Per Team
+10
+Time
+Description
+Match
+Blue 1
+Blue 2
+Blue 3
+Red 1
+Red 2
+Red 3
+Thu 8:30
+Qualification 1
+1
+2910
+2928
+2415
+5499
+2811
+5829
+Thu 8:37
+Qualification 2
+2
+1425
+5805
+1466
+580
+6832
+1378
+Thu 8:44
+Qualification 3
+3
+175
+3991
+3229
+5006
+1421
+4944
+Thu 8:51
+Qualification 4
+4
+3753
+3238
+1690
+16
+4501
+1622
+Thu 8:58
+Qualification 5
+5
+343
+2152
+100
+3132
+3145
+4013
+Thu 9:05
+Qualification 6
+6
+744
+4911
+7123
+5803
+5458
+2429
+Thu 9:12
+Qualification 7
+7
+2723
+6988
+1369
+418
+6413
+6846
+Thu 9:19
+Qualification 8
+8
+6902
+7301
+108
+801
+932
+1410
+Thu 9:26
+Qualification 9
+9
+4265
+341
+6502
+5026
+5987
+7111
+Thu 9:33
+Qualification 10
+10
+2556
+4192
+342
+6800
+6985
+1414
+Thu 9:40
+Qualification 11
+11
+4306
+1769
+4171
+4499
+4795
+1477
+Thu 9:47
+Qualification 12
+12
+3834
+1378
+343
+6838
+3991
+5458
+Thu 9:54
+Qualification 13
+13
+6902
+3132
+6988
+5803
+1622
+5829
+Thu 10:01
+Qualification 14
+14
+175
+100
+2910
+1425
+3238
+341
+Thu 10:08
+Qualification 15
+15
+1421
+6985
+3229
+1690
+580
+4501
+Thu 10:15
+Qualification 16
+16
+4265
+3753
+1769
+6832
+342
+1410
+Thu 10:22
+Qualification 17
+17
+6846
+1477
+7301
+5805
+6800
+4013
+Thu 10:29
+Qualification 18
+18
+5499
+1369
+801
+16
+4499
+4944
+Thu 10:36
+Qualification 19
+19
+4911
+5987
+418
+1466
+4795
+6838
+Thu 10:43
+Qualification 20
+20
+2811
+5006
+5026
+7111
+2152
+2429
+Thu 10:50
+Qualification 21
+21
+4306
+2556
+108
+744
+2723
+2928
+Lunch
+Thu 1:00
+Qualification 22
+22
+2415
+3834
+6413
+4192
+4171
+1414
+Thu 1:07
+Qualification 23
+23
+932
+6502
+3753
+7123
+3145
+5803
+Thu 1:14
+Qualification 24
+24
+1769*
+175
+7301
+5829
+6800*
+1466
+Thu 1:21
+Qualification 25
+25
+341
+5458*
+4795
+1421*
+5499
+2429
+Thu 1:28
+Qualification 26
+26
+1378
+4013
+2928
+1369
+4265
+3238
+Thu 1:35
+Qualification 27
+27
+4171
+801
+6838
+2910
+3229
+744
+Thu 1:42
+Qualification 28
+28
+932
+3145
+3834
+6988
+5006
+2556
+Thu 1:49
+Qualification 29
+29
+3132
+4944
+5805
+1414
+6502
+4911
+Thu 1:56
+Qualification 30
+30
+580
+1622
+5987
+2811
+3991
+6846
+Thu 2:03
+Qualification 31
+31
+7111
+2723
+7123
+1410
+2415
+4501
+Thu 2:10
+Qualification 32
+32
+1690
+1425
+6985
+1477
+4306
+6413
+Thu 2:17
+Qualification 33
+33
+342
+418
+16
+6902
+343
+5026
+Thu 2:24
+Qualification 34
+34
+2152
+4192
+6832
+108
+4499
+100
+Qualification Match Schedule
+CMPTX_V1 - As of: Apr 12, 2018 - Preliminary
+FIRST Championship - Houston - Carver Subdivision
+Matches Per Team
+10
+Time
+Description
+Match
+Blue 1
+Blue 2
+Blue 3
+Red 1
+Red 2
+Red 3
+Thu 2:31
+Qualification 35
+35
+1414
+2429
+1769
+3991
+7301
+1622
+Thu 2:38
+Qualification 36
+36
+2415
+5458
+3132
+6988
+1466
+4944
+Thu 2:45
+Qualification 37
+37
+6838
+1690
+5006
+4013
+5829
+7123
+Thu 2:52
+Qualification 38
+38
+4911
+932
+342
+2811
+175
+4171
+Thu 2:59
+Qualification 39
+39
+4795
+16
+108
+5805
+7111
+6413
+Thu 3:06
+Qualification 40
+40
+5803
+580
+4265
+418
+4499
+3834
+Thu 3:13
+Qualification 41
+41
+6800
+5987
+3145
+2723
+1425
+801
+Thu 3:20
+Qualification 42
+42
+6832
+341
+2556
+1410
+6846
+3229
+Thu 3:27
+Qualification 43
+43
+343
+744
+1369
+6502
+6985
+5499
+Thu 3:34
+Qualification 44
+44
+1378
+2910
+4192
+5026
+3753
+4306
+Thu 3:41
+Qualification 45
+45
+1421
+1477
+2152
+3238
+6902
+2928
+Thu 3:48
+Qualification 46
+46
+4501
+7111
+932
+100
+4911
+1425
+Thu 3:55
+Qualification 47
+47
+1410
+1690
+341
+5805
+2811
+6988
+Thu 4:02
+Qualification 48
+48
+5499
+6800
+6838
+6832
+6413
+1622
+Thu 4:09
+Qualification 49
+49
+3991
+5803
+5026
+108
+1369
+4171
+Thu 4:16
+Qualification 50
+50
+2429
+2928
+801
+3753
+175
+3132
+Thu 4:23
+Qualification 51
+51
+1466
+2723
+343
+4192
+4265
+1477
+Thu 4:30
+Qualification 52
+52
+4499
+2910
+6846
+5006
+6902
+1378
+Fri 8:00
+Qualification 53
+53
+7123
+1421
+4306
+1414
+16
+5987
+Fri 8:07
+Qualification 54
+54
+3229
+418
+3145
+3238
+342
+2415
+Fri 8:14
+Qualification 55
+55
+2556
+6502
+7301
+5458
+580
+100
+Fri 8:21
+Qualification 56
+56
+4944
+5829
+4795
+2152
+4013
+6985
+Fri 8:28
+Qualification 57
+57
+5026
+744
+4501
+3834
+1769
+5805
+Fri 8:35
+Qualification 58
+58
+2429
+6988
+1425
+1421
+4171
+2723
+Fri 8:42
+Qualification 59
+59
+4499
+6902
+3991
+6413
+3753
+4911
+Fri 8:49
+Qualification 60
+60
+5987
+1410
+3132
+4192
+5499
+3238
+Fri 8:56
+Qualification 61
+61
+1622
+343
+341
+801
+2556
+4795
+Fri 9:03
+Qualification 62
+62
+4944
+7111
+1769
+580
+6838
+3145
+Fri 9:10
+Qualification 63
+63
+6846
+108
+744
+4501
+1414
+175
+Fri 9:17
+Qualification 64
+64
+1466
+2152
+3834
+342
+2910
+6502
+Fri 9:24
+Qualification 65
+65
+6985
+5006
+2928
+7301
+6832
+5803
+Fri 9:31
+Qualification 66
+66
+1477
+932
+5829
+1378
+3229
+1369
+Fri 9:38
+Qualification 67
+67
+4013
+2811
+418
+5458
+16
+4306
+Fri 9:45
+Qualification 68
+68
+7123
+2415
+1690
+6800
+100
+4265
+Fri 9:52
+Qualification 69
+69
+1622
+1466
+342
+744
+1421
+4499
+Qualification Match Schedule
+CMPTX_V1 - As of: Apr 12, 2018 - Preliminary
+FIRST Championship - Houston - Carver Subdivision
+Matches Per Team
+10
+Time
+Description
+Match
+Blue 1
+Blue 2
+Blue 3
+Red 1
+Red 2
+Red 3
+Fri 9:59
+Qualification 70
+70
+2723
+5805
+175
+6985
+6838
+6902
+Fri 10:06
+Qualification 71
+71
+3238
+4944
+6832
+4171
+343
+7111
+Fri 10:13
+Qualification 72
+72
+4501
+418
+1477
+2556
+3991
+2910
+Fri 10:20
+Qualification 73
+73
+3145
+1369
+4192
+341
+7301
+4911
+Fri 10:27
+Qualification 74
+74
+1769
+7123
+2811
+1378
+3132
+6413
+Fri 10:34
+Qualification 75
+75
+16
+5829
+3834
+108
+6800
+2429
+Fri 10:41
+Qualification 76
+76
+5499
+1690
+1414
+932
+5803
+2152
+Fri 10:48
+Qualification 77
+77
+801
+6502
+580
+2415
+4306
+5006
+Fri 10:55
+Qualification 78
+78
+100
+4013
+6988
+3229
+3753
+5987
+Fri 11:02
+Qualification 79
+79
+4265
+5026
+5458
+4795
+1425
+6846
+Fri 11:09
+Qualification 80
+80
+6413
+1410
+6800
+2928
+4911
+343
+Fri 11:16
+Qualification 81
+81
+1466
+6902
+2556
+1690
+1369
+2811
+Fri 11:23
+Qualification 82
+82
+4499
+3238
+6502
+5829
+2723
+3991
+Fri 11:30
+Qualification 83
+83
+7301
+1378
+744
+2152
+2415
+5987
+Fri 11:37
+Qualification 84
+84
+6988
+6832
+2910
+4795
+7123
+4192
+Fri 11:44
+Qualification 85
+85
+4944
+6838
+5803
+342
+341
+4501
+Fri 11:51
+Qualification 86
+86
+580
+5026
+16
+3132
+2928
+932
+Lunch
+Fri 2:00
+Qualification 87
+87
+5458
+4171
+1410
+3145
+175
+6985
+Fri 2:07
+Qualification 88
+88
+7111
+6846
+1421
+3753
+3834
+5499
+Fri 2:14
+Qualification 89
+89
+418
+1414
+100
+801
+5006
+1477
+Fri 2:21
+Qualification 90
+90
+3229
+5805
+4306
+2429
+1622
+4265
+Fri 2:28
+Qualification 91
+91
+4013
+108
+2415
+1425
+1769
+6902
+Fri 2:35
+Qualification 92
+92
+175
+4795
+6832
+6502
+1690
+16
+Fri 2:42
+Qualification 93
+93
+1421
+6413
+5829
+3145
+2556
+5026
+Fri 2:49
+Qualification 94
+94
+1477
+342
+5499
+7123
+6988
+580
+Fri 2:56
+Qualification 95
+95
+4171
+4501
+4265
+7301
+2811
+6800
+Fri 3:03
+Qualification 96
+96
+5803
+801
+3238
+1769
+6846
+1466
+Fri 3:10
+Qualification 97
+97
+5006
+4013
+3991
+4192
+744
+5805
+Fri 3:17
+Qualification 98
+98
+2928
+1414
+4499
+5458
+3229
+7111
+Fri 3:24
+Qualification 99
+99
+5987
+2429
+932
+343
+2910
+4944
+Fri 3:31
+Qualification 100
+100
+1410
+4306
+1425
+1369
+6838
+2152
+Fri 3:38
+Qualification 101
+101
+6985
+108
+3753
+341
+418
+3132
+Fri 3:45
+Qualification 102
+102
+100
+1378
+2723
+1622
+3834
+4911
+Fri 3:52
+Qualification 103
+103
+6413
+2556
+4013
+7111
+5803
+175
+Qualification Match Schedule
+CMPTX_V1 - As of: Apr 12, 2018 - Preliminary
+FIRST Championship - Houston - Carver Subdivision
+Matches Per Team
+10
+Time
+Description
+Match
+Blue 1
+Blue 2
+Blue 3
+Red 1
+Red 2
+Red 3
+Fri 3:59
+Qualification 104
+104
+744
+801
+6800
+3238
+5026
+6988
+Fri 4:06
+Qualification 105
+105
+5987
+5458
+4499
+2415
+5805
+932
+Fri 4:13
+Qualification 106
+106
+6838
+1477
+2811
+6502
+108
+1421
+Fri 4:20
+Qualification 107
+107
+5829
+1414
+580
+343
+1410
+3753
+Fri 4:27
+Qualification 108
+108
+6846
+2429
+1378
+342
+100
+1690
+Fri 4:34
+Qualification 109
+109
+4911
+4265
+6985
+1769
+16
+5006
+Fri 4:41
+Qualification 110
+110
+1622
+4192
+1425
+2928
+4944
+418
+Fri 4:48
+Qualification 111
+111
+3991
+1466
+4171
+2152
+7123
+341
+Fri 4:55
+Qualification 112
+112
+7301
+3229
+4795
+3834
+3132
+2723
+Fri 5:02
+Qualification 113
+113
+4306
+4501
+6902
+3145
+5499
+6832
+Fri 5:09
+Qualification 114
+114
+1369
+6800
+1421
+2910
+1769
+5458
+SURROGATE matches will be marked with an * to the right of the SURROGATE Team's Number. Per FRC Game 
+Manual, 10.4.2: All Teams are assigned the same number of Qualification MATCHES, equal to the number of 
+rounds, unless the number of Teams multiplied by number of MATCHES is not divisible by six. In this case, the 
+FMS randomly selects some Teams to play an extra MATCH. For the purpose of seeding calculations, those 
+Teams are designated as SURROGATES for the extra MATCH. If a Team plays a MATCH as a SURROGATE, it 
+is indicated on the MATCH schedule, it is always their third Qualification MATCH, and the outcome of the MATCH 
+has no affect on the Team
+’
+s ranking. YELLOW and RED CARDS assigned to SURROGATES do carry forward to 
+subsequent MATCHES.
+Qualification Match Schedule
+CMPTX_V1 - As of: Apr 12, 2018 - Preliminary
+
