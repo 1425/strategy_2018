@@ -58,8 +58,8 @@ def split1(s):
 
 
 def caleb():
-    lines=open('../2018pncmp/caleb.csv','r').read().splitlines()
-    labels=lines[3].split(',')
+    lines=open('caleb.csv','r').read().splitlines()
+    labels=filter(len,lines[3].split(','))
     print 'labels:',labels
     def process_data((key,value)):
         def value1():
