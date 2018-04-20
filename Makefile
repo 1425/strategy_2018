@@ -1,4 +1,4 @@
-CXX=g++
+CXX=g++-7
 #CC=$(CXX)
 CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -march=native -mtune=native -Ofast -flto -g
 

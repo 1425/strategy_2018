@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-from common_utils.util import print_lines,filter_unique
+def print_lines(a):
+    for x in a:
+        print x
+
 
 def parse():
     lines=open('prelim_sched.txt','r').read().splitlines()
@@ -60,7 +63,7 @@ def split1(s):
 def caleb():
     lines=open('caleb.csv','r').read().splitlines()
     labels=filter(len,lines[3].split(','))
-    print 'labels:',labels
+    #print 'labels:',labels
     def process_data((key,value)):
         def value1():
             if key in ['nickname','home Championship','event',"Chairman's Strength (mCA)"]:
@@ -95,11 +98,11 @@ def caleb():
         return key,value1()
     out=[]
     for line in lines[4:]:
-        print_lines(zip(labels,split1(line)))
+        #print_lines(zip(labels,split1(line)))
         z=map(process_data,zip(labels,split1(line)))
         out.append(dict(z))
         #print_lines(z)
-        print
+        #print
         #=dict(zip(labels,line.split(',')))
         #rint d
     return out

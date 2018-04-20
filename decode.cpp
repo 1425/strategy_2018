@@ -497,7 +497,7 @@ double scale_expectation(double cubes1,double cubes2){
 	));
 }
 
-int vault_value(Cubes_scored cubes){
+double vault_value(Cubes_scored cubes){
 	/*individual cube values:
 	 * 15/15 (12.5?)/15
 	 * 10/10/10
@@ -506,14 +506,14 @@ int vault_value(Cubes_scored cubes){
 	 * TODO: Figure out if there is a more linear function to do this so that don't end up with weird thresholds.
 	 * */
 	if(cubes<1) return 0;
-	if(cubes<2) return 15;
-	if(cubes<3) return 30;
-	if(cubes<4) return 45;
-	if(cubes<5) return 55;
-	if(cubes<6) return 65;
-	if(cubes<7) return 75;
-	if(cubes<8) return 80;
-	if(cubes<9) return 85;
+	if(cubes<2) return 15*(cubes-1);
+	if(cubes<3) return 15+15*(cubes-2);
+	if(cubes<4) return 30+15*(cubes-3);
+	if(cubes<5) return 45+10*(cubes-4);
+	if(cubes<6) return 55+10*(cubes-5);
+	if(cubes<7) return 65+10*(cubes-6);
+	if(cubes<8) return 75+5*(cubes-7);
+	if(cubes<9) return 80+5*(cubes-7);
 	return 95;
 }
 
@@ -542,7 +542,7 @@ double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 
 	static const unsigned PYRAMID=10;
 	static const unsigned SWITCH=6;
-	static const unsigned PORTAL=7;
+	static const unsigned PORTAL=7*2;
 	static const unsigned MAX_CUBES=2*(PYRAMID+SWITCH+PORTAL);
 
 	//if the match is not running out of cubes, but you are then assume that you're able to grab 2 more cubes from the center of the field than your opponents.

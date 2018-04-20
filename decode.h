@@ -258,7 +258,7 @@ double average_total_cubes(Cube_capabilities);
 
 double scale_expectation(double cubes1,double cubes2);
 
-int vault_value(Cubes_scored);
+double vault_value(Cubes_scored);
 
 double vault(Cube_capabilities);
 
