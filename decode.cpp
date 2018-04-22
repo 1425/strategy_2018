@@ -57,6 +57,27 @@ std::string as_2decimals(double a){
 
 //start program-specific functions
 
+#define SIMPLE_CUBES(X)\
+	X(auto_scale)\
+	X(auto_switch)\
+	X(tele_scale)\
+	X(tele_switch)\
+	X(vault)
+
+struct Simple_cubes{
+	#define X(A) double A;
+	SIMPLE_CUBES(X)
+	#undef X
+};
+
+ostream& operator<<(ostream& o,Simple_cubes const& a){
+	o<<"Simple_cubes( ";
+	#define X(A) o<<""#A<<":"<<a.A<<" ";
+	SIMPLE_CUBES(X)
+	#undef X
+	return o<<")";
+}
+
 Alliance decode(std::string const& s,const Alliance*){
 	if(s=="blue") return Alliance::BLUE;
 	if(s=="red") return Alliance::RED;
@@ -463,7 +484,7 @@ double average_total_cubes(Cube_capabilities a){
 	return mean_or_0(scale_cubes(a))+mean_or_0(switch_cubes(a))+mean_or_0(vault_cubes(a));
 }
 
-double scale_expectation(double cubes1,double cubes2){
+double scale_expectation(int initial_condition,double cubes1,double cubes2){
 	assert(cubes1>=0);
 	assert(cubes2>=0);
 
@@ -490,7 +511,7 @@ double scale_expectation(double cubes1,double cubes2){
 			PRINT(a);
 			PRINT(b);*/
 			//(void)c1; (void)c2; nyi//return skellam_cdf(c2,c1,-1)-skellam_cdf(c1,c2,-1);
-			auto p=skellam_totals(c1,c2);
+			auto p=skellam_totals(initial_condition,c1,c2);
 			return p.second-p.first;
 		},
 		range_st<int,INTERVALS>()
@@ -521,6 +542,7 @@ double vault(Cube_capabilities a){
 	return mean_or_0(vault_cubes(a));
 }
 
+//double expected_outcome(Simple_cubes a,Simple_cubes b){
 double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 	//TODO: Make it so that each of the teams can try different strategies.
 
@@ -575,8 +597,9 @@ double expected_outcome(Cube_capabilities a,Cube_capabilities b){
 		b_vault*=frac_to_retain;
 	}
 
-	return scale_expectation(a_scale,b_scale)+
+	return scale_expectation(0,a_scale,b_scale)+
 		scale_expectation(
+			0,
 			mean_or_0(scale_cubes(a)+switch_cubes(a)),
 			mean_or_0(scale_cubes(b)+switch_cubes(b))
 		)+
@@ -778,12 +801,13 @@ map<Team,Robot_capabilities> interpret(vector<Scouting_row> a){
 	//START SPECIAL MUNGING
 	r[1425].climb.all1=Px{.8};
 	r[1425].climb.all2=Px{.7};
-	r[2471].climb.all1=Px{.8};
-	r[2471].climb.all2=Px{.7};
+	/*r[2471].climb.all1=Px{.8};
+	r[2471].climb.all2=Px{.7};*/
 
 	vector<Team> mecanums{
 		//753,847,4132,4309
-		492,847,948,949,2605,2557,2910,4579,3786
+		492,847,948,949,2605,2557,2910,4579,3786,
+		1421,2556,6832,1622,580,6838
 	};
 	for(auto t:mecanums){
 		auto f=r.find(t);
@@ -823,6 +847,23 @@ array<Cube_capabilities,3> cubes(Alliance_capabilities a){
 	return mapf([](auto x){ return x.cubes; },a);
 }
 
+#if 0
+Simple_cubes distill_cubes(Alliance_capabilities a){
+	mapf(
+		[](Robot_capabilities robot)->Simple_cubes{
+			return {
+				mean_or_0(mapf(
+				robot.auton.scale/switch
+				robot.cubes.scale/switch/vault
+			};
+		},
+		a
+	);
+	nyi
+}
+#endif
+
+#if 1
 Cube_capabilities distill_cubes(Alliance_capabilities a){
 	auto c=cubes(a);
 	Cube_capabilities r;
@@ -843,6 +884,7 @@ Cube_capabilities distill_cubes(Alliance_capabilities a){
 	));
 	return r;
 };
+#endif
 
 array<Auto_capabilities,3> auton(Alliance_capabilities const& a){
 	return mapf([](auto x){ return x.auton; },a);

@@ -4,5 +4,6 @@
 #include<utility>
 
 std::pair<double,double> skellam_totals(double,double);
+std::pair<double,double> skellam_totals(int,double,double);
 
 #endif

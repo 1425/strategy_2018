@@ -133,6 +133,57 @@ struct Scouting_row2{
 
 std::ostream& operator<<(std::ostream&,Scouting_row2 const&);
 
+#define SCOUTING_ROW3(X)\
+	X(std::string,event_year)\
+	X(std::string,event_name)\
+	X(std::string,team_name)\
+	X(Team,team_number)\
+	X(Alliance,alliance)\
+	X(std::string,position)\
+	X(std::string,team_match_seq)\
+	X(Always_null,score)\
+	X(Always_null,opp_score)\
+	X(Always_null,qp)\
+	X(std::string,result)\
+	X(std::string,wins)\
+	X(std::string,draws)\
+	X(std::string,losses)\
+	X(Always_null,match_total_score)\
+	X(Always_null,match_auto_score)\
+	X(Always_null,match_teleop_score)\
+	X(std::string,team_match_id)\
+	X(std::string,match_number)\
+	X(std::string,team_id)\
+	X(std::string,match_id)\
+	X(int,auto_scale_cube)\
+	X(int,auto_exchange_cube)\
+	X(std::string,auto_cross_baseline)\
+	X(int,auto_switch_cube)\
+	X(int,home_switch_cube)\
+	X(int,scale_cube)\
+	X(int,exchange_cube)\
+	X(std::string,no_climb)\
+	X(std::optional<int>,piggyback_climb)\
+	X(std::optional<int>,climb)\
+	X(std::string,assist)\
+	X(std::string,ground_collect_bool)\
+	X(std::string,support_failure)\
+	X(int,opp_switch_cube)\
+	X(std::string,collect_from_exchange)\
+	X(std::string,collect_from_portal_far)\
+	X(std::string,collect_from_stack)\
+	X(std::string,collect_from_portal_near)\
+	X(std::string,played_defensively)\
+	X(std::string,breakdown)\
+	X(std::string,disconnect)\
+	X(std::string,tmap_team_match_id)
+
+struct Scouting_row3{
+	SCOUTING_ROW3(INST)
+};
+
+std::ostream& operator<<(std::ostream&,Scouting_row3 const&);
+
 using Scouting_row=Scouting_row2;
 
 int decode(std::string s,const int*);
@@ -318,7 +369,7 @@ std::array<Climb_capabilities,3> climbs(Alliance_capabilities);
 
 std::array<Cube_capabilities,3> cubes(Alliance_capabilities);
 
-Cube_capabilities distill_cubes(Alliance_capabilities);
+//Cube_capabilities distill_cubes(Alliance_capabilities);
 
 std::array<Auto_capabilities,3> auton(Alliance_capabilities const&);
 

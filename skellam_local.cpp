@@ -85,6 +85,27 @@ pair<double,double> skellam_totals(double u1,double u2){
 	return make_pair(under,over);
 }
 
+pair<double,double> skellam_totals(int initial_condition,double u1,double u2){
+	//this has been benchmarked at about .07 ms with optimizations off, and about 1/2 of that with them on.
+	double total=0;
+	double under=0;
+	double over=0;
+	total+=skellam_pdf(u1,u2,0);
+	int i=1;
+	while(total<.99){
+		auto lower_side=skellam_pdf(u1,u2,initial_condition-i);
+		auto upper_side=skellam_pdf(u1,u2,initial_condition+i);
+
+		i++;
+
+		under+=lower_side;
+		over+=upper_side;
+		total+=lower_side;
+		total+=upper_side;
+	}
+	return make_pair(under,over);
+}
+
 void skellam_demo(){
 	auto u1=1;
 	auto u2=1;

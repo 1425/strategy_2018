@@ -123,6 +123,24 @@ void transform1(It in_begin,It in_end,Out /*out*/,Func f){
 	nyi
 }
 
+static const vector<Team> RANK{
+	4911,
+	1690,
+	16,
+	5987,
+	1414,
+	2910,
+	4944,
+	341,
+	5026,
+	4265,
+	6502,
+	3132,
+	744,
+	342,
+	4499
+};
+
 using Partial_picks=array<array<std::optional<Team>,3>,8>;
 
 struct Alliance_selection_in_progress{
@@ -178,8 +196,8 @@ vector<pair<double,unsigned>> make_picklist_with_known(Team picker,vector<Robot_
 	nyi
 }
 
-template<typename T>
-bool contains(T a,int i){
+template<typename T,typename B>
+bool contains(T a,B i){
 	for(auto elem:a){
 		if(elem==i){
 			return 1;
@@ -402,6 +420,12 @@ vector<pair<pair<double,Team>,vector<pair<double,Team>>>> make_second_picks(
 					return -20;
 				}
 				//Evan wants to boost: 1778 
+				if(candidate==4795){
+					return -20;
+				}
+				if(candidate==5803 || candidate==6502){
+					return 15;
+				}
 				return 0;
 			}();
 			auto exp=expected_outcome(alliance,opponents)-penalty;
@@ -442,6 +466,7 @@ string as_html(Team picker,vector<pair<pair<double,Team>,vector<pair<double,Team
 				join(mapf(
 					[](pair<size_t,pair<pair<double,Team>,vector<pair<double,Team>>>> p1){
 						auto p=p1.second;
+						if(!contains(RANK,p.first.second)) return string{};
 						return tr(
 							th(as_string(p1.first))+
 							tag("td","align=right",as_string(p.first.second)+"<br>"+small(as_string(int(p.first.first))))+
@@ -455,6 +480,7 @@ string as_html(Team picker,vector<pair<pair<double,Team>,vector<pair<double,Team
 						);
 					},
 					enumerate_from(1,in)
+					//enumerate_from(1,filter([](auto team){ return contains(RANK,team.second); },in))
 				))
 			)
 		)
@@ -484,6 +510,15 @@ void check_scouting_data(vector<Scouting_row2> const& a){
 	#undef X
 
 	auto climbing=to_multiset(mapf([](auto x){ return make_tuple(x.climb,x.assist,x.piggyback_climb_boolean); },a));
+	PRINT(climbing);
+}
+
+void check_scouting_data(vector<Scouting_row3> const& a){
+	#define X(A,B) cout<<""#B<<"("<<""#A<<"): "<<to_multiset(mapf([](auto x){ return x.B; },a))<<"\n";
+	SCOUTING_ROW3(X)
+	#undef X
+
+	auto climbing=to_multiset(mapf([](auto x){ return make_tuple(x.climb,x.assist,x.piggyback_climb); },a));
 	PRINT(climbing);
 }
 

@@ -1,0 +1,245 @@
+event_year,event_name,team_name,team_number,alliance,position,team_match_seq,score,opp_score,qp,result,wins,draws,losses,match_total_score,match_auto_score,match_teleop_score,team_match_id,match_number,team_id,match_id,auto_scale_cube,auto_exchange_cube,auto_cross_baseline,auto_switch_cube,home_switch_cube,scale_cube,exchange_cube,no_climb,piggyback_climb,climb,assist,ground_collect_bool,support_failure,opp_switch_cube,collect_from_exchange,collect_from_portal_far,collect_from_stack,collect_from_portal_near,played_defensively,breakdown,disconnect,tmap_team_match_id
+2018,"Carver Division",StormBots,2811,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9551,1,1859,1316,0,0,0,1,0,5,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9551
+2018,"Carver Division","ENKA TECH.",6985,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9552,10,6062,1317,0,0,0,1,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9552
+2018,"Carver Division",EastBots,4795,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9563,11,3655,1328,0,0,0,0,2,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9563
+2018,"Carver Division",KnightVision,3991,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9569,12,2900,1334,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9569
+2018,"Carver Division","Team Spyder",1622,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9570,13,1309,1335,0,0,0,0,5,2,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9570
+2018,"Carver Division","Cyborg Ferrets",3238,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9571,14,2242,1336,0,0,0,0,0,0,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,9571
+2018,"Carver Division","Viking Robotics",580,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9572,15,459,1337,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9572
+2018,"Carver Division","Burning Magnetos",342,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9573,16,276,1338,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9573
+2018,"Carver Division","ViperBots Valor",6800,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9574,17,5877,1339,0,0,0,1,1,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9574
+2018,"Carver Division","The Highlanders",4499,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9575,18,3360,1340,0,0,0,2,4,0,4,0,1,0,0,0,0,0,0,0,0,0,0,0,0,9575
+2018,"Carver Division",EastBots,4795,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9576,19,3655,1341,0,0,0,1,2,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9576
+2018,"Carver Division",S*M*A*S*H,2152,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9578,20,5600,1343,0,0,0,1,0,3,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9578
+2018,"Carver Division","Team Rocket",2723,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9579,21,1820,1344,0,0,0,0,2,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9579
+2018,"Carver Division",BayBots,4171,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9580,22,3077,1345,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9580
+2018,"Carver Division",TeraViks,3145,red,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9581,23,2153,1346,0,0,0,1,0,0,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9581
+2018,"Carver Division","ViperBots Valor",6800,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9582,24,5877,1347,0,0,0,2,0,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9582
+2018,"Carver Division","The Bay Orangutans",5499,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9583,25,4268,1348,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9583
+2018,"Carver Division","Secret City Wildbots",4265,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9584,26,3166,1349,0,0,0,0,1,3,0,0,0,1,0,0,0,5,0,0,0,0,0,0,0,9584
+2018,"Carver Division","Hawktimus Prime",3229,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9585,27,2233,1350,0,0,0,1,0,0,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9585
+2018,"Carver Division",Apophis,5006,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9586,28,3825,1351,0,0,0,1,0,0,0,0,0,1,0,0,0,4,0,0,0,0,0,0,0,9586
+2018,"Carver Division","DARC SIDE",6502,red,2,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9587,29,5201,1352,0,0,0,0,2,1,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9587
+2018,"Carver Division","Team Chaos",1421,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9588,3,1134,1353,0,0,0,2,0,4,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9588
+2018,"Carver Division",KnightVision,3991,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9589,30,2900,1354,0,0,0,1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9589
+2018,"Carver Division",WiredCats,2415,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9590,31,5793,1355,0,0,0,1,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,9590
+2018,"Carver Division",RoboKomodos,4306,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9591,32,3204,1356,0,0,0,0,2,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9591
+2018,"Carver Division",Metal-In-Motion,343,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9592,33,277,1357,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9592
+2018,"Carver Division","The Highlanders",4499,red,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9593,34,3360,1358,0,0,0,1,2,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9593
+2018,"Carver Division",Jackbots,7301,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9594,35,6372,1359,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9594
+2018,"Carver Division",AwtyBots,5829,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9596,37,4585,1361,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9596
+2018,"Carver Division","Buzz Robotics",175,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9597,38,145,1362,0,0,0,1,1,6,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9597
+2018,"Carver Division",Humans,4501,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9599,4,3362,1364,0,0,0,1,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,9599
+2018,"Carver Division","The Highlanders",4499,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9600,40,3360,1365,0,0,0,2,0,0,2,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9600
+2018,"Carver Division","Error Code Xero",1425,red,2,8,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9601,41,1136,1366,0,0,0,1,0,7,0,0,0,1,0,0,0,4,0,0,0,0,0,0,0,9601
+2018,"Carver Division","Central Magnet Robotics",6846,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9602,42,5923,1367,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9602
+2018,"Carver Division","ENKA TECH.",6985,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9603,43,6062,1368,0,0,0,0,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9603
+2018,"Carver Division",BulahBots!,3753,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9604,44,2704,1369,0,0,0,0,0,1,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,9604
+2018,"Carver Division",S.T.R.I.K.E,6902,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9605,45,5979,1370,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9605
+2018,"Carver Division",StormBots,2811,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9607,47,1859,1372,0,0,0,1,1,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,9607
+2018,"Carver Division","Degrees of Freedom",6413,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9608,48,5113,1373,0,0,0,1,5,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9608
+2018,"Carver Division",TeraViks,3145,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9610,5,2153,1375,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9610
+2018,"Carver Division","Buzz Robotics",175,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9611,50,145,1376,0,0,0,1,0,4,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9611
+2018,"Carver Division",S.T.R.I.K.E,6902,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9613,52,5979,1378,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9613
+2018,"Carver Division","Digital Minds",5458,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9621,6,4227,1386,0,0,0,1,4,0,5,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9621
+2018,"Carver Division","Degrees of Freedom",6413,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9632,7,5113,1397,0,0,0,0,0,0,7,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9632
+2018,"Carver Division","Circuit Chargers",932,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9643,8,716,1408,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9643
+2018,"Carver Division",AwtyBots,5829,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9665,1,4585,1316,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9665
+2018,"Carver Division",IHOT,1414,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9666,10,1127,1317,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9666
+2018,"Carver Division","Texas Torque",1477,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9677,11,1181,1328,0,0,0,0,0,5,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9677
+2018,"Carver Division","Digital Minds",5458,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9683,12,4227,1334,0,0,0,1,1,0,2,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9683
+2018,"Carver Division","Miss Daisy",341,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9685,14,275,1336,0,0,0,0,0,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9685
+2018,"Carver Division",Humans,4501,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9686,15,3362,1337,0,0,0,1,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,9686
+2018,"Carver Division","The Kraken",1410,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9687,16,1123,1338,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9687
+2018,"Carver Division","The Hi Fives",4944,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9689,18,3763,1340,0,0,0,1,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,9689
+2018,"Carver Division",X-SHARC,6838,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9690,19,5915,1341,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9690
+2018,"Carver Division","Hilo Viking Robotics",1378,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9691,2,1095,1342,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9691
+2018,"Carver Division","La Canada Engineerng Cub",2429,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9692,20,5805,1343,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9692
+2018,"Carver Division","Viking Robotics",2928,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9693,21,1958,1344,0,0,0,0,0,5,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9693
+2018,"Carver Division","Apex Robotics",5803,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9695,23,4559,1346,0,0,0,0,0,6,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9695
+2018,"Carver Division","Webb Robotics",1466,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9696,24,1172,1347,0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9696
+2018,"Carver Division","La Canada Engineerng Cub",2429,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9697,25,5805,1348,0,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9697
+2018,"Carver Division","Cyborg Ferrets",3238,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9698,26,2242,1349,0,0,0,0,2,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9698
+2018,"Carver Division","Shark Attack",744,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9699,27,578,1350,0,0,0,0,1,2,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9699
+2018,"Carver Division","RadioActive Roaches",2556,red,3,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9700,28,1692,1351,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9700
+2018,"Carver Division",CyberKnights,4911,red,3,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9701,29,3730,1352,0,0,0,2,0,3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9701
+2018,"Carver Division","The Hi Fives",4944,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9702,3,3763,1353,0,0,0,1,0,0,7,0,0,0,0,0,0,5,0,0,0,2,0,0,0,9702
+2018,"Carver Division","Central Magnet Robotics",6846,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9703,30,5923,1354,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9703
+2018,"Carver Division",Humans,4501,red,3,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9704,31,3362,1355,0,0,0,1,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9704
+2018,"Carver Division","The WildHats",100,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9707,34,85,1358,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9707
+2018,"Carver Division","Team Spyder",1622,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9708,35,1309,1359,0,0,0,0,0,2,4,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9708
+2018,"Carver Division","The Hi Fives",4944,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9709,36,3763,1360,0,0,0,1,2,0,2,0,0,0,0,0,0,7,0,0,0,0,0,0,0,9709
+2018,"Carver Division","Tin Men",7123,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9710,37,6196,1361,0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9710
+2018,"Carver Division",BayBots,4171,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9711,38,3077,1362,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9711
+2018,"Carver Division","Degrees of Freedom",6413,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9712,39,5113,1363,0,0,0,1,3,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9712
+2018,"Carver Division","Team Spyder",1622,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9713,4,1309,1364,0,0,0,0,1,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9713
+2018,"Carver Division",Crab-bots,3834,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9714,40,2784,1365,0,0,0,1,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9714
+2018,"Carver Division",Horsepower,801,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9715,41,608,1366,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9715
+2018,"Carver Division","Hawktimus Prime",3229,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9716,42,2233,1367,0,0,0,0,2,0,3,0,1,0,0,0,0,0,0,0,0,0,0,0,0,9716
+2018,"Carver Division","The Bay Orangutans",5499,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9717,43,4268,1368,0,0,0,1,1,1,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9717
+2018,"Carver Division",RoboKomodos,4306,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9718,44,3204,1369,0,0,0,0,3,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9718
+2018,"Carver Division","Viking Robotics",2928,red,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9719,45,1958,1370,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9719
+2018,"Carver Division","Error Code Xero",1425,red,3,9,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9720,46,1136,1371,0,0,0,1,1,3,0,0,0,1,0,0,0,3,0,0,0,0,0,0,0,9720
+2018,"Carver Division","ACI 35",6988,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9721,47,6065,1372,0,0,0,0,2,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9721
+2018,"Carver Division","Team Spyder",1622,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9722,48,1309,1373,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9722
+2018,"Carver Division",BayBots,4171,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9723,49,3077,1374,0,0,0,0,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9723
+2018,"Carver Division","Clockwork Mania",4013,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9724,5,2922,1375,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,1,0,0,0,9724
+2018,"Carver Division","Thunder Down Under",3132,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9725,50,2140,1376,0,0,0,0,1,3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9725
+2018,"Carver Division","Texas Torque",1477,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9726,51,1181,1377,0,0,0,0,5,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9726
+2018,"Carver Division","Hilo Viking Robotics",1378,red,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9727,52,1095,1378,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,9727
+2018,"Carver Division","La Canada Engineerng Cub",2429,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9735,6,5805,1386,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9735
+2018,"Carver Division","Central Magnet Robotics",6846,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9746,7,5923,1397,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9746
+2018,"Carver Division","The Kraken",1410,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9757,8,1123,1408,0,0,0,0,1,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9757
+2018,"Carver Division","RAD Robotics",7111,red,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9768,9,6184,1419,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9768
+2018,"Carver Division","RadioActive Roaches",2556,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9780,10,1692,1317,0,0,0,0,0,-1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,9780
+2018,"Carver Division",RoboKomodos,4306,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9791,11,3204,1328,0,0,0,0,1,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9791
+2018,"Carver Division",S.T.R.I.K.E,6902,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9798,13,5979,1335,0,0,0,0,0,0,6,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9798
+2018,"Carver Division","Buzz Robotics",175,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9799,14,145,1336,0,0,0,2,2,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9799
+2018,"Carver Division","Team Chaos",1421,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9800,15,1134,1337,0,0,0,1,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9800
+2018,"Carver Division","Secret City Wildbots",4265,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9801,16,3166,1338,0,0,0,1,1,5,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,9801
+2018,"Carver Division","Central Magnet Robotics",6846,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9802,17,5923,1339,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9802
+2018,"Carver Division","The Bay Orangutans",5499,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9803,18,4268,1340,0,0,0,0,2,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9803
+2018,"Carver Division",CyberKnights,4911,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9804,19,3730,1341,0,0,0,0,0,2,0,0,0,1,0,0,0,3,0,0,0,0,0,0,0,9804
+2018,"Carver Division","Error Code Xero",1425,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9805,2,1136,1342,0,0,0,1,0,4,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9805
+2018,"Carver Division",StormBots,2811,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9806,20,1859,1343,0,0,0,1,0,3,4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9806
+2018,"Carver Division",RoboKomodos,4306,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9807,21,3204,1344,0,0,0,0,2,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9807
+2018,"Carver Division",WiredCats,2415,blue,1,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9808,22,5793,1345,0,0,0,0,1,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9808
+2018,"Carver Division","Circuit Chargers",932,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9809,23,716,1346,0,0,0,1,2,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9809
+2018,"Carver Division","Digital Hawks",1769,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9810,24,1441,1347,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9810
+2018,"Carver Division","Miss Daisy",341,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9811,25,275,1348,0,0,0,0,0,2,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9811
+2018,"Carver Division","Circuit Chargers",932,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9814,28,716,1351,0,0,0,0,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9814
+2018,"Carver Division","Thunder Down Under",3132,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9815,29,2140,1352,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9815
+2018,"Carver Division","Viking Robotics",580,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9817,30,459,1354,0,0,0,0,0,0,9,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9817
+2018,"Carver Division","RAD Robotics",7111,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9818,31,6184,1355,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9818
+2018,"Carver Division","Burning Magnetos",342,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9820,33,276,1357,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9820
+2018,"Carver Division",S*M*A*S*H,2152,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9821,34,5600,1358,0,0,0,1,1,3,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9821
+2018,"Carver Division",WiredCats,2415,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9823,36,5793,1360,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9823
+2018,"Carver Division",CyberKnights,4911,blue,1,7,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9825,38,3730,1362,0,0,0,1,0,4,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9825
+2018,"Carver Division",EastBots,4795,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9826,39,3655,1363,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9826
+2018,"Carver Division","Apex Robotics",5803,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9828,40,4559,1365,0,0,0,1,5,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9828
+2018,"Carver Division","ViperBots Valor",6800,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9829,41,5877,1366,0,0,0,1,0,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9829
+2018,"Carver Division","Robotrojans STEAMex",6832,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9830,42,5909,1367,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9830
+2018,"Carver Division",Metal-In-Motion,343,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9831,43,277,1368,0,0,0,2,5,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9831
+2018,"Carver Division","Hilo Viking Robotics",1378,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9832,44,1095,1369,0,0,0,0,2,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9832
+2018,"Carver Division","Team Chaos",1421,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9833,45,1134,1370,0,0,0,2,0,0,7,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9833
+2018,"Carver Division",Humans,4501,blue,1,8,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9834,46,3362,1371,0,0,0,1,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9834
+2018,"Carver Division","The Kraken",1410,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9835,47,1123,1372,0,0,0,0,0,0,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9835
+2018,"Carver Division","The Bay Orangutans",5499,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9836,48,4268,1373,0,0,0,1,1,0,3,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9836
+2018,"Carver Division",KnightVision,3991,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9837,49,2900,1374,0,0,0,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9837
+2018,"Carver Division",Metal-In-Motion,343,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9838,5,277,1375,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9838
+2018,"Carver Division","La Canada Engineerng Cub",2429,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9839,50,5805,1376,0,0,0,0,3,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9839
+2018,"Carver Division","Webb Robotics",1466,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9840,51,1172,1377,0,0,0,0,2,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9840
+2018,"Carver Division","The Highlanders",4499,blue,1,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9841,52,3360,1378,0,0,0,2,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9841
+2018,"Carver Division","Shark Attack",744,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9849,6,578,1386,0,0,0,1,1,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9849
+2018,"Carver Division","Team Rocket",2723,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9860,7,1820,1397,0,0,0,1,0,0,0,0,0,1,0,0,0,3,0,0,0,0,0,0,0,9860
+2018,"Carver Division",S.T.R.I.K.E,6902,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9871,8,5979,1408,0,0,0,0,3,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9871
+2018,"Carver Division","Viking Robotics",2928,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9893,1,1958,1316,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9893
+2018,"Carver Division","Jaguar Robotics",4192,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9894,10,3098,1317,0,0,0,1,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9894
+2018,"Carver Division","Hilo Viking Robotics",1378,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9911,12,1095,1334,0,0,0,0,3,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9911
+2018,"Carver Division","Thunder Down Under",3132,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9912,13,2140,1335,0,0,0,1,0,2,0,0,0,1,1,0,0,2,0,0,0,0,0,0,0,9912
+2018,"Carver Division","The WildHats",100,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9913,14,85,1336,0,0,0,0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9913
+2018,"Carver Division","ENKA TECH.",6985,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9914,15,6062,1337,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9914
+2018,"Carver Division",BulahBots!,3753,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9915,16,2704,1338,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9915
+2018,"Carver Division","Texas Torque",1477,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9916,17,1181,1339,0,0,0,1,0,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9916
+2018,"Carver Division","SMbly Required",5805,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9919,2,4561,1342,0,0,0,0,0,1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,9919
+2018,"Carver Division",Apophis,5006,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9920,20,3825,1343,0,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9920
+2018,"Carver Division","RadioActive Roaches",2556,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9921,21,1692,1344,0,0,0,0,0,4,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9921
+2018,"Carver Division",Crab-bots,3834,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9922,22,2784,1345,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9922
+2018,"Carver Division","Buzz Robotics",175,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9924,24,145,1347,0,0,0,1,0,3,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9924
+2018,"Carver Division","Digital Minds",5458,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9925,25,4227,1348,0,0,0,1,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9925
+2018,"Carver Division","Clockwork Mania",4013,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9926,26,2922,1349,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9926
+2018,"Carver Division",Horsepower,801,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9927,27,608,1350,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9927
+2018,"Carver Division",TeraViks,3145,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9928,28,2153,1351,0,0,0,1,0,0,0,0,0,1,0,0,0,3,0,0,0,0,0,0,0,9928
+2018,"Carver Division","The Hi Fives",4944,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9929,29,3763,1352,0,0,0,1,4,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9929
+2018,"Carver Division",KnightVision,3991,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9930,3,2900,1353,0,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9930
+2018,"Carver Division","Team Spyder",1622,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9931,30,1309,1354,0,0,0,1,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9931
+2018,"Carver Division","Team Rocket",2723,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9932,31,1820,1355,0,0,0,1,2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9932
+2018,"Carver Division","Error Code Xero",1425,blue,2,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9933,32,1136,1356,0,0,0,1,0,3,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,9933
+2018,"Carver Division","Purple Haze",418,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9934,33,337,1357,0,0,0,2,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9934
+2018,"Carver Division","Jaguar Robotics",4192,blue,2,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9935,34,3098,1358,0,0,0,1,0,4,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9935
+2018,"Carver Division","La Canada Engineerng Cub",2429,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9936,35,5805,1359,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9936
+2018,"Carver Division","Digital Minds",5458,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9937,36,4227,1360,0,0,0,0,6,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9937
+2018,"Carver Division",Orbit,1690,blue,2,7,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9938,37,1364,1361,0,0,0,1,2,2,3,0,0,1,0,0,0,3,0,0,0,0,0,0,0,9938
+2018,"Carver Division","Bomb Squad",16,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9940,39,14,1363,0,0,0,1,0,0,0,0,0,1,0,0,0,8,0,0,0,0,0,0,0,9940
+2018,"Carver Division","Cyborg Ferrets",3238,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9941,4,2242,1364,0,0,0,1,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9941
+2018,"Carver Division","Viking Robotics",580,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9942,40,459,1365,0,0,0,0,1,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9942
+2018,"Carver Division","Miss Daisy",341,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9944,42,275,1367,0,0,0,1,4,1,5,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9944
+2018,"Carver Division","Jack in the Bot",2910,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9946,44,1940,1369,0,0,0,1,3,4,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,9946
+2018,"Carver Division","RAD Robotics",7111,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9948,46,6184,1371,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9948
+2018,"Carver Division",Orbit,1690,blue,2,9,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9949,47,1364,1372,0,0,0,1,0,6,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9949
+2018,"Carver Division","ViperBots Valor",6800,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9950,48,5877,1373,0,0,0,0,0,8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9950
+2018,"Carver Division","Apex Robotics",5803,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9951,49,4559,1374,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9951
+2018,"Carver Division",S*M*A*S*H,2152,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9952,5,5600,1375,0,0,0,0,0,1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9952
+2018,"Carver Division","Viking Robotics",2928,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9953,50,1958,1376,0,0,0,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9953
+2018,"Carver Division","Team Rocket",2723,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9954,51,1820,1377,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,9954
+2018,"Carver Division","Jack in the Bot",2910,blue,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9955,52,1940,1378,0,0,0,0,2,5,7,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9955
+2018,"Carver Division","ACI 35",6988,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9974,7,6065,1397,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9974
+2018,"Carver Division",Jackbots,7301,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9985,8,6372,1408,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9985
+2018,"Carver Division","Miss Daisy",341,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9996,9,275,1419,0,0,0,1,0,4,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9996
+2018,"Carver Division",WiredCats,2415,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10007,1,5793,1316,0,0,0,0,1,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,10007
+2018,"Carver Division","Burning Magnetos",342,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10008,10,276,1317,0,0,0,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10008
+2018,"Carver Division",BayBots,4171,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10019,11,3077,1328,0,0,0,0,3,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10019
+2018,"Carver Division",Metal-In-Motion,343,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10025,12,277,1334,0,0,0,1,0,2,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10025
+2018,"Carver Division","ACI 35",6988,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10026,13,6065,1335,0,0,0,1,1,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,10026
+2018,"Carver Division","Digital Hawks",1769,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10029,16,1441,1338,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10029
+2018,"Carver Division",Jackbots,7301,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10030,17,6372,1339,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10030
+2018,"Carver Division",Horsepower,801,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10031,18,608,1340,0,0,0,0,0,2,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10031
+2018,"Carver Division","Purple Haze",418,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10032,19,337,1341,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10032
+2018,"Carver Division","Webb Robotics",1466,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10033,2,1172,1342,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10033
+2018,"Carver Division","Iron Panthers",5026,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10034,20,3845,1343,0,0,0,1,0,4,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10034
+2018,"Carver Division","SigmaC@T Robotics Team",108,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10035,21,93,1344,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10035
+2018,"Carver Division","Degrees of Freedom",6413,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10036,22,5113,1345,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10036
+2018,"Carver Division",BulahBots!,3753,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10037,23,2704,1346,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10037
+2018,"Carver Division",Jackbots,7301,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10038,24,6372,1347,0,0,0,0,0,0,3,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10038
+2018,"Carver Division",EastBots,4795,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10039,25,3655,1348,0,0,0,0,3,0,6,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10039
+2018,"Carver Division","Viking Robotics",2928,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10040,26,1958,1349,0,0,0,1,0,4,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10040
+2018,"Carver Division",Crab-bots,3834,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10042,28,2784,1351,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10042
+2018,"Carver Division","SMbly Required",5805,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10043,29,4561,1352,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10043
+2018,"Carver Division","Hawktimus Prime",3229,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10044,3,2233,1353,0,0,0,1,0,0,5,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10044
+2018,"Carver Division","Tin Men",7123,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10046,31,6196,1355,0,0,0,0,0,0,6,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10046
+2018,"Carver Division","ENKA TECH.",6985,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10047,32,6062,1356,0,0,0,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,0,0,0,10047
+2018,"Carver Division","Digital Hawks",1769,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10050,35,1441,1359,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10050
+2018,"Carver Division","Thunder Down Under",3132,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10051,36,2140,1360,0,0,0,0,0,3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10051
+2018,"Carver Division","SigmaC@T Robotics Team",108,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10054,39,93,1363,0,0,0,0,2,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10054
+2018,"Carver Division",Orbit,1690,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10055,4,1364,1364,0,0,0,0,0,3,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,10055
+2018,"Carver Division",TeraViks,3145,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10057,41,2153,1366,0,0,0,0,1,0,4,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10057
+2018,"Carver Division",Minotaur,1369,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10059,43,1086,1368,0,0,0,0,0,1,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,10059
+2018,"Carver Division","Jaguar Robotics",4192,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10060,44,3098,1369,0,0,0,1,0,2,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,10060
+2018,"Carver Division",S*M*A*S*H,2152,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10061,45,5600,1370,0,0,0,0,1,0,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,10061
+2018,"Carver Division","Miss Daisy",341,blue,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10063,47,275,1372,0,0,0,1,1,5,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10063
+2018,"Carver Division","The WildHats",100,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10066,5,85,1375,0,0,0,0,0,6,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,10066
+2018,"Carver Division",Metal-In-Motion,343,blue,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10068,51,277,1377,0,0,0,1,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10068
+2018,"Carver Division","Central Magnet Robotics",6846,blue,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10069,52,5923,1378,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10069
+2018,"Carver Division","SigmaC@T Robotics Team",108,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10099,8,93,1408,0,0,0,0,1,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10099
+2018,"Carver Division","DARC SIDE",6502,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10110,9,5201,1419,0,0,0,0,2,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10110
+2018,"Carver Division","Webb Robotics",1466,red,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9595,36,1172,1360,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9595
+2018,"Carver Division",CyberKnights,4911,red,2,9,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9606,46,3730,1371,1,0,0,0,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9606
+2018,"Carver Division","Secret City Wildbots",4265,red,2,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9612,51,3166,1377,1,0,0,0,0,4,0,0,0,1,0,0,0,5,0,0,0,0,0,0,0,9612
+2018,"Carver Division","Galaxia in memory of David Zohar",5987,red,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9654,9,4743,1419,1,0,0,0,1,4,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,9654
+2018,"Carver Division",IHOT,1414,red,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9694,22,1127,1345,1,0,0,0,1,5,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9694
+2018,"Carver Division","Iron Panthers",5026,red,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9706,33,3845,1357,1,0,0,0,0,5,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9706
+2018,"Carver Division","Buzz Robotics",175,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9816,3,145,1353,1,0,0,0,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9816
+2018,"Carver Division",Orbit,1690,blue,1,6,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9819,32,1364,1356,1,0,0,0,0,3,3,0,0,0,0,0,0,2,0,0,0,0,0,0,0,9819
+2018,"Carver Division",IHOT,1414,blue,1,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9822,35,1127,1359,1,0,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9822
+2018,"Carver Division","Secret City Wildbots",4265,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9882,9,3166,1419,1,0,0,0,0,2,0,0,0,1,0,0,0,2,0,0,0,0,0,0,0,9882
+2018,"Carver Division",Minotaur,1369,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9917,18,1086,1340,1,0,0,0,3,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9917
+2018,"Carver Division","Galaxia in memory of David Zohar",5987,blue,2,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9918,19,4743,1341,1,0,0,0,1,3,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,9918
+2018,"Carver Division","DARC SIDE",6502,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9923,23,5201,1346,1,0,0,0,1,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9923
+2018,"Carver Division","Circuit Chargers",932,blue,2,7,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9939,38,716,1362,1,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9939
+2018,"Carver Division","Galaxia in memory of David Zohar",5987,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9943,41,4743,1366,1,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9943
+2018,"Carver Division","Shark Attack",744,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9945,43,578,1368,1,0,0,0,0,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9945
+2018,"Carver Division","Texas Torque",1477,blue,2,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9947,45,1181,1370,1,0,0,0,0,5,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,9947
+2018,"Carver Division","Hawktimus Prime",3229,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10028,15,2233,1337,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10028
+2018,"Carver Division","Galaxia in memory of David Zohar",5987,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10045,30,4743,1354,1,0,0,0,0,5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10045
+2018,"Carver Division",Apophis,5006,blue,3,8,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10052,37,3825,1361,1,0,0,1,0,0,3,0,0,1,0,0,0,5,0,0,0,0,0,0,0,10052
+2018,"Carver Division","Secret City Wildbots",4265,blue,3,4,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10056,40,3166,1365,1,0,0,0,2,3,1,0,0,1,0,0,0,2,0,0,0,0,0,0,0,10056
+2018,"Carver Division","RadioActive Roaches",2556,blue,3,8,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10058,42,1692,1367,1,0,0,0,0,2,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10058
+2018,"Carver Division","Circuit Chargers",932,blue,3,9,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10062,46,716,1371,1,0,0,0,5,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10062
+2018,"Carver Division","Iron Panthers",5026,blue,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10065,49,3845,1374,1,0,0,0,0,6,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10065
+2018,"Carver Division",Horsepower,801,blue,3,5,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10067,50,608,1376,1,0,0,0,0,3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10067
+2018,"Carver Division",Minotaur,1369,blue,3,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10088,7,1086,1397,1,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10088
+2018,"Carver Division","Jack in the Bot",2910,blue,1,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9779,1,1940,1316,2,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9779
+2018,"Carver Division","Hilo Viking Robotics",1378,blue,1,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9812,26,1095,1349,2,0,0,0,4,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9812
+2018,"Carver Division",CyberKnights,4911,blue,2,1,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,9963,6,3730,1386,2,0,0,0,5,3,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,9963
+2018,"Carver Division","Jack in the Bot",2910,blue,3,2,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10027,14,1940,1336,2,0,0,0,0,4,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,10027
+2018,"Carver Division","Bomb Squad",16,blue,3,3,NULL,NULL,NULL,loss,0,0,0,NULL,NULL,NULL,10048,33,14,1357,2,0,0,0,0,0,0,0,0,1,0,0,0,3,0,0,0,0,0,0,0,10048
